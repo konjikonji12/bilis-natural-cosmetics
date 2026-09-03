@@ -4,7 +4,7 @@ Ovde se čuvaju podaci o proizvodima brenda Bili's Natural Cosmetics.
 
 ## Proizvodi
 
-- Bili's Salbe
+- [Bili's Salbe](bilis-salbe/bilis-salbe.md)
 - Krema za lice
 - Ulja za lice
 - Balzami za usne
