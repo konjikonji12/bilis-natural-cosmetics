@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="sr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bili’s Natural Cosmetics — Administracija</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{--bg:#f6f4ef;--card:#fff;--ink:#171717;--muted:#777;--line:#ddd8cf;--gold:#b68b35}
+*{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+.wrap{max-width:1180px;margin:auto;padding:32px 20px 60px}.brand{letter-spacing:.14em;font-size:13px}.title{font-family:Georgia,serif;font-size:48px;margin:8px 0 28px}.card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:26px;box-shadow:0 8px 30px #00000008}
+.login{max-width:720px;margin:50px auto}.login h2,.dash h2{font-family:Georgia,serif;font-size:32px;margin:0 0 10px}.muted{color:var(--muted)}label{display:block;font-size:12px;letter-spacing:.12em;margin:16px 0 7px}input,textarea,select{width:100%;padding:13px 14px;border:1px solid #cfc9bf;border-radius:12px;background:#fff;font:inherit}textarea{min-height:90px;resize:vertical}
+button{border:0;border-radius:12px;padding:12px 18px;background:#171717;color:white;font-weight:700;cursor:pointer}button.secondary{background:#eee;color:#171717}button.gold{background:var(--gold)}button.danger{background:#9e2b2b}
+.row{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}.top{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:22px}.badge{display:inline-block;padding:7px 10px;border-radius:999px;background:#f0e8d8;font-size:12px}.hidden{display:none!important}
+table{width:100%;border-collapse:collapse;margin-top:18px}th,td{text-align:left;padding:14px 10px;border-bottom:1px solid var(--line);vertical-align:middle}th{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#666}.thumb{width:58px;height:58px;border-radius:10px;object-fit:cover;background:#eee}.stock-low{font-weight:700}.switch{display:flex;gap:8px;align-items:center;font-size:14px;margin-top:16px}.status{margin:14px 0;padding:12px 14px;border-radius:12px;background:#f2f0eb}.error{background:#f9e5e5;color:#8d1d1d}.ok{background:#e8f4e9;color:#23612a}.modal{position:fixed;inset:0;background:#0007;display:flex;align-items:center;justify-content:center;padding:18px}.modal .card{width:min(760px,100%);max-height:92vh;overflow:auto}
+@media(max-width:700px){.wrap{padding:22px 14px}.title{font-size:38px}.row{grid-template-columns:1fr}table{font-size:13px}.desktop{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="brand">BILI’S NATURAL COSMETICS</div>
+  <div class="title">Administracija</div>
+
+  <section id="login" class="card login">
+    <h2>Prijava</h2>
+    <p class="muted">Samo vlasnik može menjati proizvode, cene i zalihe.</p>
+    <label>EMAIL</label>
+    <input id="email" type="email" autocomplete="username" value="duricbiljana.diki@gmail.com">
+    <label>LOZINKA</label>
+    <input id="password" type="password" autocomplete="current-password">
+    <div class="actions"><button id="loginBtn">Prijavi me</button></div>
+    <div id="loginMsg" class="status hidden"></div>
+  </section>
+
+  <section id="dash" class="dash hidden">
+    <div class="top">
+      <div>
+        <span class="badge">Vlasnički pristup</span>
+        <div id="userEmail" class="muted" style="margin-top:8px"></div>
+      </div>
+      <button class="secondary" id="logoutBtn">Odjavi se</button>
+    </div>
+
+    <div class="card">
+      <div class="top">
+        <div><h2>Proizvodi</h2><div class="muted">Cena, zaliha i vidljivost proizvoda.</div></div>
+        <button class="gold" id="addBtn">+ Dodaj proizvod</button>
+      </div>
+      <div id="dashMsg" class="status hidden"></div>
+      <div style="overflow:auto">
+        <table>
+          <thead><tr><th>Proizvod</th><th>Cena</th><th>Zaliha</th><th>Aktivan</th><th>Radnja</th></tr></thead>
+          <tbody id="productsBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div id="modal" class="modal hidden">
+ <div class="card">
+  <div class="top"><h2 id="modalTitle">Novi proizvod</h2><button class="secondary" id="closeBtn">Zatvori</button></div>
+  <input id="pid" type="hidden">
+  <div class="row">
+    <div><label>NAZIV — SRPSKI</label><input id="name_sr"></div>
+    <div><label>NAZIV — NEMAČKI</label><input id="name_de"></div>
+    <div><div><label>KATEGORIJA</label><input id="category"></div></div>
+    <div><div><label>VELIČINA</label><input id="size"></div></div>
+    <div><div><label>CENA (CHF)</label><input id="price_chf" type="number" step="0.01" min="0"></div></div>
+    <div><div><label>ZALIHA</label><input id="stock_qty" type="number" step="1" min="0"></div></div>
+    <div><div><label>REDOSLED</label><input id="display_order" type="number" step="1" value="0"></div></div>
+    <div><div><label>SLIKA — URL</label><input id="image"></div></div>
+  </div>
+  <label>OPIS — SRPSKI</label><textarea id="description_sr"></textarea>
+  <label>OPIS — NEMAČKI</label><textarea id="description_de"></textarea>
+  <label class="switch"><input id="active" type="checkbox" checked> Proizvod je aktivan</label>
+  <label class="switch"><input id="featured" type="checkbox"> Istaknuti proizvod</label>
+  <div class="actions"><button id="saveBtn">Sačuvaj</button><button class="danger" id="deleteBtn">Obriši</button></div>
+ </div>
+</div>
+
+<script>
+/* Samo javni publishable/anon ključ ide u browser.
+   NE stavljaj service_role ključ ovde. */
+const SUPABASE_URL = "https://enzcsfhtduucaggjamnx.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_04GgoHvEKpmroJtjY-1wKA_HjEu7tC9";
+const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+
+const $ = id => document.getElementById(id);
+function msg(el,text,ok=false){el.textContent=text;el.className="status "+(ok?"ok":"error");el.classList.remove("hidden")}
+function clearMsg(el){el.classList.add("hidden")}
+
+async function checkConfig(){
+  if(SUPABASE_PUBLISHABLE_KEY.startsWith("OVDE_")){
+    msg($("loginMsg"),"Admin ekran je napravljen. Nedostaje samo Publishable key za povezivanje sa Supabase projektom.");
+    $("loginBtn").disabled=true;
+  }
+}
+
+async function login(){
+  clearMsg($("loginMsg"));
+  const {error}=await client.auth.signInWithPassword({email:$("email").value.trim(),password:$("password").value});
+  if(error) return msg($("loginMsg"),error.message);
+  await refresh();
+}
+async function logout(){await client.auth.signOut();await refresh()}
+async function refresh(){
+  const {data:{session}}=await client.auth.getSession();
+  if(!session){$("login").classList.remove("hidden");$("dash").classList.add("hidden");return}
+  $("login").classList.add("hidden");$("dash").classList.remove("hidden");$("userEmail").textContent=session.user.email||"Prijavljen korisnik";
+  await loadProducts();
+}
+async function loadProducts(){
+  const body=$("productsBody");body.innerHTML="<tr><td colspan='5'>Učitavanje…</td></tr>";
+  const {data,error}=await client.from("products").select("*").order("display_order",{ascending:true});
+  if(error){body.innerHTML="";return msg($("dashMsg"),"Ne mogu da učitam proizvode: "+error.message)}
+  clearMsg($("dashMsg"));
+  if(!data?.length){body.innerHTML="<tr><td colspan='5'>Nema proizvoda.</td></tr>";return}
+  body.innerHTML=data.map(p=>{
+    const name=p.name_sr||p.name_de||p.name||"Bez naziva";
+    const image=p.image||"";
+    return `<tr>
+      <td>${image?`<img class="thumb" src="${esc(image)}" onerror="this.style.display='none'">`:""}<strong>${esc(name)}</strong><div class="muted">${esc(p.size||"")}</div></td>
+      <td>${p.price_chf!=null?Number(p.price_chf).toFixed(2)+" CHF":"—"}</td>
+      <td class="${Number(p.stock_qty||0)<=3?"stock-low":""}">${p.stock_qty??0}</td>
+      <td>${p.active?"Da":"Ne"}</td>
+      <td><button class="secondary" onclick='editProduct(${JSON.stringify(p).replace(/</g,"\\u003c")})'>Uredi</button></td>
+    </tr>`;
+  }).join("");
+}
+function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[c]))}
+function openModal(p={}){
+  $("modalTitle").textContent=p.id?"Uredi proizvod":"Novi proizvod";
+  $("pid").value=p.id||"";
+  ["name_sr","name_de","category","size","price_chf","stock_qty","display_order","image","description_sr","description_de"].forEach(k=>$(k).value=p[k]??(k==="display_order"?0:""));
+  $("active").checked=p.id?p.active!==false:true;
+  $("featured").checked=!!p.featured;
+  $("deleteBtn").style.display=p.id?"inline-block":"none";
+  $("modal").classList.remove("hidden");
+}
+function closeModal(){$("modal").classList.add("hidden")}
+async function save(){
+  const payload={};
+  ["name_sr","name_de","category","size","image","description_sr","description_de"].forEach(k=>payload[k]=$(k).value.trim());
+  payload.price_chf=Number($("price_chf").value||0);
+  payload.stock_qty=Number($("stock_qty").value||0);
+  payload.display_order=Number($("display_order").value||0);
+  payload.active=$("active").checked; payload.featured=$("featured").checked;
+  const id=$("pid").value;
+  const result=id?await client.from("products").update(payload).eq("id",id):await client.from("products").insert(payload);
+  if(result.error){return msg($("dashMsg"),"Nije sačuvano: "+result.error.message)}
+  closeModal();msg($("dashMsg"),"Proizvod je uspešno sačuvan.",true);await loadProducts();
+}
+async function del(){
+  const id=$("pid").value;if(!id)return;
+  if(!confirm("Da li sigurno želiš da obrišeš ovaj proizvod?"))return;
+  const {error}=await client.from("products").delete().eq("id",id);
+  if(error)return msg($("dashMsg"),"Nije obrisano: "+error.message);
+  closeModal();msg($("dashMsg"),"Proizvod je obrisan.",true);await loadProducts();
+}
+$("loginBtn").onclick=login;$("logoutBtn").onclick=logout;$("addBtn").onclick=()=>openModal();$("closeBtn").onclick=closeModal;$("saveBtn").onclick=save;$("deleteBtn").onclick=del;
+$("password").addEventListener("keydown",e=>{if(e.key==="Enter")login()});
+client.auth.onAuthStateChange(()=>refresh());
+checkConfig();refresh();
+</script>
+</body>
+</html>
