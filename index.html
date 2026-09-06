@@ -590,7 +590,7 @@
       "https://enzcsfhtduucagqjamnx.supabase.co";
 
     const SUPABASE_ANON_KEY =
-      "sb_publishable_04GgoHvEKrmroJtjY-1wKA_HjEu7tC9";
+      "sb_publishable_04GgoHvEKpmroJtjY-1wKA_HjEu7tC9";
 
 
     const db = supabase.createClient(
@@ -842,14 +842,6 @@
 
       try {
 
-        /*
-          VAŽNO:
-          Ovde namerno NEMA:
-          .order("sort_order")
-
-          jer ta kolona ne postoji u tvojoj tabeli.
-        */
-
         const result =
           await db
             .from("products")
@@ -923,6 +915,3 @@
 
 </body>
 </html>
-
-  
-na
