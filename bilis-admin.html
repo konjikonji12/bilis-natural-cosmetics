@@ -395,91 +395,69 @@ th{
 
     </div>
 
-
     <input
       id="pid"
       type="hidden"
     >
 
-
     <div class="row">
 
       <div>
-
         <label>NAZIV — SRPSKI</label>
         <input id="name_sr">
-
       </div>
 
       <div>
-
         <label>NAZIV — NEMAČKI</label>
         <input id="name_de">
-
       </div>
 
       <div>
-
         <label>KATEGORIJA</label>
         <input id="category">
-
       </div>
 
       <div>
-
         <label>VELIČINA</label>
         <input id="size">
-
       </div>
 
       <div>
-
         <label>CENA (CHF)</label>
-
         <input
           id="price_chf"
           type="number"
           step="0.01"
           min="0"
         >
-
       </div>
 
       <div>
-
         <label>ZALIHA</label>
-
         <input
           id="stock_qty"
           type="number"
           step="1"
           min="0"
         >
-
       </div>
 
       <div>
-
         <label>REDOSLED</label>
-
         <input
-          id="display_order"
+          id="sort_order"
           type="number"
           step="1"
           value="0"
         >
-
       </div>
 
       <div>
-
         <label>SLIKA — URL</label>
         <input id="image">
-
       </div>
 
     </div>
-
 
     <label>OPIS — SRPSKI</label>
     <textarea id="description_sr"></textarea>
@@ -487,34 +465,24 @@ th{
     <label>OPIS — NEMAČKI</label>
     <textarea id="description_de"></textarea>
 
-
     <label class="switch">
-
       <input
         id="active"
         type="checkbox"
         checked
       >
-
       Proizvod je aktivan
-
     </label>
 
-
     <label class="switch">
-
       <input
         id="featured"
         type="checkbox"
       >
-
       Istaknuti proizvod
-
     </label>
 
-
     <div class="actions">
-
       <button id="saveBtn">
         Sačuvaj
       </button>
@@ -525,7 +493,6 @@ th{
       >
         Obriši
       </button>
-
     </div>
 
   </div>
@@ -549,109 +516,76 @@ const SUPABASE_PUBLISHABLE_KEY =
 const RESET_PASSWORD_URL =
 "https://konjikonji12.github.io/bilis-natural-cosmetics/reset-password.html";
 
-
 const client =
 window.supabase.createClient(
   SUPABASE_URL,
   SUPABASE_PUBLISHABLE_KEY
 );
 
-
 const $ = id =>
 document.getElementById(id);
 
-
 function msg(el,text,ok=false){
-
   el.textContent=text;
-
   el.className=
   "status "+(ok ? "ok" : "error");
-
   el.classList.remove("hidden");
-
 }
-
 
 function clearMsg(el){
-
   el.classList.add("hidden");
-
 }
 
-
 async function checkConfig(){
-
   if(
     SUPABASE_PUBLISHABLE_KEY
     .startsWith("OVDE_")
   ){
-
     msg(
       $("loginMsg"),
       "Admin ekran je napravljen. Nedostaje samo Publishable key za povezivanje sa Supabase projektom."
     );
-
     $("loginBtn").disabled=true;
-
   }
-
 }
 
-
 async function login(){
-
   clearMsg($("loginMsg"));
 
   const {
     error
   } =
   await client.auth.signInWithPassword({
-
     email:
     $("email").value.trim(),
-
     password:
     $("password").value
-
   });
 
-
   if(error){
-
     return msg(
       $("loginMsg"),
       error.message
     );
-
   }
 
-
   await refresh();
-
 }
 
-
 async function forgotPassword(){
-
   clearMsg($("loginMsg"));
 
   const email =
   $("email").value.trim();
 
-
   if(!email){
-
     return msg(
       $("loginMsg"),
       "Unesi email adresu."
     );
-
   }
 
-
   $("forgotBtn").disabled=true;
-
 
   const {
     error
@@ -664,41 +598,29 @@ async function forgotPassword(){
     }
   );
 
-
   $("forgotBtn").disabled=false;
 
-
   if(error){
-
     return msg(
       $("loginMsg"),
       "Reset lozinke nije poslat: "
       + error.message
     );
-
   }
-
 
   msg(
     $("loginMsg"),
     "Poslat je email za promenu lozinke. Otvori najnoviji email i pritisni link za reset lozinke.",
     true
   );
-
 }
-
 
 async function logout(){
-
   await client.auth.signOut();
-
   await refresh();
-
 }
 
-
 async function refresh(){
-
   const {
     data:{
       session
@@ -706,9 +628,7 @@ async function refresh(){
   } =
   await client.auth.getSession();
 
-
   if(!session){
-
     $("login")
     .classList
     .remove("hidden");
@@ -718,40 +638,30 @@ async function refresh(){
     .add("hidden");
 
     return;
-
   }
-
 
   $("login")
   .classList
   .add("hidden");
 
-
   $("dash")
   .classList
   .remove("hidden");
-
 
   $("userEmail")
   .textContent =
   session.user.email ||
   "Prijavljen korisnik";
 
-
   await loadProducts();
-
 }
 
-
 async function loadProducts(){
-
   const body =
   $("productsBody");
 
-
   body.innerHTML =
   "<tr><td colspan='5'>Učitavanje…</td></tr>";
-
 
   const {
     data,
@@ -761,15 +671,13 @@ async function loadProducts(){
   .from("products")
   .select("*")
   .order(
-    "display_order",
+    "sort_order",
     {
       ascending:true
     }
   );
 
-
   if(error){
-
     body.innerHTML="";
 
     return msg(
@@ -777,24 +685,17 @@ async function loadProducts(){
       "Ne mogu da učitam proizvode: "
       + error.message
     );
-
   }
-
 
   clearMsg(
     $("dashMsg")
   );
 
-
   if(!data?.length){
-
     body.innerHTML =
     "<tr><td colspan='5'>Nema proizvoda.</td></tr>";
-
     return;
-
   }
-
 
   body.innerHTML =
   data.map(p=>{
@@ -805,11 +706,9 @@ async function loadProducts(){
     p.name ||
     "Bez naziva";
 
-
     const image =
     p.image ||
     "";
-
 
     return `
     <tr>
@@ -838,9 +737,7 @@ async function loadProducts(){
 
       </td>
 
-
       <td>
-
         ${
           p.price_chf!=null
           ?
@@ -851,9 +748,7 @@ async function loadProducts(){
           :
           "—"
         }
-
       </td>
-
 
       <td
         class="${
@@ -866,14 +761,10 @@ async function loadProducts(){
           ""
         }"
       >
-
         ${p.stock_qty??0}
-
       </td>
 
-
       <td>
-
         ${
           p.active
           ?
@@ -881,12 +772,9 @@ async function loadProducts(){
           :
           "Ne"
         }
-
       </td>
 
-
       <td>
-
         <button
           class="secondary"
           onclick='editProduct(
@@ -901,19 +789,15 @@ async function loadProducts(){
         >
           Uredi
         </button>
-
       </td>
 
     </tr>
     `;
 
   }).join("");
-
 }
 
-
 function esc(v){
-
   return String(v??"")
   .replace(
     /[&<>"']/g,
@@ -925,12 +809,9 @@ function esc(v){
       "'":"&#039;"
     }[c])
   );
-
 }
 
-
 function openModal(p={}){
-
   $("modalTitle")
   .textContent =
   p.id
@@ -939,10 +820,8 @@ function openModal(p={}){
   :
   "Novi proizvod";
 
-
   $("pid").value =
   p.id||"";
-
 
   [
     "name_sr",
@@ -951,7 +830,7 @@ function openModal(p={}){
     "size",
     "price_chf",
     "stock_qty",
-    "display_order",
+    "sort_order",
     "image",
     "description_sr",
     "description_de"
@@ -961,14 +840,13 @@ function openModal(p={}){
     $(k).value =
     p[k] ??
     (
-      k==="display_order"
+      k==="sort_order"
       ?
       0
       :
       ""
     )
   );
-
 
   $("active").checked =
   p.id
@@ -977,10 +855,8 @@ function openModal(p={}){
   :
   true;
 
-
   $("featured").checked =
   !!p.featured;
-
 
   $("deleteBtn")
   .style
@@ -991,34 +867,23 @@ function openModal(p={}){
   :
   "none";
 
-
   $("modal")
   .classList
   .remove("hidden");
-
 }
-
 
 function editProduct(p){
-
   openModal(p);
-
 }
 
-
 function closeModal(){
-
   $("modal")
   .classList
   .add("hidden");
-
 }
 
-
 async function save(){
-
   const payload={};
-
 
   [
     "name_sr",
@@ -1035,36 +900,29 @@ async function save(){
     $(k).value.trim()
   );
 
-
   payload.price_chf =
   Number(
     $("price_chf").value||0
   );
-
 
   payload.stock_qty =
   Number(
     $("stock_qty").value||0
   );
 
-
-  payload.display_order =
+  payload.sort_order =
   Number(
-    $("display_order").value||0
+    $("sort_order").value||0
   );
-
 
   payload.active =
   $("active").checked;
 
-
   payload.featured =
   $("featured").checked;
 
-
   const id =
   $("pid").value;
-
 
   const result =
   id
@@ -1078,20 +936,15 @@ async function save(){
   .from("products")
   .insert(payload);
 
-
   if(result.error){
-
     return msg(
       $("dashMsg"),
       "Nije sačuvano: "
       + result.error.message
     );
-
   }
 
-
   closeModal();
-
 
   msg(
     $("dashMsg"),
@@ -1099,27 +952,20 @@ async function save(){
     true
   );
 
-
   await loadProducts();
-
 }
 
-
 async function del(){
-
   const id =
   $("pid").value;
 
-
   if(!id)return;
-
 
   if(
     !confirm(
       "Da li sigurno želiš da obrišeš ovaj proizvod?"
     )
   )return;
-
 
   const {
     error
@@ -1132,20 +978,15 @@ async function del(){
     id
   );
 
-
   if(error){
-
     return msg(
       $("dashMsg"),
       "Nije obrisano: "
       + error.message
     );
-
   }
 
-
   closeModal();
-
 
   msg(
     $("dashMsg"),
@@ -1153,39 +994,29 @@ async function del(){
     true
   );
 
-
   await loadProducts();
-
 }
-
 
 $("loginBtn").onclick =
 login;
 
-
 $("forgotBtn").onclick =
 forgotPassword;
-
 
 $("logoutBtn").onclick =
 logout;
 
-
 $("addBtn").onclick =
 ()=>openModal();
-
 
 $("closeBtn").onclick =
 closeModal;
 
-
 $("saveBtn").onclick =
 save;
 
-
 $("deleteBtn").onclick =
 del;
-
 
 $("password")
 .addEventListener(
@@ -1199,7 +1030,6 @@ $("password")
   }
 );
 
-
 client.auth
 .onAuthStateChange(
   ()=>{
@@ -1207,9 +1037,7 @@ client.auth
   }
 );
 
-
 checkConfig();
-
 refresh();
 
 </script>
