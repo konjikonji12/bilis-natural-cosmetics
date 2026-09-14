@@ -5,10 +5,12 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Bili’s Natural Cosmetics — Administracija</title>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
 :root{
   --bg:#f6f4ef;
-  --card:#fff;
+  --card:#ffffff;
   --ink:#171717;
   --muted:#777;
   --line:#ddd8cf;
@@ -56,8 +58,7 @@ body{
   margin:50px auto;
 }
 
-.login h2,
-.dash h2{
+h2{
   font-family:Georgia,serif;
   font-size:32px;
   margin:0 0 10px;
@@ -73,8 +74,7 @@ label{
 }
 
 input,
-textarea,
-select{
+textarea{
   width:100%;
   padding:13px 14px;
   border:1px solid #cfc9bf;
@@ -121,13 +121,6 @@ button.linkbtn{
   color:#171717;
   padding:12px 4px;
   text-decoration:underline;
-  font-weight:600;
-}
-
-.row{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:16px;
 }
 
 .actions{
@@ -145,6 +138,12 @@ button.linkbtn{
   margin-bottom:22px;
 }
 
+.row{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:16px;
+}
+
 .badge{
   display:inline-block;
   padding:7px 10px;
@@ -158,10 +157,9 @@ button.linkbtn{
 }
 
 .status{
-  margin:14px 0;
+  margin-top:14px;
   padding:12px 14px;
   border-radius:12px;
-  background:#f2f0eb;
   white-space:pre-wrap;
   word-break:break-word;
 }
@@ -173,7 +171,12 @@ button.linkbtn{
 
 .ok{
   background:#e8f4e9;
-  color:var(--ok);
+  color:#23612a;
+}
+
+.info{
+  background:#eeeae1;
+  color:#333;
 }
 
 table{
@@ -215,7 +218,6 @@ th{
   display:flex;
   gap:8px;
   align-items:center;
-  font-size:14px;
   margin-top:16px;
 }
 
@@ -228,8 +230,8 @@ th{
   inset:0;
   background:#0007;
   display:flex;
-  align-items:center;
   justify-content:center;
+  align-items:center;
   padding:18px;
   z-index:999;
 }
@@ -265,7 +267,6 @@ th{
     </p>
 
     <label>EMAIL</label>
-
     <input
       id="email"
       type="email"
@@ -274,7 +275,6 @@ th{
     >
 
     <label>LOZINKA</label>
-
     <input
       id="password"
       type="password"
@@ -282,10 +282,7 @@ th{
     >
 
     <div class="actions">
-
-      <button id="loginBtn">
-        Prijavi me
-      </button>
+      <button id="loginBtn">Prijavi me</button>
 
       <button
         id="forgotBtn"
@@ -294,7 +291,6 @@ th{
       >
         Zaboravljena lozinka?
       </button>
-
     </div>
 
     <div id="loginMsg" class="status hidden"></div>
@@ -302,7 +298,7 @@ th{
   </section>
 
 
-  <section id="dash" class="dash hidden">
+  <section id="dash" class="hidden">
 
     <div class="top">
 
@@ -316,14 +312,13 @@ th{
       </div>
 
       <button
-        class="secondary"
         id="logoutBtn"
+        class="secondary"
       >
         Odjavi se
       </button>
 
     </div>
-
 
     <div class="card">
 
@@ -337,23 +332,19 @@ th{
         </div>
 
         <button
-          class="gold"
           id="addBtn"
+          class="gold"
         >
           + Dodaj proizvod
         </button>
 
       </div>
 
-      <div
-        id="dashMsg"
-        class="status hidden"
-      ></div>
+      <div id="dashMsg" class="status hidden"></div>
 
       <div style="overflow:auto">
 
         <table>
-
           <thead>
             <tr>
               <th>Proizvod</th>
@@ -365,7 +356,6 @@ th{
           </thead>
 
           <tbody id="productsBody"></tbody>
-
         </table>
 
       </div>
@@ -377,33 +367,23 @@ th{
 </div>
 
 
-<div
-  id="modal"
-  class="modal hidden"
->
+<div id="modal" class="modal hidden">
 
   <div class="card">
 
     <div class="top">
-
-      <h2 id="modalTitle">
-        Novi proizvod
-      </h2>
+      <h2 id="modalTitle">Novi proizvod</h2>
 
       <button
-        class="secondary"
         id="closeBtn"
+        class="secondary"
         type="button"
       >
         Zatvori
       </button>
-
     </div>
 
-    <input
-      id="pid"
-      type="hidden"
-    >
+    <input id="pid" type="hidden">
 
     <div class="row">
 
@@ -429,32 +409,17 @@ th{
 
       <div>
         <label>CENA (CHF)</label>
-        <input
-          id="price_chf"
-          type="number"
-          step="0.01"
-          min="0"
-        >
+        <input id="price_chf" type="number" step="0.01">
       </div>
 
       <div>
         <label>ZALIHA</label>
-        <input
-          id="stock_qty"
-          type="number"
-          step="1"
-          min="0"
-        >
+        <input id="stock_qty" type="number" step="1">
       </div>
 
       <div>
         <label>REDOSLED</label>
-        <input
-          id="sort_order"
-          type="number"
-          step="1"
-          value="0"
-        >
+        <input id="sort_order" type="number" step="1">
       </div>
 
       <div>
@@ -471,19 +436,12 @@ th{
     <textarea id="description_de"></textarea>
 
     <label class="switch">
-      <input
-        id="active"
-        type="checkbox"
-        checked
-      >
+      <input id="active" type="checkbox">
       Proizvod je aktivan
     </label>
 
     <label class="switch">
-      <input
-        id="featured"
-        type="checkbox"
-      >
+      <input id="featured" type="checkbox">
       Istaknuti proizvod
     </label>
 
@@ -494,8 +452,8 @@ th{
       </button>
 
       <button
-        class="danger"
         id="deleteBtn"
+        class="danger"
       >
         Obriši
       </button>
@@ -509,16 +467,19 @@ th{
 
 <script>
 
-/* ==============================
-   BILI'S ADMIN — NOVA VERZIJA
-   Bez supabase-js biblioteke
-   ============================== */
+/* ==========================================
+   BILI'S NATURAL COSMETICS — ADMIN
+   ========================================== */
 
 const SUPABASE_URL =
   "https://enzcsfhtduucaggjamnx.supabase.co";
 
-const SUPABASE_KEY =
-  "sb_publishable_04GgoHvEKpmroJtjY-1wKA_HjEu7tC9";
+/*
+  OVDE NALEPI PUBLISHABLE KEY KOJI SI
+  KOPIRALA IZ SUPABASE-A.
+*/
+const SUPABASE_PUBLISHABLE_KEY =
+  "OVDE_NALEPI_PUBLISHABLE_KEY";
 
 const ADMIN_EMAIL =
   "duricbiljana.diki@gmail.com";
@@ -531,112 +492,188 @@ const $ = id =>
   document.getElementById(id);
 
 
-let session = null;
-
-
-/* ---------- PORUKE ---------- */
-
-function showMsg(el,text,ok=false){
-  el.textContent = text;
-  el.className =
-    "status " + (ok ? "ok" : "error");
+function showMessage(
+  el,
+  text,
+  type="error"
+){
+  el.textContent=text;
+  el.className=
+    "status " + type;
   el.classList.remove("hidden");
 }
 
-function clearMsg(el){
-  el.textContent = "";
+
+function clearMessage(el){
+  el.textContent="";
   el.classList.add("hidden");
 }
 
 
-/* ---------- FETCH ---------- */
+/* ==========================================
+   PROVERA KONFIGURACIJE
+   ========================================== */
 
-async function apiFetch(
-  path,
-  options={}
-){
+function configOK(){
 
-  const headers = {
-    "apikey": SUPABASE_KEY,
-    ...(options.headers || {})
-  };
+  if(
+    !SUPABASE_PUBLISHABLE_KEY ||
+    SUPABASE_PUBLISHABLE_KEY.includes(
+      "OVDE_NALEPI"
+    )
+  ){
 
-  if(session?.access_token){
-    headers["Authorization"] =
-      "Bearer " + session.access_token;
-  }
-
-  try{
-
-    return await fetch(
-      SUPABASE_URL + path,
-      {
-        ...options,
-        headers
-      }
+    showMessage(
+      $("loginMsg"),
+      "Publishable key još nije unet u bilis-admin.html."
     );
 
-  }catch(err){
+    $("loginBtn").disabled=true;
+    $("forgotBtn").disabled=true;
 
-    throw new Error(
-      "Mrežna greška pri povezivanju sa Supabase-om: "
-      + (err?.message || err)
-    );
-
+    return false;
   }
+
+  return true;
 }
 
 
-/* ---------- SESSION ---------- */
+/* ==========================================
+   SUPABASE KLIJENT
+   ========================================== */
 
-function saveSession(data){
-
-  session = data;
-
-  sessionStorage.setItem(
-    "bilis_admin_session",
-    JSON.stringify(data)
-  );
-
-}
+let supabaseClient=null;
 
 
-function loadStoredSession(){
+function createSupabaseClient(){
 
-  try{
-
-    const raw =
-      sessionStorage.getItem(
-        "bilis_admin_session"
-      );
-
-    if(!raw)return null;
-
-    return JSON.parse(raw);
-
-  }catch{
+  if(!configOK()){
     return null;
   }
 
+  try{
+
+    if(
+      !window.supabase ||
+      !window.supabase.createClient
+    ){
+      throw new Error(
+        "Supabase biblioteka nije učitana."
+      );
+    }
+
+    supabaseClient =
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY,
+        {
+          auth:{
+            persistSession:true,
+            autoRefreshToken:true,
+            detectSessionInUrl:true
+          }
+        }
+      );
+
+    return supabaseClient;
+
+  }catch(error){
+
+    showMessage(
+      $("loginMsg"),
+      "Greška pri pokretanju Supabase veze: "
+      + error.message
+    );
+
+    return null;
+  }
 }
 
 
-function clearSession(){
+/* ==========================================
+   TEST VEZE
+   ========================================== */
 
-  session = null;
+async function testConnection(){
 
-  sessionStorage.removeItem(
-    "bilis_admin_session"
+  clearMessage(
+    $("loginMsg")
   );
 
+  if(!supabaseClient){
+    return false;
+  }
+
+  try{
+
+    const controller =
+      new AbortController();
+
+    const timer =
+      setTimeout(
+        ()=>controller.abort(),
+        10000
+      );
+
+    const response =
+      await fetch(
+        SUPABASE_URL + "/auth/v1/health",
+        {
+          method:"GET",
+          headers:{
+            apikey:
+              SUPABASE_PUBLISHABLE_KEY
+          },
+          signal:
+            controller.signal
+        }
+      );
+
+    clearTimeout(timer);
+
+    if(!response.ok){
+
+      throw new Error(
+        "Supabase odgovara HTTP "
+        + response.status
+      );
+    }
+
+    return true;
+
+  }catch(error){
+
+    let text =
+      error?.message ||
+      String(error);
+
+    if(
+      error?.name ===
+      "AbortError"
+    ){
+      text =
+        "Veza sa Supabase-om je istekla.";
+    }
+
+    showMessage(
+      $("loginMsg"),
+      "Ne mogu da uspostavim vezu sa Supabase-om.\n"
+      + text
+      + "\n\nAko koristiš Safari, privremeno isključi content blocker/VPN za ovu stranicu i pokušaj ponovo."
+    );
+
+    return false;
+  }
 }
 
 
-/* ---------- LOGIN ---------- */
+/* ==========================================
+   PRIJAVA
+   ========================================== */
 
 async function login(){
 
-  clearMsg(
+  clearMessage(
     $("loginMsg")
   );
 
@@ -646,108 +683,91 @@ async function login(){
   const password =
     $("password").value;
 
+
   if(!email || !password){
 
-    return showMsg(
+    showMessage(
       $("loginMsg"),
       "Unesi email i lozinku."
     );
 
+    return;
   }
 
-  $("loginBtn").disabled = true;
-  $("loginBtn").textContent =
+
+  $("loginBtn").disabled=true;
+  $("loginBtn").textContent=
     "Prijavljivanje…";
+
 
   try{
 
-    const response =
-      await apiFetch(
-        "/auth/v1/token?grant_type=password",
-        {
-          method:"POST",
+    const connected =
+      await testConnection();
 
-          headers:{
-            "Content-Type":
-              "application/json"
-          },
+    if(!connected){
+      return;
+    }
 
-          body:JSON.stringify({
-            email,
-            password
-          })
-        }
+
+    const {
+      data,
+      error
+    } =
+      await supabaseClient
+        .auth
+        .signInWithPassword({
+          email,
+          password
+        });
+
+
+    if(error){
+      throw error;
+    }
+
+
+    if(!data?.user){
+
+      throw new Error(
+        "Supabase nije vratio korisnički nalog."
       );
-
-
-    const text =
-      await response.text();
-
-    let data={};
-
-    try{
-      data =
-        text
-        ? JSON.parse(text)
-        : {};
-    }catch{
-      data = {
-        raw:text
-      };
     }
-
-
-    if(!response.ok){
-
-      const reason =
-        data.msg ||
-        data.message ||
-        data.error_description ||
-        data.error ||
-        data.raw ||
-        (
-          "HTTP "
-          + response.status
-        );
-
-      throw new Error(reason);
-    }
-
-
-    const userEmail =
-      (
-        data.user?.email ||
-        email
-      ).toLowerCase();
 
 
     if(
-      userEmail !==
+      (
+        data.user.email ||
+        ""
+      ).toLowerCase()
+      !==
       ADMIN_EMAIL.toLowerCase()
     ){
 
-      clearSession();
+      await supabaseClient
+        .auth
+        .signOut();
 
       throw new Error(
         "Ovaj nalog nema administratorski pristup."
       );
-
     }
 
-
-    saveSession(data);
 
     $("password").value="";
 
     await showDashboard();
 
 
-  }catch(err){
+  }catch(error){
 
-    showMsg(
+    showMessage(
       $("loginMsg"),
       "Prijava nije uspela:\n"
-      + err.message
+      + (
+        error?.message ||
+        String(error)
+      )
     );
 
   }finally{
@@ -755,115 +775,101 @@ async function login(){
     $("loginBtn").disabled=false;
     $("loginBtn").textContent=
       "Prijavi me";
-
   }
-
 }
 
 
-/* ---------- RESET LOZINKE ---------- */
+/* ==========================================
+   RESET LOZINKE
+   ========================================== */
 
 async function forgotPassword(){
 
-  clearMsg(
+  clearMessage(
     $("loginMsg")
   );
 
   const email =
     $("email").value.trim();
 
+
   if(!email){
 
-    return showMsg(
+    showMessage(
       $("loginMsg"),
       "Unesi email adresu."
     );
 
+    return;
   }
+
 
   $("forgotBtn").disabled=true;
 
+
   try{
 
-    const response =
-      await apiFetch(
-        "/auth/v1/recover?redirect_to="
-        + encodeURIComponent(
-          RESET_PASSWORD_URL
-        ),
-        {
-          method:"POST",
+    const connected =
+      await testConnection();
 
-          headers:{
-            "Content-Type":
-              "application/json"
-          },
-
-          body:JSON.stringify({
-            email
-          })
-        }
-      );
-
-
-    const text =
-      await response.text();
-
-
-    if(!response.ok){
-
-      let reason=text;
-
-      try{
-
-        const data =
-          JSON.parse(text);
-
-        reason =
-          data.msg ||
-          data.message ||
-          data.error_description ||
-          text;
-
-      }catch{}
-
-      throw new Error(
-        reason ||
-        "Reset nije poslat."
-      );
-
+    if(!connected){
+      return;
     }
 
 
-    showMsg(
+    const {
+      error
+    } =
+      await supabaseClient
+        .auth
+        .resetPasswordForEmail(
+          email,
+          {
+            redirectTo:
+              RESET_PASSWORD_URL
+          }
+        );
+
+
+    if(error){
+      throw error;
+    }
+
+
+    showMessage(
       $("loginMsg"),
-      "Email za promenu lozinke je poslat. Otvori najnoviju poruku i pritisni link za reset lozinke.",
-      true
+      "Email za promenu lozinke je uspešno poslat.",
+      "ok"
     );
 
 
-  }catch(err){
+  }catch(error){
 
-    showMsg(
+    showMessage(
       $("loginMsg"),
       "Reset lozinke nije poslat:\n"
-      + err.message
+      + (
+        error?.message ||
+        String(error)
+      )
     );
 
   }finally{
 
     $("forgotBtn").disabled=false;
-
   }
-
 }
 
 
-/* ---------- LOGOUT ---------- */
+/* ==========================================
+   ODJAVA
+   ========================================== */
 
-function logout(){
+async function logout(){
 
-  clearSession();
+  try{
+    await supabaseClient.auth.signOut();
+  }catch{}
 
   $("dash")
     .classList
@@ -873,21 +879,66 @@ function logout(){
     .classList
     .remove("hidden");
 
-  clearMsg(
+  clearMessage(
     $("dashMsg")
   );
-
 }
 
 
-/* ---------- DASHBOARD ---------- */
+/* ==========================================
+   DASHBOARD
+   ========================================== */
 
 async function showDashboard(){
 
-  if(!session?.access_token){
-    logout();
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .auth
+      .getSession();
+
+
+  if(error){
+    throw error;
+  }
+
+
+  const session =
+    data?.session;
+
+
+  if(!session){
+
+    $("dash")
+      .classList
+      .add("hidden");
+
+    $("login")
+      .classList
+      .remove("hidden");
+
     return;
   }
+
+
+  const email =
+    (
+      session.user?.email ||
+      ""
+    ).toLowerCase();
+
+
+  if(
+    email !==
+    ADMIN_EMAIL.toLowerCase()
+  ){
+
+    await logout();
+    return;
+  }
+
 
   $("login")
     .classList
@@ -899,108 +950,77 @@ async function showDashboard(){
 
   $("userEmail")
     .textContent =
-      session.user?.email ||
-      ADMIN_EMAIL;
+      session.user.email;
 
   await loadProducts();
-
 }
 
 
-/* ---------- PRODUCTS ---------- */
+/* ==========================================
+   UČITAVANJE PROIZVODA
+   ========================================== */
 
 async function loadProducts(){
 
   const body =
     $("productsBody");
 
-  clearMsg(
-    $("dashMsg")
-  );
 
   body.innerHTML =
     "<tr><td colspan='5'>Učitavanje…</td></tr>";
 
 
+  clearMessage(
+    $("dashMsg")
+  );
+
+
   try{
 
-    const response =
-      await apiFetch(
-        "/rest/v1/products"
-        + "?select=*"
-        + "&order=sort_order.asc",
-        {
-          method:"GET",
-
-          headers:{
-            "Accept":
-              "application/json"
+    const {
+      data,
+      error
+    } =
+      await supabaseClient
+        .from("products")
+        .select("*")
+        .order(
+          "sort_order",
+          {
+            ascending:true
           }
-        }
-      );
+        );
 
 
-    const text =
-      await response.text();
-
-    let data=[];
-
-
-    try{
-
-      data =
-        text
-        ? JSON.parse(text)
-        : [];
-
-    }catch{
-
-      throw new Error(
-        "Supabase je vratio neispravan odgovor."
-      );
-
+    if(error){
+      throw error;
     }
 
 
-    if(!response.ok){
-
-      throw new Error(
-        data.message ||
-        data.details ||
-        data.hint ||
-        (
-          "HTTP "
-          + response.status
-        )
-      );
-
-    }
+    renderProducts(
+      data || []
+    );
 
 
-    if(!Array.isArray(data)){
-      throw new Error(
-        "Neočekivan odgovor baze."
-      );
-    }
-
-
-    renderProducts(data);
-
-
-  }catch(err){
+  }catch(error){
 
     body.innerHTML="";
 
-    showMsg(
+    showMessage(
       $("dashMsg"),
       "Ne mogu da učitam proizvode:\n"
-      + err.message
+      + (
+        error?.message ||
+        String(error)
+      )
     );
-
   }
-
 }
 
+
+/* ==========================================
+   PRIKAZ PROIZVODA
+   ========================================== */
 
 function renderProducts(data){
 
@@ -1014,7 +1034,6 @@ function renderProducts(data){
       "<tr><td colspan='5'>Nema proizvoda.</td></tr>";
 
     return;
-
   }
 
 
@@ -1030,82 +1049,79 @@ function renderProducts(data){
       const image =
         p.image || "";
 
+      const price =
+        p.price_chf != null
+        ?
+        Number(
+          p.price_chf
+        ).toFixed(2)
+        + " CHF"
+        :
+        "—";
+
       return `
-      <tr>
+        <tr>
 
-        <td>
+          <td>
 
-          ${
-            image
-            ?
-            `<img
-              class="thumb"
-              src="${esc(image)}"
-              onerror="this.style.display='none'"
-            >`
-            :
-            ""
-          }
+            ${
+              image
+              ?
+              `<img
+                class="thumb"
+                src="${escapeHTML(image)}"
+                onerror="this.style.display='none'"
+              >`
+              :
+              ""
+            }
 
-          <strong>
-            ${esc(name)}
-          </strong>
+            <strong>
+              ${escapeHTML(name)}
+            </strong>
 
-          <div class="muted">
-            ${esc(p.size||"")}
-          </div>
+            <div class="muted">
+              ${escapeHTML(p.size || "")}
+            </div>
 
-        </td>
+          </td>
 
-        <td>
-          ${
-            p.price_chf != null
-            ?
-            Number(
-              p.price_chf
-            ).toFixed(2)
-            + " CHF"
-            :
-            "—"
-          }
-        </td>
+          <td>${price}</td>
 
-        <td
-          class="${
-            Number(
-              p.stock_qty||0
-            ) <= 3
-            ?
-            "stock-low"
-            :
-            ""
-          }"
-        >
-          ${p.stock_qty ?? 0}
-        </td>
-
-        <td>
-          ${
-            p.active
-            ?
-            "Da"
-            :
-            "Ne"
-          }
-        </td>
-
-        <td>
-
-          <button
-            class="secondary"
-            data-edit-id="${esc(p.id)}"
+          <td
+            class="${
+              Number(
+                p.stock_qty || 0
+              ) <= 3
+              ?
+              "stock-low"
+              :
+              ""
+            }"
           >
-            Uredi
-          </button>
+            ${p.stock_qty ?? 0}
+          </td>
 
-        </td>
+          <td>
+            ${
+              p.active
+              ?
+              "Da"
+              :
+              "Ne"
+            }
+          </td>
 
-      </tr>
+          <td>
+            <button
+              class="secondary"
+              data-id="${escapeHTML(p.id)}"
+            >
+              Uredi
+            </button>
+          </td>
+
+        </tr>
       `;
 
     }).join("");
@@ -1113,36 +1129,34 @@ function renderProducts(data){
 
   document
     .querySelectorAll(
-      "[data-edit-id]"
+      "[data-id]"
     )
-    .forEach(btn=>{
+    .forEach(button=>{
 
-      btn.onclick=()=>{
+      button.onclick=()=>{
 
         const id =
-          btn.getAttribute(
-            "data-edit-id"
-          );
+          button.dataset.id;
 
         const product =
           data.find(
             p =>
-            String(p.id) ===
-            String(id)
+              String(p.id) ===
+              String(id)
           );
 
         if(product){
           openModal(product);
         }
-
       };
 
     });
-
 }
 
 
-/* ---------- MODAL ---------- */
+/* ==========================================
+   MODAL
+   ========================================== */
 
 function openModal(p={}){
 
@@ -1159,7 +1173,7 @@ function openModal(p={}){
     p.id || "";
 
 
-  [
+  const fields=[
     "name_sr",
     "name_de",
     "category",
@@ -1170,13 +1184,15 @@ function openModal(p={}){
     "image",
     "description_sr",
     "description_de"
-  ]
-  .forEach(k=>{
+  ];
 
-    $(k).value =
-      p[k] ??
+
+  fields.forEach(field=>{
+
+    $(field).value =
+      p[field] ??
       (
-        k === "sort_order"
+        field === "sort_order"
         ?
         0
         :
@@ -1211,7 +1227,6 @@ function openModal(p={}){
   $("modal")
     .classList
     .remove("hidden");
-
 }
 
 
@@ -1220,17 +1235,14 @@ function closeModal(){
   $("modal")
     .classList
     .add("hidden");
-
 }
 
 
-/* ---------- SAVE PRODUCT ---------- */
+/* ==========================================
+   ČUVANJE PROIZVODA
+   ========================================== */
 
 async function saveProduct(){
-
-  clearMsg(
-    $("dashMsg")
-  );
 
   $("saveBtn").disabled=true;
 
@@ -1247,10 +1259,10 @@ async function saveProduct(){
     "description_sr",
     "description_de"
   ]
-  .forEach(k=>{
+  .forEach(field=>{
 
-    payload[k] =
-      $(k).value.trim();
+    payload[field] =
+      $(field).value.trim();
 
   });
 
@@ -1287,104 +1299,72 @@ async function saveProduct(){
 
   try{
 
-    const path =
-      id
-      ?
-      "/rest/v1/products?id=eq."
-      + encodeURIComponent(id)
-      :
-      "/rest/v1/products";
+    let query;
 
 
-    const response =
-      await apiFetch(
-        path,
-        {
-          method:
-            id
-            ?
-            "PATCH"
-            :
-            "POST",
+    if(id){
 
-          headers:{
-            "Content-Type":
-              "application/json",
+      query =
+        supabaseClient
+          .from("products")
+          .update(payload)
+          .eq("id",id);
 
-            "Prefer":
-              "return=representation"
-          },
+    }else{
 
-          body:
-            JSON.stringify(payload)
-        }
-      );
+      query =
+        supabaseClient
+          .from("products")
+          .insert(payload);
+
+    }
 
 
-    const text =
-      await response.text();
+    const {
+      error
+    } =
+      await query;
 
 
-    if(!response.ok){
-
-      let reason=text;
-
-      try{
-
-        const data =
-          JSON.parse(text);
-
-        reason =
-          data.message ||
-          data.details ||
-          data.hint ||
-          text;
-
-      }catch{}
-
-
-      throw new Error(
-        reason ||
-        (
-          "HTTP "
-          + response.status
-        )
-      );
-
+    if(error){
+      throw error;
     }
 
 
     closeModal();
 
 
-    showMsg(
+    showMessage(
       $("dashMsg"),
       "Proizvod je uspešno sačuvan.",
-      true
+      "ok"
     );
 
 
     await loadProducts();
 
 
-  }catch(err){
+  }catch(error){
 
-    showMsg(
+    showMessage(
       $("dashMsg"),
       "Nije sačuvano:\n"
-      + err.message
+      + (
+        error?.message ||
+        String(error)
+      )
     );
 
   }finally{
 
     $("saveBtn").disabled=false;
-
   }
-
 }
 
 
-/* ---------- DELETE PRODUCT ---------- */
+/* ==========================================
+   BRISANJE PROIZVODA
+   ========================================== */
 
 async function deleteProduct(){
 
@@ -1392,7 +1372,9 @@ async function deleteProduct(){
     $("pid").value;
 
 
-  if(!id)return;
+  if(!id){
+    return;
+  }
 
 
   if(
@@ -1409,99 +1391,76 @@ async function deleteProduct(){
 
   try{
 
-    const response =
-      await apiFetch(
-        "/rest/v1/products?id=eq."
-        + encodeURIComponent(id),
-        {
-          method:"DELETE"
-        }
-      );
+    const {
+      error
+    } =
+      await supabaseClient
+        .from("products")
+        .delete()
+        .eq("id",id);
 
 
-    const text =
-      await response.text();
-
-
-    if(!response.ok){
-
-      let reason=text;
-
-      try{
-
-        const data =
-          JSON.parse(text);
-
-        reason =
-          data.message ||
-          data.details ||
-          data.hint ||
-          text;
-
-      }catch{}
-
-
-      throw new Error(
-        reason ||
-        (
-          "HTTP "
-          + response.status
-        )
-      );
-
+    if(error){
+      throw error;
     }
 
 
     closeModal();
 
 
-    showMsg(
+    showMessage(
       $("dashMsg"),
       "Proizvod je obrisan.",
-      true
+      "ok"
     );
 
 
     await loadProducts();
 
 
-  }catch(err){
+  }catch(error){
 
-    showMsg(
+    showMessage(
       $("dashMsg"),
       "Nije obrisano:\n"
-      + err.message
+      + (
+        error?.message ||
+        String(error)
+      )
     );
 
   }finally{
 
     $("deleteBtn").disabled=false;
-
   }
-
 }
 
 
-/* ---------- ESCAPE ---------- */
+/* ==========================================
+   ESCAPE HTML
+   ========================================== */
 
-function esc(v){
+function escapeHTML(value){
 
-  return String(v ?? "")
-    .replace(
-      /[&<>"']/g,
-      c=>({
-        "&":"&amp;",
-        "<":"&lt;",
-        ">":"&gt;",
-        "\"":"&quot;",
-        "'":"&#039;"
-      }[c])
-    );
-
+  return String(
+    value ?? ""
+  )
+  .replace(
+    /[&<>"']/g,
+    char=>({
+      "&":"&amp;",
+      "<":"&lt;",
+      ">":"&gt;",
+      "\"":"&quot;",
+      "'":"&#039;"
+    }[char])
+  );
 }
 
 
-/* ---------- EVENTS ---------- */
+/* ==========================================
+   DOGAĐAJI
+   ========================================== */
 
 $("loginBtn").onclick =
   login;
@@ -1528,10 +1487,10 @@ $("deleteBtn").onclick =
 $("password")
   .addEventListener(
     "keydown",
-    e=>{
+    event=>{
 
       if(
-        e.key === "Enter"
+        event.key === "Enter"
       ){
         login();
       }
@@ -1540,35 +1499,51 @@ $("password")
   );
 
 
-/* ---------- START ---------- */
+/* ==========================================
+   START
+   ========================================== */
 
-session =
-  loadStoredSession();
+(async()=>{
 
-
-if(session?.access_token){
-
-  const email =
-    (
-      session.user?.email ||
-      ""
-    ).toLowerCase();
-
-
-  if(
-    email ===
-    ADMIN_EMAIL.toLowerCase()
-  ){
-
-    showDashboard();
-
-  }else{
-
-    clearSession();
-
+  if(!configOK()){
+    return;
   }
 
-}
+  createSupabaseClient();
+
+  if(!supabaseClient){
+    return;
+  }
+
+  try{
+
+    const {
+      data
+    } =
+      await supabaseClient
+        .auth
+        .getSession();
+
+
+    if(data?.session){
+
+      await showDashboard();
+
+    }
+
+  }catch(error){
+
+    showMessage(
+      $("loginMsg"),
+      "Greška pri pokretanju administracije:\n"
+      + (
+        error?.message ||
+        String(error)
+      )
+    );
+  }
+
+})();
 
 </script>
 
