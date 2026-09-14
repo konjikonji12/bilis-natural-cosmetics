@@ -1,1380 +1,1730 @@
 <!doctype html>
 <html lang="sr">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Bili’s Natural Cosmetics — Administracija</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>Bili’s Natural Cosmetics — Administracija</title>
+  <meta name="robots" content="noindex,nofollow">
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<style>
-:root{
-  --bg:#f6f4ef;
-  --card:#ffffff;
-  --ink:#171717;
-  --muted:#777;
-  --line:#ddd8cf;
-  --gold:#b68b35;
-  --danger:#9e2b2b;
-  --ok:#23612a;
-}
+  <style>
+    :root{
+      --bg:#f6f4ef;
+      --card:#ffffff;
+      --ink:#171717;
+      --muted:#777;
+      --line:#ddd8cf;
+      --gold:#b68b35;
+      --ok:#23612a;
+      --bad:#9c2f27;
+      --bad-bg:#f8e5e2;
+      --ok-bg:#e9f4e9;
+    }
 
-*{box-sizing:border-box}
+    *{box-sizing:border-box}
 
-body{
-  margin:0;
-  background:var(--bg);
-  color:var(--ink);
-  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-}
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--ink);
+      font-family:Arial,sans-serif;
+    }
 
-.wrap{
-  max-width:1180px;
-  margin:auto;
-  padding:32px 20px 60px;
-}
+    button,input,textarea,select{
+      font:inherit;
+    }
 
-.brand{
-  letter-spacing:.14em;
-  font-size:13px;
-}
+    button{cursor:pointer}
 
-.title{
-  font-family:Georgia,serif;
-  font-size:48px;
-  margin:8px 0 28px;
-}
+    [hidden]{
+      display:none !important;
+    }
 
-.card{
-  background:var(--card);
-  border:1px solid var(--line);
-  border-radius:22px;
-  padding:26px;
-  box-shadow:0 8px 30px #00000008;
-}
+    .wrap{
+      width:min(1180px,calc(100% - 28px));
+      margin:auto;
+      padding:35px 0 70px;
+    }
 
-.login{
-  max-width:720px;
-  margin:50px auto;
-}
+    .brand{
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      font-size:14px;
+      margin-bottom:10px;
+    }
 
-h2{
-  font-family:Georgia,serif;
-  font-size:32px;
-  margin:0 0 10px;
-}
+    h1,h2,h3{
+      font-family:Georgia,serif;
+    }
 
-.muted{color:var(--muted)}
+    h1{
+      font-size:60px;
+      margin:0 0 30px;
+    }
 
-label{
-  display:block;
-  font-size:12px;
-  letter-spacing:.12em;
-  margin:16px 0 7px;
-}
+    h2{
+      font-size:38px;
+      margin:0 0 10px;
+    }
 
-input,
-textarea{
-  width:100%;
-  padding:13px 14px;
-  border:1px solid #cfc9bf;
-  border-radius:12px;
-  background:#fff;
-  font:inherit;
-}
+    .card{
+      background:white;
+      border:1px solid var(--line);
+      border-radius:26px;
+    }
 
-textarea{
-  min-height:90px;
-  resize:vertical;
-}
+    .login-card{
+      max-width:780px;
+      padding:42px;
+    }
 
-button{
-  border:0;
-  border-radius:12px;
-  padding:12px 18px;
-  background:#171717;
-  color:white;
-  font-weight:700;
-  cursor:pointer;
-}
+    .lead{
+      color:var(--muted);
+      font-size:19px;
+      margin-bottom:28px;
+    }
 
-button:disabled{
-  opacity:.55;
-  cursor:not-allowed;
-}
+    .field{
+      display:grid;
+      gap:7px;
+      margin-bottom:18px;
+    }
 
-button.secondary{
-  background:#eee;
-  color:#171717;
-}
+    .field label{
+      font-size:13px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      font-weight:bold;
+    }
 
-button.gold{
-  background:var(--gold);
-}
+    input,textarea,select{
+      width:100%;
+      border:1px solid #cfc7bb;
+      background:white;
+      border-radius:16px;
+      padding:14px 16px;
+    }
 
-button.danger{
-  background:var(--danger);
-}
+    textarea{
+      min-height:110px;
+    }
 
-button.linkbtn{
-  background:transparent;
-  color:#171717;
-  padding:12px 4px;
-  text-decoration:underline;
-}
+    .row{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
 
-.actions{
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-  margin-top:20px;
-}
+    .btn{
+      border:0;
+      border-radius:15px;
+      padding:13px 19px;
+      font-weight:bold;
+      background:#8d8d8d;
+      color:white;
+    }
 
-.top{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:15px;
-  margin-bottom:22px;
-}
+    .btn-gold{
+      background:var(--gold);
+      color:#111;
+    }
 
-.row{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:16px;
-}
+    .btn-dark{
+      background:#191919;
+    }
 
-.badge{
-  display:inline-block;
-  padding:7px 10px;
-  border-radius:999px;
-  background:#f0e8d8;
-  font-size:12px;
-}
+    .btn-light{
+      background:#f0ede7;
+      color:#222;
+      border:1px solid var(--line);
+    }
 
-.hidden{
-  display:none!important;
-}
+    .btn-danger{
+      background:#9c2f27;
+    }
 
-.status{
-  margin-top:14px;
-  padding:12px 14px;
-  border-radius:12px;
-  white-space:pre-wrap;
-  word-break:break-word;
-}
+    .link-btn{
+      background:none;
+      border:0;
+      color:#6f6f6f;
+      text-decoration:underline;
+      font-weight:bold;
+    }
 
-.error{
-  background:#f9e5e5;
-  color:#8d1d1d;
-}
+    .msg{
+      margin-top:20px;
+      border-radius:16px;
+      padding:14px 16px;
+    }
 
-.ok{
-  background:#e8f4e9;
-  color:#23612a;
-}
+    .msg.error{
+      background:var(--bad-bg);
+      color:var(--bad);
+    }
 
-.info{
-  background:#eeeae1;
-  color:#333;
-}
+    .msg.ok{
+      background:var(--ok-bg);
+      color:var(--ok);
+    }
 
-table{
-  width:100%;
-  border-collapse:collapse;
-  margin-top:18px;
-}
+    .msg.info{
+      background:#efede8;
+      color:#4c4944;
+    }
 
-th,
-td{
-  text-align:left;
-  padding:14px 10px;
-  border-bottom:1px solid var(--line);
-  vertical-align:middle;
-}
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-end;
+      gap:18px;
+      margin-bottom:20px;
+    }
 
-th{
-  font-size:12px;
-  letter-spacing:.08em;
-  text-transform:uppercase;
-  color:#666;
-}
+    .tools{
+      padding:18px;
+      margin-bottom:18px;
+      display:grid;
+      grid-template-columns:1.5fr .8fr .8fr auto;
+      gap:12px;
+    }
 
-.thumb{
-  width:58px;
-  height:58px;
-  border-radius:10px;
-  object-fit:cover;
-  background:#eee;
-  display:block;
-  margin-bottom:6px;
-}
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:12px;
+      margin-bottom:18px;
+    }
 
-.stock-low{
-  font-weight:700;
-}
+    .stat{
+      padding:20px;
+      background:white;
+      border:1px solid var(--line);
+      border-radius:20px;
+    }
 
-.switch{
-  display:flex;
-  gap:8px;
-  align-items:center;
-  margin-top:16px;
-}
+    .stat b{
+      font-size:30px;
+      font-family:Georgia,serif;
+    }
 
-.switch input{
-  width:auto;
-}
+    .stat span{
+      display:block;
+      color:var(--muted);
+      font-size:13px;
+    }
 
-.modal{
-  position:fixed;
-  inset:0;
-  background:#0007;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  padding:18px;
-  z-index:999;
-}
+    .table-card{
+      overflow:hidden;
+    }
 
-.modal .card{
-  width:min(760px,100%);
-  max-height:92vh;
-  overflow:auto;
-}
+    .table-wrap{
+      overflow:auto;
+    }
 
-@media(max-width:700px){
-  .wrap{padding:22px 14px}
-  .title{font-size:38px}
-  .row{grid-template-columns:1fr}
-  table{font-size:13px}
-}
-</style>
+    table{
+      width:100%;
+      border-collapse:collapse;
+      min-width:900px;
+    }
+
+    th,td{
+      padding:14px;
+      border-bottom:1px solid #eee9e0;
+      text-align:left;
+    }
+
+    th{
+      background:#faf8f4;
+      font-size:12px;
+      text-transform:uppercase;
+    }
+
+    .product-cell{
+      display:flex;
+      gap:12px;
+      align-items:center;
+    }
+
+    .thumb{
+      width:52px;
+      height:52px;
+      object-fit:cover;
+      border-radius:12px;
+      border:1px solid var(--line);
+      background:#f1eee8;
+    }
+
+    .product-name{
+      font-weight:bold;
+    }
+
+    .product-sub{
+      color:var(--muted);
+      font-size:12px;
+    }
+
+    .pill{
+      display:inline-block;
+      border-radius:999px;
+      padding:6px 9px;
+      font-size:12px;
+      font-weight:bold;
+    }
+
+    .pill.on{
+      background:#e8f3e8;
+      color:#24602a;
+    }
+
+    .pill.off{
+      background:#f1eeee;
+      color:#766d6d;
+    }
+
+    .pill.featured{
+      background:#f6edcf;
+      color:#6d5318;
+    }
+
+    .actions{
+      display:flex;
+      gap:7px;
+    }
+
+    .actions .btn{
+      padding:8px 11px;
+      font-size:13px;
+    }
+
+    .empty{
+      padding:40px;
+      text-align:center;
+      color:var(--muted);
+    }
+
+    dialog{
+      width:min(760px,calc(100% - 20px));
+      border:0;
+      border-radius:24px;
+      padding:0;
+    }
+
+    dialog::backdrop{
+      background:rgba(20,18,15,.48);
+    }
+
+    .modal{
+      padding:28px;
+      max-height:88vh;
+      overflow:auto;
+    }
+
+    .modal-head{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:22px;
+    }
+
+    .close{
+      border:0;
+      background:#eeeae3;
+      width:42px;
+      height:42px;
+      border-radius:50%;
+      font-size:22px;
+    }
+
+    .grid2{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:15px;
+    }
+
+    .checks{
+      display:flex;
+      gap:20px;
+      margin:8px 0 18px;
+    }
+
+    .check{
+      display:flex;
+      gap:8px;
+      align-items:center;
+      font-weight:bold;
+    }
+
+    .check input{
+      width:auto;
+    }
+
+    @media(max-width:700px){
+      h1{
+        font-size:48px;
+      }
+
+      .login-card{
+        padding:28px 20px;
+      }
+
+      .topbar{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+
+      .tools{
+        grid-template-columns:1fr;
+      }
+
+      .stats{
+        grid-template-columns:1fr 1fr;
+      }
+
+      .grid2{
+        grid-template-columns:1fr;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<div class="wrap">
+<main class="wrap">
 
-  <div class="brand">BILI’S NATURAL COSMETICS</div>
-  <div class="title">Administracija</div>
+  <div class="brand">Bili’s Natural Cosmetics</div>
 
-  <section id="login" class="card login">
+  <h1>Administracija</h1>
+
+  <section id="loginSection" class="card login-card">
 
     <h2>Prijava</h2>
 
-    <p class="muted">
+    <p class="lead">
       Samo vlasnik može menjati proizvode, cene i zalihe.
     </p>
 
-    <label>EMAIL</label>
-    <input
-      id="email"
-      type="email"
-      autocomplete="username"
-      value="duricbiljana.diki@gmail.com"
-    >
+    <form id="loginForm">
 
-    <label>LOZINKA</label>
-    <input
-      id="password"
-      type="password"
-      autocomplete="current-password"
-    >
+      <div class="field">
+        <label>Email</label>
 
-    <div class="actions">
-      <button id="loginBtn">Prijavi me</button>
-
-      <button
-        id="forgotBtn"
-        class="linkbtn"
-        type="button"
-      >
-        Zaboravljena lozinka?
-      </button>
-    </div>
-
-    <div id="loginMsg" class="status hidden"></div>
-
-  </section>
-
-
-  <section id="dash" class="hidden">
-
-    <div class="top">
-
-      <div>
-        <span class="badge">Vlasnički pristup</span>
-        <div
-          id="userEmail"
-          class="muted"
-          style="margin-top:8px"
-        ></div>
+        <input
+          id="email"
+          type="email"
+          value="duricbiljana.diki@gmail.com"
+          autocomplete="username"
+          required
+        >
       </div>
 
-      <button
-        id="logoutBtn"
-        class="secondary"
-      >
-        Odjavi se
-      </button>
+      <div class="field">
+        <label>Lozinka</label>
 
-    </div>
+        <input
+          id="password"
+          type="password"
+          autocomplete="current-password"
+          required
+        >
+      </div>
 
-    <div class="card">
-
-      <div class="top">
-
-        <div>
-          <h2>Proizvodi</h2>
-          <div class="muted">
-            Cena, zaliha i vidljivost proizvoda.
-          </div>
-        </div>
+      <div class="row">
 
         <button
-          id="addBtn"
-          class="gold"
+          id="loginBtn"
+          class="btn"
+          type="submit"
         >
-          + Dodaj proizvod
+          Prijavi me
+        </button>
+
+        <button
+          id="forgotBtn"
+          class="link-btn"
+          type="button"
+        >
+          Zaboravljena lozinka?
         </button>
 
       </div>
 
-      <div id="dashMsg" class="status hidden"></div>
+    </form>
 
-      <div style="overflow:auto">
+    <div
+      id="loginMsg"
+      class="msg info"
+      hidden
+    ></div>
+
+  </section>
+
+
+  <section id="adminSection" hidden>
+
+    <div class="topbar">
+
+      <div>
+
+        <h2>Proizvodi</h2>
+
+        <div id="sessionEmail"></div>
+
+      </div>
+
+      <div class="row">
+
+        <button
+          id="addBtn"
+          class="btn btn-gold"
+          type="button"
+        >
+          + Novi proizvod
+        </button>
+
+        <button
+          id="refreshBtn"
+          class="btn btn-light"
+          type="button"
+        >
+          Osveži
+        </button>
+
+        <button
+          id="logoutBtn"
+          class="btn btn-dark"
+          type="button"
+        >
+          Odjava
+        </button>
+
+      </div>
+
+    </div>
+
+    <div
+      id="adminMsg"
+      class="msg info"
+      hidden
+    ></div>
+
+
+    <section class="stats">
+
+      <div class="stat">
+        <b id="statAll">0</b>
+        <span>Ukupno proizvoda</span>
+      </div>
+
+      <div class="stat">
+        <b id="statActive">0</b>
+        <span>Aktivni</span>
+      </div>
+
+      <div class="stat">
+        <b id="statStock">0</b>
+        <span>Ukupno na stanju</span>
+      </div>
+
+      <div class="stat">
+        <b id="statFeatured">0</b>
+        <span>Istaknuti</span>
+      </div>
+
+    </section>
+
+
+    <section class="card tools">
+
+      <input
+        id="searchInput"
+        type="search"
+        placeholder="Pretraži proizvode..."
+      >
+
+      <select id="categoryFilter">
+        <option value="">
+          Sve kategorije
+        </option>
+      </select>
+
+      <select id="activeFilter">
+
+        <option value="">
+          Svi statusi
+        </option>
+
+        <option value="true">
+          Samo aktivni
+        </option>
+
+        <option value="false">
+          Samo neaktivni
+        </option>
+
+      </select>
+
+      <button
+        id="clearFiltersBtn"
+        class="btn btn-light"
+        type="button"
+      >
+        Obriši filtere
+      </button>
+
+    </section>
+
+
+    <section class="card table-card">
+
+      <div class="table-wrap">
 
         <table>
+
           <thead>
+
             <tr>
               <th>Proizvod</th>
-              <th>Cena</th>
+              <th>Kategorija</th>
+              <th>Veličina</th>
+              <th>Cena CHF</th>
               <th>Zaliha</th>
-              <th>Aktivan</th>
-              <th>Radnja</th>
+              <th>Status</th>
+              <th>Redosled</th>
+              <th>Akcije</th>
             </tr>
+
           </thead>
 
           <tbody id="productsBody"></tbody>
+
         </table>
 
       </div>
 
-    </div>
+      <div
+        id="emptyState"
+        class="empty"
+        hidden
+      >
+        Nema proizvoda za prikaz.
+      </div>
+
+    </section>
 
   </section>
 
-</div>
+</main>
 
 
-<div id="modal" class="modal hidden">
+<dialog id="productDialog">
 
-  <div class="card">
+<form
+  id="productForm"
+  class="modal"
+  method="dialog"
+>
 
-    <div class="top">
-      <h2 id="modalTitle">Novi proizvod</h2>
+  <div class="modal-head">
 
-      <button
-        id="closeBtn"
-        class="secondary"
-        type="button"
+    <h3 id="modalTitle">
+      Proizvod
+    </h3>
+
+    <button
+      id="closeDialogBtn"
+      class="close"
+      type="button"
+    >
+      ×
+    </button>
+
+  </div>
+
+
+  <input
+    id="p_id"
+    type="hidden"
+  >
+
+
+  <div class="grid2">
+
+    <div class="field">
+
+      <label>
+        Naziv — srpski
+      </label>
+
+      <input
+        id="p_name_sr"
+        required
       >
-        Zatvori
-      </button>
-    </div>
-
-    <input id="pid" type="hidden">
-
-    <div class="row">
-
-      <div>
-        <label>NAZIV — SRPSKI</label>
-        <input id="name_sr">
-      </div>
-
-      <div>
-        <label>NAZIV — NEMAČKI</label>
-        <input id="name_de">
-      </div>
-
-      <div>
-        <label>KATEGORIJA</label>
-        <input id="category">
-      </div>
-
-      <div>
-        <label>VELIČINA</label>
-        <input id="size">
-      </div>
-
-      <div>
-        <label>CENA (CHF)</label>
-        <input id="price_chf" type="number" step="0.01">
-      </div>
-
-      <div>
-        <label>ZALIHA</label>
-        <input id="stock_qty" type="number" step="1">
-      </div>
-
-      <div>
-        <label>REDOSLED</label>
-        <input id="sort_order" type="number" step="1">
-      </div>
-
-      <div>
-        <label>SLIKA — URL</label>
-        <input id="image">
-      </div>
 
     </div>
 
-    <label>OPIS — SRPSKI</label>
-    <textarea id="description_sr"></textarea>
 
-    <label>OPIS — NEMAČKI</label>
-    <textarea id="description_de"></textarea>
+    <div class="field">
 
-    <label class="switch">
-      <input id="active" type="checkbox">
-      Proizvod je aktivan
-    </label>
+      <label>
+        Naziv — nemački
+      </label>
 
-    <label class="switch">
-      <input id="featured" type="checkbox">
-      Istaknuti proizvod
-    </label>
-
-    <div class="actions">
-
-      <button id="saveBtn">
-        Sačuvaj
-      </button>
-
-      <button
-        id="deleteBtn"
-        class="danger"
-      >
-        Obriši
-      </button>
+      <input id="p_name_de">
 
     </div>
 
   </div>
 
-</div>
+
+  <div class="grid2">
+
+    <div class="field">
+
+      <label>Slug</label>
+
+      <input
+        id="p_slug"
+        required
+      >
+
+    </div>
+
+
+    <div class="field">
+
+      <label>Kategorija</label>
+
+      <input
+        id="p_category"
+        value="Ostalo"
+        required
+      >
+
+    </div>
+
+  </div>
+
+
+  <div class="grid2">
+
+    <div class="field">
+
+      <label>Veličina</label>
+
+      <input id="p_size">
+
+    </div>
+
+
+    <div class="field">
+
+      <label>Cena CHF</label>
+
+      <input
+        id="p_price_chf"
+        type="number"
+        step="0.01"
+        min="0"
+      >
+
+    </div>
+
+  </div>
+
+
+  <div class="grid2">
+
+    <div class="field">
+
+      <label>Zaliha</label>
+
+      <input
+        id="p_stock_qty"
+        type="number"
+        min="0"
+      >
+
+    </div>
+
+
+    <div class="field">
+
+      <label>Redosled</label>
+
+      <input
+        id="p_sort_order"
+        type="number"
+      >
+
+    </div>
+
+  </div>
+
+
+  <div class="field">
+
+    <label>URL slike</label>
+
+    <input
+      id="p_image_url"
+      type="url"
+    >
+
+  </div>
+
+
+  <div class="field">
+
+    <label>
+      Opis — srpski
+    </label>
+
+    <textarea
+      id="p_description_sr"
+    ></textarea>
+
+  </div>
+
+
+  <div class="field">
+
+    <label>
+      Opis — nemački
+    </label>
+
+    <textarea
+      id="p_description_de"
+    ></textarea>
+
+  </div>
+
+
+  <div class="checks">
+
+    <label class="check">
+
+      <input
+        id="p_active"
+        type="checkbox"
+        checked
+      >
+
+      Aktivan
+
+    </label>
+
+
+    <label class="check">
+
+      <input
+        id="p_featured"
+        type="checkbox"
+      >
+
+      Istaknut
+
+    </label>
+
+  </div>
+
+
+  <div class="row">
+
+    <button
+      id="saveBtn"
+      class="btn btn-gold"
+      type="submit"
+    >
+      Sačuvaj
+    </button>
+
+    <button
+      id="cancelBtn"
+      class="btn btn-light"
+      type="button"
+    >
+      Otkaži
+    </button>
+
+    <button
+      id="deleteBtn"
+      class="btn btn-danger"
+      type="button"
+      hidden
+    >
+      Obriši proizvod
+    </button>
+
+  </div>
+
+
+  <div
+    id="modalMsg"
+    class="msg info"
+    hidden
+  ></div>
+
+</form>
+
+</dialog>
 
 
 <script>
 
-/* ==========================================
-   BILI'S NATURAL COSMETICS — ADMIN
-   ========================================== */
-
 const SUPABASE_URL =
-  "https://enzcsfhtduucaggjamnx.supabase.co";
+"https://enzcsfhtduucagqjamnx.supabase.co";
 
-/*
-  OVDE NALEPI PUBLISHABLE KEY KOJI SI
-  KOPIRALA IZ SUPABASE-A.
-*/
 const SUPABASE_PUBLISHABLE_KEY =
-  "OVDE_NALEPI_PUBLISHABLE_KEY";
+"sb_publishable_04GgoHvEKpmroJtjY-1wKA_HjEu7tC9";
 
-const ADMIN_EMAIL =
-  "duricbiljana.diki@gmail.com";
 
-const RESET_PASSWORD_URL =
-  "https://konjikonji12.github.io/bilis-natural-cosmetics/reset-password.html";
+const { createClient } = supabase;
+
+const db = createClient(
+  SUPABASE_URL,
+  SUPABASE_PUBLISHABLE_KEY,
+  {
+    auth:{
+      persistSession:true,
+      autoRefreshToken:true,
+      detectSessionInUrl:true
+    }
+  }
+);
 
 
 const $ = id =>
-  document.getElementById(id);
+document.getElementById(id);
 
 
-function showMessage(
+let products = [];
+
+
+function setMsg(
   el,
-  text,
-  type="error"
+  text="",
+  type="info"
 ){
-  el.textContent=text;
-  el.className=
-    "status " + type;
-  el.classList.remove("hidden");
-}
 
+  if(!text){
 
-function clearMessage(el){
-  el.textContent="";
-  el.classList.add("hidden");
-}
+    el.hidden = true;
 
-
-/* ==========================================
-   PROVERA KONFIGURACIJE
-   ========================================== */
-
-function configOK(){
-
-  if(
-    !SUPABASE_PUBLISHABLE_KEY ||
-    SUPABASE_PUBLISHABLE_KEY.includes(
-      "OVDE_NALEPI"
-    )
-  ){
-
-    showMessage(
-      $("loginMsg"),
-      "Publishable key još nije unet u bilis-admin.html."
-    );
-
-    $("loginBtn").disabled=true;
-    $("forgotBtn").disabled=true;
-
-    return false;
-  }
-
-  return true;
-}
-
-
-/* ==========================================
-   SUPABASE KLIJENT
-   ========================================== */
-
-let supabaseClient=null;
-
-
-function createSupabaseClient(){
-
-  if(!configOK()){
-    return null;
-  }
-
-  try{
-
-    if(
-      !window.supabase ||
-      !window.supabase.createClient
-    ){
-      throw new Error(
-        "Supabase biblioteka nije učitana."
-      );
-    }
-
-    supabaseClient =
-      window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_PUBLISHABLE_KEY,
-        {
-          auth:{
-            persistSession:true,
-            autoRefreshToken:true,
-            detectSessionInUrl:true
-          }
-        }
-      );
-
-    return supabaseClient;
-
-  }catch(error){
-
-    showMessage(
-      $("loginMsg"),
-      "Greška pri pokretanju Supabase veze: "
-      + error.message
-    );
-
-    return null;
-  }
-}
-
-
-/* ==========================================
-   TEST VEZE
-   ========================================== */
-
-async function testConnection(){
-
-  clearMessage(
-    $("loginMsg")
-  );
-
-  if(!supabaseClient){
-    return false;
-  }
-
-  try{
-
-    const controller =
-      new AbortController();
-
-    const timer =
-      setTimeout(
-        ()=>controller.abort(),
-        10000
-      );
-
-    const response =
-      await fetch(
-        SUPABASE_URL + "/auth/v1/health",
-        {
-          method:"GET",
-          headers:{
-            apikey:
-              SUPABASE_PUBLISHABLE_KEY
-          },
-          signal:
-            controller.signal
-        }
-      );
-
-    clearTimeout(timer);
-
-    if(!response.ok){
-
-      throw new Error(
-        "Supabase odgovara HTTP "
-        + response.status
-      );
-    }
-
-    return true;
-
-  }catch(error){
-
-    let text =
-      error?.message ||
-      String(error);
-
-    if(
-      error?.name ===
-      "AbortError"
-    ){
-      text =
-        "Veza sa Supabase-om je istekla.";
-    }
-
-    showMessage(
-      $("loginMsg"),
-      "Ne mogu da uspostavim vezu sa Supabase-om.\n"
-      + text
-      + "\n\nAko koristiš Safari, privremeno isključi content blocker/VPN za ovu stranicu i pokušaj ponovo."
-    );
-
-    return false;
-  }
-}
-
-
-/* ==========================================
-   PRIJAVA
-   ========================================== */
-
-async function login(){
-
-  clearMessage(
-    $("loginMsg")
-  );
-
-  const email =
-    $("email").value.trim();
-
-  const password =
-    $("password").value;
-
-
-  if(!email || !password){
-
-    showMessage(
-      $("loginMsg"),
-      "Unesi email i lozinku."
-    );
+    el.textContent = "";
 
     return;
+
   }
 
+  el.hidden = false;
 
-  $("loginBtn").disabled=true;
-  $("loginBtn").textContent=
-    "Prijavljivanje…";
+  el.textContent = text;
 
+  el.className =
+  "msg " + type;
 
-  try{
-
-    const connected =
-      await testConnection();
-
-    if(!connected){
-      return;
-    }
-
-
-    const {
-      data,
-      error
-    } =
-      await supabaseClient
-        .auth
-        .signInWithPassword({
-          email,
-          password
-        });
-
-
-    if(error){
-      throw error;
-    }
-
-
-    if(!data?.user){
-
-      throw new Error(
-        "Supabase nije vratio korisnički nalog."
-      );
-    }
-
-
-    if(
-      (
-        data.user.email ||
-        ""
-      ).toLowerCase()
-      !==
-      ADMIN_EMAIL.toLowerCase()
-    ){
-
-      await supabaseClient
-        .auth
-        .signOut();
-
-      throw new Error(
-        "Ovaj nalog nema administratorski pristup."
-      );
-    }
-
-
-    $("password").value="";
-
-    await showDashboard();
-
-
-  }catch(error){
-
-    showMessage(
-      $("loginMsg"),
-      "Prijava nije uspela:\n"
-      + (
-        error?.message ||
-        String(error)
-      )
-    );
-
-  }finally{
-
-    $("loginBtn").disabled=false;
-    $("loginBtn").textContent=
-      "Prijavi me";
-  }
 }
 
 
-/* ==========================================
-   RESET LOZINKE
-   ========================================== */
+function escapeHtml(value){
 
-async function forgotPassword(){
+  return String(value ?? "")
 
-  clearMessage(
-    $("loginMsg")
-  );
+  .replaceAll("&","&amp;")
 
-  const email =
-    $("email").value.trim();
+  .replaceAll("<","&lt;")
 
+  .replaceAll(">","&gt;")
 
-  if(!email){
+  .replaceAll('"',"&quot;")
 
-    showMessage(
-      $("loginMsg"),
-      "Unesi email adresu."
-    );
+  .replaceAll("'","&#039;");
 
-    return;
-  }
-
-
-  $("forgotBtn").disabled=true;
-
-
-  try{
-
-    const connected =
-      await testConnection();
-
-    if(!connected){
-      return;
-    }
-
-
-    const {
-      error
-    } =
-      await supabaseClient
-        .auth
-        .resetPasswordForEmail(
-          email,
-          {
-            redirectTo:
-              RESET_PASSWORD_URL
-          }
-        );
-
-
-    if(error){
-      throw error;
-    }
-
-
-    showMessage(
-      $("loginMsg"),
-      "Email za promenu lozinke je uspešno poslat.",
-      "ok"
-    );
-
-
-  }catch(error){
-
-    showMessage(
-      $("loginMsg"),
-      "Reset lozinke nije poslat:\n"
-      + (
-        error?.message ||
-        String(error)
-      )
-    );
-
-  }finally{
-
-    $("forgotBtn").disabled=false;
-  }
 }
 
 
-/* ==========================================
-   ODJAVA
-   ========================================== */
+function money(v){
 
-async function logout(){
+  const n =
+  Number(v ?? 0);
 
-  try{
-    await supabaseClient.auth.signOut();
-  }catch{}
+  return Number.isFinite(n)
+  ? n.toFixed(2)
+  : "0.00";
 
-  $("dash")
-    .classList
-    .add("hidden");
-
-  $("login")
-    .classList
-    .remove("hidden");
-
-  clearMessage(
-    $("dashMsg")
-  );
 }
 
 
-/* ==========================================
-   DASHBOARD
-   ========================================== */
+async function showAdmin(user){
 
-async function showDashboard(){
+  $("loginSection").hidden =
+  true;
 
-  const {
-    data,
-    error
-  } =
-    await supabaseClient
-      .auth
-      .getSession();
+  $("adminSection").hidden =
+  false;
 
-
-  if(error){
-    throw error;
-  }
-
-
-  const session =
-    data?.session;
-
-
-  if(!session){
-
-    $("dash")
-      .classList
-      .add("hidden");
-
-    $("login")
-      .classList
-      .remove("hidden");
-
-    return;
-  }
-
-
-  const email =
-    (
-      session.user?.email ||
-      ""
-    ).toLowerCase();
-
-
-  if(
-    email !==
-    ADMIN_EMAIL.toLowerCase()
-  ){
-
-    await logout();
-    return;
-  }
-
-
-  $("login")
-    .classList
-    .add("hidden");
-
-  $("dash")
-    .classList
-    .remove("hidden");
-
-  $("userEmail")
-    .textContent =
-      session.user.email;
+  $("sessionEmail").textContent =
+  "Prijavljeni: " +
+  (user?.email || "");
 
   await loadProducts();
+
 }
 
 
-/* ==========================================
-   UČITAVANJE PROIZVODA
-   ========================================== */
+function showLogin(){
+
+  $("adminSection").hidden =
+  true;
+
+  $("loginSection").hidden =
+  false;
+
+}
+
 
 async function loadProducts(){
 
-  const body =
-    $("productsBody");
-
-
-  body.innerHTML =
-    "<tr><td colspan='5'>Učitavanje…</td></tr>";
-
-
-  clearMessage(
-    $("dashMsg")
+  setMsg(
+    $("adminMsg"),
+    "Učitavam proizvode…",
+    "info"
   );
 
 
-  try{
+  const {data,error} =
+  await db
 
-    const {
-      data,
-      error
-    } =
-      await supabaseClient
-        .from("products")
-        .select("*")
-        .order(
-          "sort_order",
-          {
-            ascending:true
-          }
-        );
+  .from("products")
 
+  .select("*")
 
-    if(error){
-      throw error;
-    }
+  .order(
+    "sort_order",
+    {ascending:true}
+  )
+
+  .order(
+    "name_sr",
+    {ascending:true}
+  );
 
 
-    renderProducts(
-      data || []
+  if(error){
+
+    console.error(error);
+
+    setMsg(
+      $("adminMsg"),
+      "Greška pri učitavanju proizvoda: "
+      + error.message,
+      "error"
     );
 
+    return;
 
-  }catch(error){
-
-    body.innerHTML="";
-
-    showMessage(
-      $("dashMsg"),
-      "Ne mogu da učitam proizvode:\n"
-      + (
-        error?.message ||
-        String(error)
-      )
-    );
   }
+
+
+  products =
+  data || [];
+
+
+  setMsg(
+    $("adminMsg"),
+    ""
+  );
+
+
+  buildCategoryFilter();
+
+  renderProducts();
+
+  updateStats();
+
 }
 
 
-/* ==========================================
-   PRIKAZ PROIZVODA
-   ========================================== */
+function buildCategoryFilter(){
 
-function renderProducts(data){
-
-  const body =
-    $("productsBody");
+  const select =
+  $("categoryFilter");
 
 
-  if(!data.length){
+  const categories =
+  [...new Set(
 
-    body.innerHTML =
-      "<tr><td colspan='5'>Nema proizvoda.</td></tr>";
+    products
 
-    return;
-  }
+    .map(p => p.category)
+
+    .filter(Boolean)
+
+  )];
 
 
-  body.innerHTML =
-    data.map(p=>{
+  select.innerHTML =
+  '<option value="">Sve kategorije</option>' +
 
-      const name =
-        p.name_sr ||
-        p.name_de ||
-        p.name ||
-        "Bez naziva";
+  categories
 
-      const image =
-        p.image || "";
+  .map(c =>
+  `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`
+  )
 
-      const price =
-        p.price_chf != null
-        ?
-        Number(
-          p.price_chf
-        ).toFixed(2)
-        + " CHF"
-        :
-        "—";
+  .join("");
 
-      return `
-        <tr>
+}
 
-          <td>
 
-            ${
-              image
-              ?
-              `<img
-                class="thumb"
-                src="${escapeHTML(image)}"
-                onerror="this.style.display='none'"
-              >`
-              :
-              ""
-            }
+function filteredProducts(){
 
-            <strong>
-              ${escapeHTML(name)}
-            </strong>
+  const q =
+  $("searchInput")
+  .value
+  .trim()
+  .toLowerCase();
 
-            <div class="muted">
-              ${escapeHTML(p.size || "")}
-            </div>
 
-          </td>
+  const category =
+  $("categoryFilter").value;
 
-          <td>${price}</td>
 
-          <td
-            class="${
-              Number(
-                p.stock_qty || 0
-              ) <= 3
-              ?
-              "stock-low"
-              :
-              ""
-            }"
-          >
-            ${p.stock_qty ?? 0}
-          </td>
+  const active =
+  $("activeFilter").value;
 
-          <td>
-            ${
-              p.active
-              ?
-              "Da"
-              :
-              "Ne"
-            }
-          </td>
 
-          <td>
-            <button
-              class="secondary"
-              data-id="${escapeHTML(p.id)}"
-            >
-              Uredi
-            </button>
-          </td>
+  return products.filter(p=>{
 
-        </tr>
-      `;
+    const text = [
 
-    }).join("");
+      p.name_sr,
+      p.name_de,
+      p.slug,
+      p.category,
+      p.size
+
+    ]
+
+    .join(" ")
+
+    .toLowerCase();
+
+
+    if(
+      q &&
+      !text.includes(q)
+    ){
+      return false;
+    }
+
+
+    if(
+      category &&
+      p.category !== category
+    ){
+      return false;
+    }
+
+
+    if(
+      active === "true" &&
+      p.active !== true
+    ){
+      return false;
+    }
+
+
+    if(
+      active === "false" &&
+      p.active !== false
+    ){
+      return false;
+    }
+
+
+    return true;
+
+  });
+
+}
+
+
+function renderProducts(){
+
+  const list =
+  filteredProducts();
+
+
+  $("productsBody").innerHTML =
+  "";
+
+
+  $("emptyState").hidden =
+  list.length !== 0;
+
+
+  list.forEach(p=>{
+
+    const tr =
+    document.createElement("tr");
+
+
+    const image =
+    p.image_url
+
+    ? `<img class="thumb"
+         src="${escapeHtml(p.image_url)}"
+         alt="">`
+
+    : `<div class="thumb"></div>`;
+
+
+    tr.innerHTML = `
+
+    <td>
+
+      <div class="product-cell">
+
+        ${image}
+
+        <div>
+
+          <div class="product-name">
+
+            ${escapeHtml(
+              p.name_sr ||
+              p.name_de ||
+              "Bez naziva"
+            )}
+
+          </div>
+
+          <div class="product-sub">
+
+            ${escapeHtml(
+              p.slug || ""
+            )}
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </td>
+
+
+    <td>
+      ${escapeHtml(
+        p.category || ""
+      )}
+    </td>
+
+
+    <td>
+      ${escapeHtml(
+        p.size || ""
+      )}
+    </td>
+
+
+    <td>
+      ${money(
+        p.price_chf
+      )}
+    </td>
+
+
+    <td>
+      ${Number(
+        p.stock_qty || 0
+      )}
+    </td>
+
+
+    <td>
+
+      <span class="pill ${
+        p.active
+        ? "on"
+        : "off"
+      }">
+
+        ${
+          p.active
+          ? "Aktivan"
+          : "Neaktivan"
+        }
+
+      </span>
+
+      ${
+        p.featured
+        ? '<span class="pill featured">Istaknut</span>'
+        : ""
+      }
+
+    </td>
+
+
+    <td>
+      ${Number(
+        p.sort_order || 0
+      )}
+    </td>
+
+
+    <td>
+
+      <div class="actions">
+
+        <button
+          class="btn btn-light edit-btn"
+          data-id="${p.id}"
+          type="button"
+        >
+          Izmeni
+        </button>
+
+
+        <button
+          class="btn btn-dark toggle-btn"
+          data-id="${p.id}"
+          type="button"
+        >
+
+          ${
+            p.active
+            ? "Sakrij"
+            : "Aktiviraj"
+          }
+
+        </button>
+
+      </div>
+
+    </td>
+
+    `;
+
+
+    $("productsBody")
+    .appendChild(tr);
+
+  });
 
 
   document
-    .querySelectorAll(
-      "[data-id]"
-    )
-    .forEach(button=>{
 
-      button.onclick=()=>{
+  .querySelectorAll(
+    ".edit-btn"
+  )
 
-        const id =
-          button.dataset.id;
+  .forEach(btn=>{
 
-        const product =
-          data.find(
-            p =>
-              String(p.id) ===
-              String(id)
-          );
-
-        if(product){
-          openModal(product);
-        }
-      };
-
-    });
-}
-
-
-/* ==========================================
-   MODAL
-   ========================================== */
-
-function openModal(p={}){
-
-  $("modalTitle")
-    .textContent =
-      p.id
-      ?
-      "Uredi proizvod"
-      :
-      "Novi proizvod";
-
-
-  $("pid").value =
-    p.id || "";
-
-
-  const fields=[
-    "name_sr",
-    "name_de",
-    "category",
-    "size",
-    "price_chf",
-    "stock_qty",
-    "sort_order",
-    "image",
-    "description_sr",
-    "description_de"
-  ];
-
-
-  fields.forEach(field=>{
-
-    $(field).value =
-      p[field] ??
-      (
-        field === "sort_order"
-        ?
-        0
-        :
-        ""
-      );
-
-  });
-
-
-  $("active").checked =
-    p.id
-    ?
-    p.active !== false
-    :
-    true;
-
-
-  $("featured").checked =
-    !!p.featured;
-
-
-  $("deleteBtn")
-    .style
-    .display =
-      p.id
-      ?
-      "inline-block"
-      :
-      "none";
-
-
-  $("modal")
-    .classList
-    .remove("hidden");
-}
-
-
-function closeModal(){
-
-  $("modal")
-    .classList
-    .add("hidden");
-}
-
-
-/* ==========================================
-   ČUVANJE PROIZVODA
-   ========================================== */
-
-async function saveProduct(){
-
-  $("saveBtn").disabled=true;
-
-
-  const payload={};
-
-
-  [
-    "name_sr",
-    "name_de",
-    "category",
-    "size",
-    "image",
-    "description_sr",
-    "description_de"
-  ]
-  .forEach(field=>{
-
-    payload[field] =
-      $(field).value.trim();
-
-  });
-
-
-  payload.price_chf =
-    Number(
-      $("price_chf").value || 0
-    );
-
-
-  payload.stock_qty =
-    Number(
-      $("stock_qty").value || 0
-    );
-
-
-  payload.sort_order =
-    Number(
-      $("sort_order").value || 0
-    );
-
-
-  payload.active =
-    $("active").checked;
-
-
-  payload.featured =
-    $("featured").checked;
-
-
-  const id =
-    $("pid").value;
-
-
-  try{
-
-    let query;
-
-
-    if(id){
-
-      query =
-        supabaseClient
-          .from("products")
-          .update(payload)
-          .eq("id",id);
-
-    }else{
-
-      query =
-        supabaseClient
-          .from("products")
-          .insert(payload);
-
-    }
-
-
-    const {
-      error
-    } =
-      await query;
-
-
-    if(error){
-      throw error;
-    }
-
-
-    closeModal();
-
-
-    showMessage(
-      $("dashMsg"),
-      "Proizvod je uspešno sačuvan.",
-      "ok"
-    );
-
-
-    await loadProducts();
-
-
-  }catch(error){
-
-    showMessage(
-      $("dashMsg"),
-      "Nije sačuvano:\n"
-      + (
-        error?.message ||
-        String(error)
+    btn.addEventListener(
+      "click",
+      ()=>openEdit(
+        btn.dataset.id
       )
     );
 
-  }finally{
+  });
 
-    $("saveBtn").disabled=false;
-  }
+
+  document
+
+  .querySelectorAll(
+    ".toggle-btn"
+  )
+
+  .forEach(btn=>{
+
+    btn.addEventListener(
+      "click",
+      ()=>toggleActive(
+        btn.dataset.id
+      )
+    );
+
+  });
+
 }
 
 
-/* ==========================================
-   BRISANJE PROIZVODA
-   ========================================== */
+function updateStats(){
+
+  $("statAll").textContent =
+  products.length;
+
+
+  $("statActive").textContent =
+  products.filter(
+    p=>p.active
+  ).length;
+
+
+  $("statStock").textContent =
+  products.reduce(
+    (sum,p)=>
+    sum +
+    Number(
+      p.stock_qty || 0
+    ),
+    0
+  );
+
+
+  $("statFeatured").textContent =
+  products.filter(
+    p=>p.featured
+  ).length;
+
+}
+
+
+function resetForm(){
+
+  $("productForm").reset();
+
+  $("p_id").value = "";
+
+  $("p_category").value =
+  "Ostalo";
+
+  $("p_stock_qty").value =
+  0;
+
+  $("p_sort_order").value =
+  0;
+
+  $("p_active").checked =
+  true;
+
+  $("deleteBtn").hidden =
+  true;
+
+  setMsg(
+    $("modalMsg"),
+    ""
+  );
+
+}
+
+
+function openNew(){
+
+  resetForm();
+
+  $("modalTitle").textContent =
+  "Novi proizvod";
+
+  $("productDialog")
+  .showModal();
+
+}
+
+
+function openEdit(id){
+
+  const p =
+  products.find(
+    x=>x.id === id
+  );
+
+
+  if(!p) return;
+
+
+  resetForm();
+
+
+  $("modalTitle").textContent =
+  "Izmeni proizvod";
+
+
+  $("p_id").value =
+  p.id || "";
+
+
+  $("p_name_sr").value =
+  p.name_sr || "";
+
+
+  $("p_name_de").value =
+  p.name_de || "";
+
+
+  $("p_slug").value =
+  p.slug || "";
+
+
+  $("p_category").value =
+  p.category || "Ostalo";
+
+
+  $("p_size").value =
+  p.size || "";
+
+
+  $("p_price_chf").value =
+  p.price_chf ?? 0;
+
+
+  $("p_stock_qty").value =
+  p.stock_qty ?? 0;
+
+
+  $("p_sort_order").value =
+  p.sort_order ?? 0;
+
+
+  $("p_image_url").value =
+  p.image_url || "";
+
+
+  $("p_description_sr").value =
+  p.description_sr || "";
+
+
+  $("p_description_de").value =
+  p.description_de || "";
+
+
+  $("p_active").checked =
+  p.active !== false;
+
+
+  $("p_featured").checked =
+  p.featured === true;
+
+
+  $("deleteBtn").hidden =
+  false;
+
+
+  $("productDialog")
+  .showModal();
+
+}
+
+
+function payload(){
+
+  return {
+
+    slug:
+    $("p_slug").value.trim(),
+
+    name_sr:
+    $("p_name_sr").value.trim(),
+
+    name_de:
+    $("p_name_de").value.trim()
+    || null,
+
+    description_sr:
+    $("p_description_sr")
+    .value.trim()
+    || null,
+
+    description_de:
+    $("p_description_de")
+    .value.trim()
+    || null,
+
+    category:
+    $("p_category").value.trim()
+    || "Ostalo",
+
+    size:
+    $("p_size").value.trim()
+    || null,
+
+    price_chf:
+    Number(
+      $("p_price_chf").value
+      || 0
+    ),
+
+    stock_qty:
+    Math.max(
+      0,
+      parseInt(
+        $("p_stock_qty").value
+        || 0
+      )
+    ),
+
+    image_url:
+    $("p_image_url").value.trim()
+    || null,
+
+    active:
+    $("p_active").checked,
+
+    featured:
+    $("p_featured").checked,
+
+    sort_order:
+    parseInt(
+      $("p_sort_order").value
+      || 0
+    ),
+
+    updated_at:
+    new Date().toISOString()
+
+  };
+
+}
+
+
+$("productForm")
+.addEventListener(
+"submit",
+async e=>{
+
+  e.preventDefault();
+
+
+  const id =
+  $("p_id").value;
+
+
+  const data =
+  payload();
+
+
+  setMsg(
+    $("modalMsg"),
+    "Čuvam…",
+    "info"
+  );
+
+
+  let result;
+
+
+  if(id){
+
+    result =
+    await db
+
+    .from("products")
+
+    .update(data)
+
+    .eq("id",id);
+
+  }else{
+
+    result =
+    await db
+
+    .from("products")
+
+    .insert(data);
+
+  }
+
+
+  if(result.error){
+
+    setMsg(
+      $("modalMsg"),
+      "Greška: "
+      + result.error.message,
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  setMsg(
+    $("modalMsg"),
+    "Sačuvano.",
+    "ok"
+  );
+
+
+  await loadProducts();
+
+
+  setTimeout(
+    ()=>{
+      $("productDialog")
+      .close();
+    },
+    300
+  );
+
+});
+
+
+async function toggleActive(id){
+
+  const p =
+  products.find(
+    x=>x.id === id
+  );
+
+
+  if(!p) return;
+
+
+  const {error} =
+  await db
+
+  .from("products")
+
+  .update({
+
+    active:
+    !p.active,
+
+    updated_at:
+    new Date().toISOString()
+
+  })
+
+  .eq(
+    "id",
+    id
+  );
+
+
+  if(error){
+
+    setMsg(
+      $("adminMsg"),
+      "Promena nije sačuvana: "
+      + error.message,
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  await loadProducts();
+
+}
+
 
 async function deleteProduct(){
 
   const id =
-    $("pid").value;
+  $("p_id").value;
 
 
-  if(!id){
-    return;
-  }
+  if(!id) return;
 
 
   if(
@@ -1386,161 +1736,333 @@ async function deleteProduct(){
   }
 
 
-  $("deleteBtn").disabled=true;
+  const {error} =
+  await db
+
+  .from("products")
+
+  .delete()
+
+  .eq(
+    "id",
+    id
+  );
 
 
-  try{
+  if(error){
 
-    const {
-      error
-    } =
-      await supabaseClient
-        .from("products")
-        .delete()
-        .eq("id",id);
+    setMsg(
+      $("modalMsg"),
+      "Brisanje nije uspelo: "
+      + error.message,
+      "error"
+    );
 
+    return;
 
-    if(error){
-      throw error;
-    }
+  }
 
 
-    closeModal();
+  $("productDialog")
+  .close();
 
 
-    showMessage(
-      $("dashMsg"),
-      "Proizvod je obrisan.",
+  await loadProducts();
+
+}
+
+
+$("loginForm")
+.addEventListener(
+"submit",
+async e=>{
+
+  e.preventDefault();
+
+
+  const email =
+  $("email")
+  .value
+  .trim();
+
+
+  const password =
+  $("password")
+  .value;
+
+
+  setMsg(
+    $("loginMsg"),
+    "Prijavljujem…",
+    "info"
+  );
+
+
+  $("loginBtn").disabled =
+  true;
+
+
+  const {data,error} =
+  await db.auth
+
+  .signInWithPassword({
+
+    email,
+    password
+
+  });
+
+
+  $("loginBtn").disabled =
+  false;
+
+
+  if(error){
+
+    setMsg(
+      $("loginMsg"),
+      "Prijava nije uspela: "
+      + error.message,
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  setMsg(
+    $("loginMsg"),
+    ""
+  );
+
+
+  $("password").value =
+  "";
+
+
+  await showAdmin(
+    data.user
+  );
+
+});
+
+
+$("forgotBtn")
+.addEventListener(
+"click",
+async ()=>{
+
+  const email =
+  $("email")
+  .value
+  .trim();
+
+
+  if(!email){
+
+    setMsg(
+      $("loginMsg"),
+      "Prvo upiši email adresu.",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  setMsg(
+    $("loginMsg"),
+    "Šaljem link za promenu lozinke…",
+    "info"
+  );
+
+
+  const redirectTo =
+  location.origin
+  + location.pathname;
+
+
+  const {error} =
+  await db.auth
+
+  .resetPasswordForEmail(
+    email,
+    {redirectTo}
+  );
+
+
+  if(error){
+
+    setMsg(
+      $("loginMsg"),
+      "Slanje nije uspelo: "
+      + error.message,
+      "error"
+    );
+
+  }else{
+
+    setMsg(
+      $("loginMsg"),
+      "Poslat je email sa linkom za promenu lozinke.",
       "ok"
     );
 
+  }
 
-    await loadProducts();
+});
 
 
-  }catch(error){
+$("logoutBtn")
+.addEventListener(
+"click",
+async ()=>{
 
-    showMessage(
-      $("dashMsg"),
-      "Nije obrisano:\n"
-      + (
-        error?.message ||
-        String(error)
-      )
+  await db.auth.signOut();
+
+  showLogin();
+
+});
+
+
+$("refreshBtn")
+.addEventListener(
+"click",
+loadProducts
+);
+
+
+$("addBtn")
+.addEventListener(
+"click",
+openNew
+);
+
+
+$("closeDialogBtn")
+.addEventListener(
+"click",
+()=>$("productDialog").close()
+);
+
+
+$("cancelBtn")
+.addEventListener(
+"click",
+()=>$("productDialog").close()
+);
+
+
+$("deleteBtn")
+.addEventListener(
+"click",
+deleteProduct
+);
+
+
+$("searchInput")
+.addEventListener(
+"input",
+renderProducts
+);
+
+
+$("categoryFilter")
+.addEventListener(
+"change",
+renderProducts
+);
+
+
+$("activeFilter")
+.addEventListener(
+"change",
+renderProducts
+);
+
+
+$("clearFiltersBtn")
+.addEventListener(
+"click",
+()=>{
+
+  $("searchInput").value =
+  "";
+
+  $("categoryFilter").value =
+  "";
+
+  $("activeFilter").value =
+  "";
+
+  renderProducts();
+
+});
+
+
+db.auth
+.onAuthStateChange(
+async (event,session)=>{
+
+  if(
+    event === "SIGNED_OUT"
+  ){
+
+    showLogin();
+
+  }
+
+
+  if(
+    event === "SIGNED_IN"
+    &&
+    session?.user
+  ){
+
+    await showAdmin(
+      session.user
     );
 
-  }finally{
-
-    $("deleteBtn").disabled=false;
-  }
-}
-
-
-/* ==========================================
-   ESCAPE HTML
-   ========================================== */
-
-function escapeHTML(value){
-
-  return String(
-    value ?? ""
-  )
-  .replace(
-    /[&<>"']/g,
-    char=>({
-      "&":"&amp;",
-      "<":"&lt;",
-      ">":"&gt;",
-      "\"":"&quot;",
-      "'":"&#039;"
-    }[char])
-  );
-}
-
-
-/* ==========================================
-   DOGAĐAJI
-   ========================================== */
-
-$("loginBtn").onclick =
-  login;
-
-$("forgotBtn").onclick =
-  forgotPassword;
-
-$("logoutBtn").onclick =
-  logout;
-
-$("addBtn").onclick =
-  ()=>openModal();
-
-$("closeBtn").onclick =
-  closeModal;
-
-$("saveBtn").onclick =
-  saveProduct;
-
-$("deleteBtn").onclick =
-  deleteProduct;
-
-
-$("password")
-  .addEventListener(
-    "keydown",
-    event=>{
-
-      if(
-        event.key === "Enter"
-      ){
-        login();
-      }
-
-    }
-  );
-
-
-/* ==========================================
-   START
-   ========================================== */
-
-(async()=>{
-
-  if(!configOK()){
-    return;
   }
 
-  createSupabaseClient();
-
-  if(!supabaseClient){
-    return;
-  }
-
-  try{
-
-    const {
-      data
-    } =
-      await supabaseClient
-        .auth
-        .getSession();
+});
 
 
-    if(data?.session){
+(async function(){
 
-      await showDashboard();
+  const {data,error} =
+  await db.auth
+  .getSession();
 
-    }
 
-  }catch(error){
+  if(error){
 
-    showMessage(
+    setMsg(
       $("loginMsg"),
-      "Greška pri pokretanju administracije:\n"
-      + (
-        error?.message ||
-        String(error)
-      )
+      "Greška pri povezivanju: "
+      + error.message,
+      "error"
     );
+
+    return;
+
+  }
+
+
+  if(
+    data?.session?.user
+  ){
+
+    await showAdmin(
+      data.session.user
+    );
+
+  }else{
+
+    showLogin();
+
   }
 
 })();
