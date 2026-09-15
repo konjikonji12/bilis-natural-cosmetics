@@ -193,7 +193,7 @@ h1{
   box-shadow:0 0 25px rgba(197,162,91,.25);
 }
 
-/* SHIPPING BAR */
+/* SHIPPING */
 
 .shipping-bar{
   background:#15130f;
@@ -206,9 +206,7 @@ h1{
   letter-spacing:.3px;
 }
 
-.shipping-bar strong{
-  color:#d5b36b;
-}
+.shipping-bar strong{color:#d5b36b}
 
 /* PRODUCTS */
 
@@ -265,6 +263,8 @@ h1{
   box-shadow:0 9px 28px rgba(58,45,25,.07);
 }
 
+.product-link{display:block}
+
 .photo{
   aspect-ratio:1;
   overflow:hidden;
@@ -285,7 +285,20 @@ h1{
   margin:7px 0 10px;
 }
 
+.info h3 a:hover{
+  color:var(--gold2);
+}
+
 .info p{color:#625e55}
+
+.product-details-link{
+  display:inline-block;
+  margin-top:12px;
+  color:#8c6a2d;
+  font-size:12px;
+  font-weight:bold;
+  letter-spacing:.5px;
+}
 
 .row{
   display:flex;
@@ -629,6 +642,7 @@ Bili's
 <div class="tools">
 <button id="sr" class="on" onclick="setLang('sr')">SR</button>
 <button id="de" onclick="setLang('de')">DE</button>
+
 <button class="cart-button" onclick="cartOpen()">
 🛒 <span id="cc">0</span>
 </button>
@@ -639,18 +653,25 @@ Bili's
 
 <section class="hero">
 <div class="hero-content">
+
 <div class="hero-kicker" id="heroKicker"></div>
 <div class="hero-line"></div>
+
 <h1 id="hero"></h1>
+
 <p id="heroText"></p>
+
 <a class="btn" href="#products" id="see"></a>
+
 </div>
 </section>
 
 <section class="section" id="products">
 
 <div class="gold">BILI'S COLLECTION</div>
+
 <h2 id="prodTitle"></h2>
+
 <p id="prodSub"></p>
 
 <div id="filters" class="filters"></div>
@@ -663,19 +684,25 @@ Učitavanje...
 
 <section class="story">
 <div>
+
 <div class="gold">BILI'S NATURAL COSMETICS</div>
+
 <h2 id="storyTitle"></h2>
+
 <p id="storyText"></p>
+
 </div>
 </section>
 
 <section class="contact">
+
 <div>
 <div class="gold" id="contactLabel"></div>
 <h2 id="here"></h2>
 </div>
 
 <div>
+
 <b>Bili's Natural Cosmetics</b>
 
 <p>
@@ -689,6 +716,7 @@ Schweiz
 Telefon: 077 438 39 16<br>
 E-Mail: duricbiljana.diki@gmail.com
 </p>
+
 </div>
 </section>
 
@@ -704,13 +732,17 @@ E-Mail: duricbiljana.diki@gmail.com
 
 <div class="quick-links">
 
-<a id="quickContact" href="informationen.html#kontakt">Kontakt</a>
+<a id="quickContact" href="informationen.html#kontakt">
+Kontakt
+</a>
 
 <a id="quickPrivacy" href="informationen.html#datenschutz">
 Datenschutzerklärung
 </a>
 
-<a id="quickAGB" href="informationen.html#agb">AGB</a>
+<a id="quickAGB" href="informationen.html#agb">
+AGB
+</a>
 
 <a id="quickShipping" href="informationen.html#versand">
 Versand & Lieferung
@@ -812,6 +844,9 @@ Bili's Natural Cosmetics · Switzerland
 
 <script>
 
+const SITE =
+"https://konjikonji12.github.io/bilis-natural-cosmetics/";
+
 const db =
 supabase.createClient(
 "https://enzcsfhtduucagqjamnx.supabase.co",
@@ -888,6 +923,8 @@ ship:
 all:"Sve",
 
 add:"Dodaj u korpu",
+
+details:"Detalji proizvoda →",
 
 available:"Dostupno",
 
@@ -999,6 +1036,8 @@ all:"Alle",
 
 add:"In den Warenkorb",
 
+details:"Produktdetails →",
+
 available:"Verfügbar",
 
 none:"Derzeit nicht verfügbar",
@@ -1070,7 +1109,26 @@ m=>({
 }[m])
 );
 
+function productUrl(p){
+
+if(!p || !p.slug){
+return SITE;
+}
+
+return "product.html?slug="+encodeURIComponent(p.slug);
+}
+
+function absoluteProductUrl(p){
+
+if(!p || !p.slug){
+return SITE;
+}
+
+return SITE+"product.html?slug="+encodeURIComponent(p.slug);
+}
+
 function n(p){
+
 return(
 lang==="de"
 ?
@@ -1082,9 +1140,11 @@ lang==="de"
 p.name
 ||
 "Bili's";
+
 }
 
 function d(p){
+
 return(
 lang==="de"
 ?
@@ -1096,9 +1156,11 @@ lang==="de"
 p.description
 ||
 "";
+
 }
 
 function c(p){
+
 return(
 lang==="de"
 ?
@@ -1110,6 +1172,7 @@ lang==="de"
 p.category
 ||
 "";
+
 }
 
 function setLang(x){
@@ -1163,6 +1226,7 @@ $(k).textContent=T[x][k];
 renderFilters();
 render();
 renderCart();
+
 }
 
 function renderFilters(){
@@ -1192,12 +1256,16 @@ ${esc(x)}
 </button>
 `
 ).join("");
+
 }
 
 function setCat(x){
+
 cat=x;
+
 renderFilters();
 render();
+
 }
 
 function render(){
@@ -1244,6 +1312,8 @@ p.volume||
 ""
 );
 
+let url=productUrl(p);
+
 return`
 
 <article class="card">
@@ -1253,7 +1323,14 @@ return`
 ${
 im
 ?
-`<img src="${esc(im)}" alt="${esc(n(p))}" loading="lazy">`
+`
+<a class="product-link" href="${esc(url)}" aria-label="${esc(n(p))}">
+<img
+src="${esc(im)}"
+alt="${esc(n(p))}"
+loading="lazy">
+</a>
+`
 :
 ""
 }
@@ -1266,11 +1343,23 @@ im
 ${esc(c(p))}
 </small>
 
-<h3>${esc(n(p))}</h3>
+<h3>
+<a href="${esc(url)}">
+${esc(n(p))}
+</a>
+</h3>
 
 <p>${esc(d(p))}</p>
 
 ${size?`<small>${esc(size)}</small>`:""}
+
+<br>
+
+<a
+class="product-details-link"
+href="${esc(url)}">
+${T[lang].details}
+</a>
 
 <div class="row">
 
@@ -1321,6 +1410,8 @@ all.find(
 x=>String(x.id)===String(id)
 );
 
+if(!p)return;
+
 let i=
 cart.find(
 x=>String(x.id)===String(id)
@@ -1334,17 +1425,22 @@ p.stock??
 );
 
 if(i){
+
 if(i.q<max)i.q++;
+
 }else{
+
 cart.push({
 id,
 q:1
 });
+
 }
 
 save();
 renderCart();
 cartOpen();
+
 }
 
 function save(){
@@ -1359,6 +1455,7 @@ cart.reduce(
 (s,x)=>s+x.q,
 0
 );
+
 }
 
 function qty(id,z){
@@ -1372,6 +1469,8 @@ let p=
 all.find(
 x=>String(x.id)===String(id)
 );
+
+if(!i || !p)return;
 
 i.q=
 Math.max(
@@ -1387,14 +1486,17 @@ i.q+z
 );
 
 if(!i.q){
+
 cart=
 cart.filter(
 x=>String(x.id)!==String(id)
 );
+
 }
 
 save();
 renderCart();
+
 }
 
 function getSubtotal(){
@@ -1424,6 +1526,7 @@ tot+=pr*i.q;
 );
 
 return tot;
+
 }
 
 function getShipping(){
@@ -1435,10 +1538,13 @@ return $("pay").value==="Bar"
 0
 :
 SHIPPING_CHF;
+
 }
 
 function getTotal(){
+
 return getSubtotal()+getShipping();
+
 }
 
 function renderCart(){
@@ -1532,6 +1638,7 @@ T[lang].deliveryNote;
 
 save();
 paymentInfo();
+
 }
 
 function paymentInfo(){
@@ -1559,6 +1666,7 @@ ${T[lang].twintName}
 `;
 
 return;
+
 }
 
 if(method==="PayPal"){
@@ -1577,6 +1685,7 @@ ${T[lang].paypalName}
 `;
 
 return;
+
 }
 
 box.innerHTML=
@@ -1588,22 +1697,30 @@ ${T[lang].cashText}<br>
 ${T[lang].amount}: ${tot} CHF
 </div>
 `;
+
 }
 
 function cartOpen(){
+
 $("ov").classList.add("open");
+
 renderCart();
+
 }
 
 function cartClose(){
+
 $("ov").classList.remove("open");
+
 }
 
 function sendOrder(){
 
 if(!cart.length){
+
 alert(T[lang].empty);
 return;
+
 }
 
 if(
@@ -1623,6 +1740,7 @@ lang==="de"
 );
 
 return;
+
 }
 
 let subtotal=0;
@@ -1765,11 +1883,14 @@ encodeURIComponent(m),
 
 function addProductSchema(){
 
-const old=document.getElementById("product-schema");
+const old=
+document.getElementById("product-schema");
 
 if(old)old.remove();
 
-const products=all.map(p=>{
+const products=
+all.map(
+p=>{
 
 let price=
 Number(
@@ -1785,34 +1906,64 @@ p.stock??
 0
 );
 
+let image=
+p.image_url||
+p.image||
+undefined;
+
 return{
+
 "@type":"Product",
-"name":p.name_de||p.name_sr||p.name||"Bili's Natural Cosmetics",
-"description":p.description_de||p.description_sr||p.description||"",
-"image":p.image_url||p.image||undefined,
+
+"name":
+p.name_de||
+p.name_sr||
+p.name||
+"Bili's Natural Cosmetics",
+
+"description":
+p.description_de||
+p.description_sr||
+p.description||
+"",
+
+"image":image,
+
+"sku":p.slug||undefined,
+
 "brand":{
 "@type":"Brand",
 "name":"Bili's Natural Cosmetics"
 },
+
 "offers":{
 "@type":"Offer",
+
 "priceCurrency":"CHF",
+
 "price":price.toFixed(2),
+
 "availability":
 stock>0
 ?
 "https://schema.org/InStock"
 :
 "https://schema.org/OutOfStock",
-"url":"https://konjikonji12.github.io/bilis-natural-cosmetics/"
+
+"url":absoluteProductUrl(p)
+
 }
+
 };
 
-});
+}
+);
 
-const script=document.createElement("script");
+const script=
+document.createElement("script");
 
 script.type="application/ld+json";
+
 script.id="product-schema";
 
 script.textContent=
@@ -1822,6 +1973,7 @@ JSON.stringify({
 });
 
 document.head.appendChild(script);
+
 }
 
 async function load(){
@@ -1845,6 +1997,7 @@ $("grid").textContent=
 console.error(error);
 
 return;
+
 }
 
 all=data||[];
@@ -1853,6 +2006,7 @@ renderFilters();
 render();
 renderCart();
 addProductSchema();
+
 }
 
 $("year").textContent=
