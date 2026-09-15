@@ -192,7 +192,47 @@ h1{
 .legal{
   padding:25px 5%;
   font-size:12px;
-  color:#666
+  color:#666;
+  max-width:1200px;
+  margin:auto
+}
+
+/* NOVI QUICK LINKS FOOTER */
+
+.quick-footer{
+  background:#151513;
+  color:white;
+  padding:42px 5%
+}
+
+.quick-footer-inner{
+  max-width:1200px;
+  margin:auto
+}
+
+.quick-footer-title{
+  color:var(--g);
+  font-size:11px;
+  font-weight:bold;
+  letter-spacing:3px;
+  margin-bottom:20px
+}
+
+.quick-links{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px 30px
+}
+
+.quick-links a{
+  color:#ddd7ca;
+  font-size:13px;
+  padding:7px 0;
+  border-bottom:1px solid #34322d
+}
+
+.quick-links a:hover{
+  color:var(--g)
 }
 
 footer{
@@ -263,6 +303,10 @@ input,textarea,select{
   .grid{
     grid-template-columns:repeat(2,1fr)
   }
+
+  .quick-links{
+    grid-template-columns:repeat(2,1fr)
+  }
 }
 
 @media(max-width:540px){
@@ -276,6 +320,15 @@ input,textarea,select{
   }
 
   .contact{
+    grid-template-columns:1fr
+  }
+
+  .quick-footer{
+    padding-left:18px;
+    padding-right:18px
+  }
+
+  .quick-links{
     grid-template-columns:1fr
   }
 }
@@ -293,16 +346,11 @@ Bili's
 
 <div class="tools">
 
-<button
-id="sr"
-class="on"
-onclick="setLang('sr')">
+<button id="sr" class="on" onclick="setLang('sr')">
 SR
 </button>
 
-<button
-id="de"
-onclick="setLang('de')">
+<button id="de" onclick="setLang('de')">
 DE
 </button>
 
@@ -325,18 +373,12 @@ HANDMADE • NATURAL • SWITZERLAND
 
 <p id="heroText"></p>
 
-<a
-class="btn"
-href="#products"
-id="see">
-</a>
+<a class="btn" href="#products" id="see"></a>
 
 </section>
 
 
-<section
-class="section"
-id="products">
+<section class="section" id="products">
 
 <div class="gold">
 BILI'S COLLECTION
@@ -346,14 +388,9 @@ BILI'S COLLECTION
 
 <p id="prodSub"></p>
 
-<div
-id="filters"
-class="filters">
-</div>
+<div id="filters" class="filters"></div>
 
-<div
-id="grid"
-class="grid">
+<div id="grid" class="grid">
 Učitavanje...
 </div>
 
@@ -381,21 +418,15 @@ BILI'S NATURAL COSMETICS
 
 <div>
 
-<div
-class="gold"
-id="contactLabel">
-</div>
+<div class="gold" id="contactLabel"></div>
 
 <h2 id="here"></h2>
 
 </div>
 
-
 <div>
 
-<b>
-Bili's Natural Cosmetics
-</b>
+<b>Bili's Natural Cosmetics</b>
 
 <p>
 Duric Biljana<br>
@@ -423,9 +454,84 @@ E-Mail: duricbiljana.diki@gmail.com
 </div>
 
 
+<!-- QUICK LINKS -->
+
+<section class="quick-footer">
+
+<div class="quick-footer-inner">
+
+<div
+class="quick-footer-title"
+id="quickTitle">
+BRZI LINKOVI
+</div>
+
+<div class="quick-links">
+
+<a
+id="quickContact"
+href="informationen.html#kontakt">
+Kontakt
+</a>
+
+<a
+id="quickPrivacy"
+href="informationen.html#datenschutz">
+Datenschutzerklärung
+</a>
+
+<a
+id="quickAGB"
+href="informationen.html#agb">
+AGB
+</a>
+
+<a
+id="quickShipping"
+href="informationen.html#versand">
+Versand & Lieferung
+</a>
+
+<a
+id="quickReturn"
+href="informationen.html#rueckgabe">
+Rückgabe & Rückerstattung
+</a>
+
+<a
+id="quickPayment"
+href="informationen.html#zahlung">
+Zahlung
+</a>
+
+<a
+id="quickImprint"
+href="informationen.html#impressum">
+Impressum
+</a>
+
+<a
+id="quickAbout"
+href="informationen.html#ueber-uns">
+Über uns
+</a>
+
+<a
+id="quickFAQ"
+href="informationen.html#faq">
+FAQ
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+
 <footer>
 © <span id="year"></span>
-Bili's Natural Cosmetics
+Bili's Natural Cosmetics · Switzerland
 </footer>
 
 
@@ -436,9 +542,7 @@ onclick="if(event.target===this)cartClose()">
 
 <div class="drawer">
 
-<button onclick="cartClose()">
-×
-</button>
+<button onclick="cartClose()">×</button>
 
 <h2 id="cartTitle"></h2>
 
@@ -451,24 +555,17 @@ onclick="if(event.target===this)cartClose()">
 
 <hr>
 
-
 <label id="nameL"></label>
 <input id="name">
-
 
 <label id="addressL"></label>
 <input id="address">
 
-
-<label>
-E-Mail
-</label>
+<label>E-Mail</label>
 <input id="email">
-
 
 <label id="phoneL"></label>
 <input id="phone">
-
 
 <label id="payL"></label>
 
@@ -488,24 +585,17 @@ Bar / Gotovina
 
 </select>
 
-
-<div
-id="paymentInfo"
-class="payment-info">
-</div>
-
+<div id="paymentInfo" class="payment-info"></div>
 
 <label id="noteL"></label>
 
 <textarea id="note"></textarea>
-
 
 <button
 class="full"
 id="send"
 onclick="sendOrder()">
 </button>
-
 
 <p
 id="ship"
@@ -525,10 +615,11 @@ supabase.createClient(
 "sb_publishable_04GgoHvEKpmroJtjY-1wKA_HjEu7tC9"
 );
 
+const TWINT_NUMBER =
+"+41 77 438 39 16";
 
-const TWINT_NUMBER = "+41 77 438 39 16";
-
-const PAYPAL_EMAIL = "duricbiljana.diki@gmail.com";
+const PAYPAL_EMAIL =
+"duricbiljana.diki@gmail.com";
 
 
 const T = {
@@ -637,8 +728,35 @@ cashText:
 amount:
 "Iznos za uplatu",
 
-paymentInstructions:
-"Podaci za uplatu"
+quickTitle:
+"BRZI LINKOVI",
+
+quickContact:
+"Kontakt",
+
+quickPrivacy:
+"Zaštita podataka",
+
+quickAGB:
+"Opšti uslovi poslovanja (AGB)",
+
+quickShipping:
+"Dostava i isporuka",
+
+quickReturn:
+"Povrat i refundacija",
+
+quickPayment:
+"Plaćanje",
+
+quickImprint:
+"Impressum",
+
+quickAbout:
+"O nama",
+
+quickFAQ:
+"Česta pitanja"
 
 },
 
@@ -747,8 +865,35 @@ cashText:
 amount:
 "Zu zahlender Betrag",
 
-paymentInstructions:
-"Zahlungsinformationen"
+quickTitle:
+"SCHNELLZUGRIFF",
+
+quickContact:
+"Kontakt",
+
+quickPrivacy:
+"Datenschutzerklärung",
+
+quickAGB:
+"AGB",
+
+quickShipping:
+"Versand & Lieferung",
+
+quickReturn:
+"Rückgabe & Rückerstattung",
+
+quickPayment:
+"Zahlung",
+
+quickImprint:
+"Impressum",
+
+quickAbout:
+"Über uns",
+
+quickFAQ:
+"FAQ"
 
 }
 
@@ -874,7 +1019,17 @@ const k of [
 "payL",
 "noteL",
 "send",
-"ship"
+"ship",
+"quickTitle",
+"quickContact",
+"quickPrivacy",
+"quickAGB",
+"quickShipping",
+"quickReturn",
+"quickPayment",
+"quickImprint",
+"quickAbout",
+"quickFAQ"
 ]
 ){
 
@@ -1023,16 +1178,13 @@ alt="${esc(n(p))}">
 ${esc(c(p))}
 </small>
 
-
 <h3>
 ${esc(n(p))}
 </h3>
 
-
 <p>
 ${esc(d(p))}
 </p>
-
 
 ${
 size
@@ -1046,7 +1198,6 @@ ${esc(size)}
 ""
 }
 
-
 <div class="row">
 
 <div>
@@ -1054,7 +1205,6 @@ ${esc(size)}
 <div class="price">
 ${pr.toFixed(2)} CHF
 </div>
-
 
 <div class="stock">
 
@@ -1069,7 +1219,6 @@ T[lang].none
 </div>
 
 </div>
-
 
 ${
 st > 0
