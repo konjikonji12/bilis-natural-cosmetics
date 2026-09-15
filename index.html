@@ -4,7 +4,38 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 
-<title>Bili's Natural Cosmetics</title>
+<title>Bili's Natural Cosmetics | Prirodna kozmetika iz Švajcarske</title>
+
+<meta name="description" content="Bili's Natural Cosmetics – ručno izrađena prirodna kozmetika iz Švajcarske. Otkrijte pažljivo odabrana biljna ulja, macerate, balzame, kreme i serume.">
+
+<meta name="robots" content="index,follow,max-image-preview:large">
+
+<link rel="canonical" href="https://konjikonji12.github.io/bilis-natural-cosmetics/">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Bili's Natural Cosmetics">
+<meta property="og:description" content="Prirodna kozmetika, pažljivo odabrana biljna ulja, macerati, balzami, kreme i serumi.">
+<meta property="og:url" content="https://konjikonji12.github.io/bilis-natural-cosmetics/">
+<meta property="og:image" content="https://konjikonji12.github.io/bilis-natural-cosmetics/909ED8FD-1343-400A-B30F-B45D26D8CB1E.png">
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"OnlineStore",
+  "name":"Bili's Natural Cosmetics",
+  "url":"https://konjikonji12.github.io/bilis-natural-cosmetics/",
+  "description":"Ručno izrađena prirodna kozmetika iz Švajcarske.",
+  "email":"duricbiljana.diki@gmail.com",
+  "telephone":"+41774383916",
+  "address":{
+    "@type":"PostalAddress",
+    "streetAddress":"Abt Bedastrasse 42",
+    "postalCode":"9245",
+    "addressLocality":"Sonnental",
+    "addressCountry":"CH"
+  }
+}
+</script>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -21,7 +52,6 @@
 }
 
 *{box-sizing:border-box}
-
 html{scroll-behavior:smooth}
 
 body{
@@ -32,15 +62,8 @@ body{
   line-height:1.55;
 }
 
-a{
-  text-decoration:none;
-  color:inherit;
-}
-
-button,.btn{
-  font:inherit;
-  cursor:pointer;
-}
+a{text-decoration:none;color:inherit}
+button,.btn{font:inherit;cursor:pointer}
 
 /* HEADER */
 
@@ -91,9 +114,7 @@ nav{
   color:#111;
 }
 
-.cart-button{
-  color:#d7b468!important;
-}
+.cart-button{color:#d7b468!important}
 
 /* HERO */
 
@@ -172,6 +193,23 @@ h1{
   box-shadow:0 0 25px rgba(197,162,91,.25);
 }
 
+/* SHIPPING BAR */
+
+.shipping-bar{
+  background:#15130f;
+  color:#eee5d4;
+  text-align:center;
+  padding:13px 15px;
+  border-top:1px solid #5c4826;
+  border-bottom:1px solid #5c4826;
+  font-size:13px;
+  letter-spacing:.3px;
+}
+
+.shipping-bar strong{
+  color:#d5b36b;
+}
+
 /* PRODUCTS */
 
 .section{
@@ -193,9 +231,7 @@ h1{
   font-size:clamp(38px,5vw,60px);
 }
 
-#prodSub{
-  color:#686158;
-}
+#prodSub{color:#686158}
 
 .filters{
   display:flex;
@@ -242,18 +278,14 @@ h1{
   display:block;
 }
 
-.info{
-  padding:21px;
-}
+.info{padding:21px}
 
 .info h3{
   font-size:23px;
   margin:7px 0 10px;
 }
 
-.info p{
-  color:#625e55;
-}
+.info p{color:#625e55}
 
 .row{
   display:flex;
@@ -414,9 +446,7 @@ footer{
   font-size:20px;
 }
 
-.drawer h2{
-  font-size:38px;
-}
+.drawer h2{font-size:38px}
 
 .cartitem{
   padding:15px 0;
@@ -430,6 +460,37 @@ footer{
   border:0;
   background:#111;
   color:white;
+}
+
+.cart-summary{
+  margin:20px 0;
+  padding:16px;
+  background:#faf5e9;
+  border:1px solid #d4bd8c;
+}
+
+.summary-line{
+  display:flex;
+  justify-content:space-between;
+  gap:15px;
+  padding:5px 0;
+}
+
+.summary-total{
+  display:flex;
+  justify-content:space-between;
+  gap:15px;
+  border-top:1px solid #cdbb96;
+  margin-top:8px;
+  padding-top:11px;
+  font-size:18px;
+  font-weight:bold;
+}
+
+.delivery-note{
+  margin-top:9px;
+  color:#6e624c;
+  font-size:12px;
 }
 
 input,textarea,select{
@@ -473,34 +534,22 @@ textarea{min-height:80px}
 /* MOBILE */
 
 @media(max-width:800px){
-
-  .grid{
-    grid-template-columns:repeat(2,1fr);
-  }
-
-  .quick-links{
-    grid-template-columns:repeat(2,1fr);
-  }
+  .grid{grid-template-columns:repeat(2,1fr)}
+  .quick-links{grid-template-columns:repeat(2,1fr)}
 }
 
 @media(max-width:650px){
 
-  nav{
-    padding:13px 16px;
-  }
+  nav{padding:13px 16px}
 
-  .brand{
-    font-size:29px;
-  }
+  .brand{font-size:29px}
 
   .brand small{
     font-size:7px;
     letter-spacing:2.5px;
   }
 
-  .tools{
-    gap:5px;
-  }
+  .tools{gap:5px}
 
   .tools button{
     min-width:43px;
@@ -512,7 +561,6 @@ textarea{min-height:80px}
     min-height:720px;
     padding:55px 24px 48px;
     align-items:flex-end;
-
     background:
       linear-gradient(
         0deg,
@@ -525,9 +573,7 @@ textarea{min-height:80px}
       63% center/cover no-repeat;
   }
 
-  .hero-content{
-    width:100%;
-  }
+  .hero-content{width:100%}
 
   .hero-kicker{
     font-size:10px;
@@ -539,25 +585,15 @@ textarea{min-height:80px}
     max-width:500px;
   }
 
-  .hero p{
-    font-size:17px;
-  }
+  .hero p{font-size:17px}
 
-  .section{
-    padding:58px 18px;
-  }
+  .section{padding:58px 18px}
 
-  .grid{
-    grid-template-columns:1fr;
-  }
+  .grid{grid-template-columns:1fr}
 
-  .filters button{
-    padding:10px 13px;
-  }
+  .filters button{padding:10px 13px}
 
-  .story{
-    padding:65px 18px;
-  }
+  .story{padding:65px 18px}
 
   .contact{
     grid-template-columns:1fr;
@@ -575,66 +611,46 @@ textarea{min-height:80px}
     padding-right:18px;
   }
 
-  .quick-footer{
-    padding:42px 18px;
-  }
+  .quick-footer{padding:42px 18px}
 
-  .quick-links{
-    grid-template-columns:1fr;
-  }
+  .quick-links{grid-template-columns:1fr}
 }
-
 </style>
 </head>
 
 <body>
 
 <nav>
-
 <div class="brand">
 Bili's
 <small>NATURAL COSMETICS</small>
 </div>
 
 <div class="tools">
-
 <button id="sr" class="on" onclick="setLang('sr')">SR</button>
-
 <button id="de" onclick="setLang('de')">DE</button>
-
 <button class="cart-button" onclick="cartOpen()">
 🛒 <span id="cc">0</span>
 </button>
-
 </div>
 </nav>
 
+<div class="shipping-bar" id="shippingBar"></div>
 
 <section class="hero">
-
 <div class="hero-content">
-
 <div class="hero-kicker" id="heroKicker"></div>
-
 <div class="hero-line"></div>
-
 <h1 id="hero"></h1>
-
 <p id="heroText"></p>
-
 <a class="btn" href="#products" id="see"></a>
-
 </div>
-
 </section>
-
 
 <section class="section" id="products">
 
 <div class="gold">BILI'S COLLECTION</div>
-
 <h2 id="prodTitle"></h2>
-
 <p id="prodSub"></p>
 
 <div id="filters" class="filters"></div>
@@ -645,36 +661,21 @@ Učitavanje...
 
 </section>
 
-
 <section class="story">
-
 <div>
-
-<div class="gold">
-BILI'S NATURAL COSMETICS
-</div>
-
+<div class="gold">BILI'S NATURAL COSMETICS</div>
 <h2 id="storyTitle"></h2>
-
 <p id="storyText"></p>
-
 </div>
-
 </section>
 
-
 <section class="contact">
-
 <div>
-
 <div class="gold" id="contactLabel"></div>
-
 <h2 id="here"></h2>
-
 </div>
 
 <div>
-
 <b>Bili's Natural Cosmetics</b>
 
 <p>
@@ -688,22 +689,15 @@ Schweiz
 Telefon: 077 438 39 16<br>
 E-Mail: duricbiljana.diki@gmail.com
 </p>
-
 </div>
-
 </section>
 
-
 <div class="legal">
-
 <b id="warning"></b>
 <span id="legal"></span>
-
 </div>
 
-
 <section class="quick-footer">
-
 <div class="quick-footer-inner">
 
 <div class="quick-footer-title" id="quickTitle"></div>
@@ -746,17 +740,12 @@ FAQ
 </div>
 </section>
 
-
 <footer>
 © <span id="year"></span>
 Bili's Natural Cosmetics · Switzerland
 </footer>
 
-
-<div
-id="ov"
-class="overlay"
-onclick="if(event.target===this)cartClose()">
+<div id="ov" class="overlay" onclick="if(event.target===this)cartClose()">
 
 <div class="drawer">
 
@@ -766,10 +755,26 @@ onclick="if(event.target===this)cartClose()">
 
 <div id="items"></div>
 
-<h3>
-<span id="totalLabel"></span>:
-<span id="total">0.00</span> CHF
-</h3>
+<div class="cart-summary">
+
+<div class="summary-line">
+<span id="productsLabel"></span>
+<strong><span id="subtotal">0.00</span> CHF</strong>
+</div>
+
+<div class="summary-line" id="shippingLine">
+<span id="shippingLabel"></span>
+<strong><span id="shippingPrice">9.00</span> CHF</strong>
+</div>
+
+<div class="summary-total">
+<span id="totalLabel"></span>
+<span><span id="total">0.00</span> CHF</span>
+</div>
+
+<div class="delivery-note" id="deliveryNote"></div>
+
+</div>
 
 <hr>
 
@@ -787,12 +792,10 @@ onclick="if(event.target===this)cartClose()">
 
 <label id="payL"></label>
 
-<select id="pay" onchange="paymentInfo()">
-
+<select id="pay" onchange="renderCart()">
 <option value="TWINT">TWINT</option>
 <option value="PayPal">PayPal</option>
 <option value="Bar">Bar / Gotovina</option>
-
 </select>
 
 <div id="paymentInfo" class="payment-info"></div>
@@ -800,17 +803,12 @@ onclick="if(event.target===this)cartClose()">
 <label id="noteL"></label>
 <textarea id="note"></textarea>
 
-<button
-class="full"
-id="send"
-onclick="sendOrder()">
-</button>
+<button class="full" id="send" onclick="sendOrder()"></button>
 
 <p id="ship" style="font-size:12px;color:#777"></p>
 
 </div>
 </div>
-
 
 <script>
 
@@ -821,9 +819,9 @@ supabase.createClient(
 );
 
 const TWINT_NUMBER = "+41 77 438 39 16";
-
 const PAYPAL_EMAIL = "duricbiljana.diki@gmail.com";
 
+const SHIPPING_CHF = 9.00;
 
 const T={
 
@@ -838,13 +836,15 @@ heroText:
 
 see:"OTKRIJ KOLEKCIJU →",
 
+shippingBar:
+"🇨🇭 Swiss Post · Dostava 9.00 CHF · Rok isporuke oko 2–3 radna dana",
+
 prodTitle:"Proizvodi",
 
 prodSub:
 "Cene i stanje zaliha učitavaju se direktno iz online baze.",
 
-storyTitle:
-"Prirodno. Pažljivo. Ručno.",
+storyTitle:"Prirodno. Pažljivo. Ručno.",
 
 storyText:
 "Bili's Natural Cosmetics je kolekcija prirodne kozmetike razvijena sa posebnom pažnjom prema izboru sirovina i kvalitetu izrade.",
@@ -860,7 +860,15 @@ legal:
 
 cartTitle:"Korpa",
 
+productsLabel:"Proizvodi",
+
+shippingLabel:"Swiss Post dostava",
+
 totalLabel:"Ukupno",
+
+deliveryNote:"Rok isporuke: oko 2–3 radna dana.",
+
+pickupNote:"Lično preuzimanje – bez troškova dostave.",
 
 nameL:"Ime i prezime",
 
@@ -872,11 +880,10 @@ payL:"Način plaćanja",
 
 noteL:"Napomena",
 
-send:
-"Pošalji porudžbinu preko WhatsApp-a",
+send:"Pošalji porudžbinu preko WhatsApp-a",
 
 ship:
-"Dostava se dodatno naplaćuje. Dostava je moguća u Švajcarskoj, EU i drugim zemljama; transport plaća kupac.",
+"Swiss Post dostava u Švajcarskoj: 9.00 CHF. Rok isporuke je oko 2–3 radna dana. Kod ličnog preuzimanja nema troškova dostave.",
 
 all:"Sve",
 
@@ -890,24 +897,19 @@ empty:"Korpa je prazna.",
 
 twintTitle:"TWINT uplata",
 
-twintText:
-"Pošaljite ukupan iznos putem TWINT-a na broj:",
+twintText:"Pošaljite ukupan iznos putem TWINT-a na broj:",
 
-twintName:
-"Molimo navedite ime i prezime prilikom uplate.",
+twintName:"Molimo navedite ime i prezime prilikom uplate.",
 
 paypalTitle:"PayPal uplata",
 
-paypalText:
-"Pošaljite ukupan iznos putem PayPal-a na:",
+paypalText:"Pošaljite ukupan iznos putem PayPal-a na:",
 
-paypalName:
-"Molimo navedite ime i prezime uz uplatu.",
+paypalName:"Molimo navedite ime i prezime uz uplatu.",
 
 cashTitle:"Gotovina",
 
-cashText:
-"Plaćanje gotovinom moguće je pri ličnom preuzimanju.",
+cashText:"Plaćanje gotovinom moguće je pri ličnom preuzimanju.",
 
 amount:"Iznos za uplatu",
 
@@ -933,26 +935,26 @@ quickFAQ:"Česta pitanja"
 
 },
 
-
 de:{
 
 heroKicker:"NATURKOSMETIK MIT HERZ",
 
-hero:
-"Natürliche Schönheit in ihrer reinsten Form.",
+hero:"Natürliche Schönheit in ihrer reinsten Form.",
 
 heroText:
 "Hochwertige Pflanzenöle, wertvolle Mazerate und natürliche Inhaltsstoffe – vereint in einer handgefertigten Kollektion für Ihre tägliche Pflege.",
 
 see:"JETZT ENTDECKEN →",
 
+shippingBar:
+"🇨🇭 Swiss Post · Versand 9.00 CHF · Lieferzeit ca. 2–3 Werktage",
+
 prodTitle:"Produkte",
 
 prodSub:
 "Preise und Lagerbestand werden direkt aus der Online-Datenbank geladen.",
 
-storyTitle:
-"Natürlich. Sorgfältig. Handgemacht.",
+storyTitle:"Natürlich. Sorgfältig. Handgemacht.",
 
 storyText:
 "Bili's Natural Cosmetics ist eine Kollektion natürlicher Kosmetik mit besonderer Sorgfalt bei Rohstoffen und Herstellung.",
@@ -968,7 +970,15 @@ legal:
 
 cartTitle:"Warenkorb",
 
+productsLabel:"Produkte",
+
+shippingLabel:"Swiss Post Versand",
+
 totalLabel:"Gesamt",
+
+deliveryNote:"Lieferzeit: ca. 2–3 Werktage.",
+
+pickupNote:"Persönliche Abholung – keine Versandkosten.",
 
 nameL:"Vor- und Nachname",
 
@@ -980,11 +990,10 @@ payL:"Zahlungsart",
 
 noteL:"Bemerkung",
 
-send:
-"Bestellung über WhatsApp senden",
+send:"Bestellung über WhatsApp senden",
 
 ship:
-"Versandkosten werden zusätzlich berechnet. Versand in die Schweiz, EU und weitere Länder ist möglich; Transportkosten trägt der Käufer.",
+"Swiss Post Versand innerhalb der Schweiz: 9.00 CHF. Lieferzeit ca. 2–3 Werktage. Bei persönlicher Abholung fallen keine Versandkosten an.",
 
 all:"Alle",
 
@@ -998,24 +1007,19 @@ empty:"Der Warenkorb ist leer.",
 
 twintTitle:"TWINT-Zahlung",
 
-twintText:
-"Bitte senden Sie den Gesamtbetrag per TWINT an:",
+twintText:"Bitte senden Sie den Gesamtbetrag per TWINT an:",
 
-twintName:
-"Bitte geben Sie bei der Zahlung Ihren Vor- und Nachnamen an.",
+twintName:"Bitte geben Sie bei der Zahlung Ihren Vor- und Nachnamen an.",
 
 paypalTitle:"PayPal-Zahlung",
 
-paypalText:
-"Bitte senden Sie den Gesamtbetrag per PayPal an:",
+paypalText:"Bitte senden Sie den Gesamtbetrag per PayPal an:",
 
-paypalName:
-"Bitte geben Sie bei der Zahlung Ihren Vor- und Nachnamen an.",
+paypalName:"Bitte geben Sie bei der Zahlung Ihren Vor- und Nachnamen an.",
 
 cashTitle:"Barzahlung",
 
-cashText:
-"Barzahlung ist bei persönlicher Abholung möglich.",
+cashText:"Barzahlung ist bei persönlicher Abholung möglich.",
 
 amount:"Zu zahlender Betrag",
 
@@ -1043,11 +1047,8 @@ quickFAQ:"FAQ"
 
 };
 
-
 let lang="sr";
-
 let all=[];
-
 let cat="*";
 
 let cart=
@@ -1055,9 +1056,7 @@ JSON.parse(
 localStorage.getItem("bilis_cart")||"[]"
 );
 
-
 const $=id=>document.getElementById(id);
-
 
 const esc=s=>
 String(s??"").replace(
@@ -1071,9 +1070,7 @@ m=>({
 }[m])
 );
 
-
 function n(p){
-
 return(
 lang==="de"
 ?
@@ -1085,12 +1082,9 @@ lang==="de"
 p.name
 ||
 "Bili's";
-
 }
 
-
 function d(p){
-
 return(
 lang==="de"
 ?
@@ -1102,12 +1096,9 @@ lang==="de"
 p.description
 ||
 "";
-
 }
 
-
 function c(p){
-
 return(
 lang==="de"
 ?
@@ -1119,25 +1110,23 @@ lang==="de"
 p.category
 ||
 "";
-
 }
-
 
 function setLang(x){
 
 lang=x;
 
-$("sr").classList.toggle("on",x==="sr");
+document.documentElement.lang=x;
 
+$("sr").classList.toggle("on",x==="sr");
 $("de").classList.toggle("on",x==="de");
 
-
 for(const k of[
-
 "heroKicker",
 "hero",
 "heroText",
 "see",
+"shippingBar",
 "prodTitle",
 "prodSub",
 "storyTitle",
@@ -1147,6 +1136,8 @@ for(const k of[
 "warning",
 "legal",
 "cartTitle",
+"productsLabel",
+"shippingLabel",
 "totalLabel",
 "nameL",
 "addressL",
@@ -1165,24 +1156,14 @@ for(const k of[
 "quickImprint",
 "quickAbout",
 "quickFAQ"
-
 ]){
-
 $(k).textContent=T[x][k];
-
 }
-
 
 renderFilters();
-
 render();
-
 renderCart();
-
-paymentInfo();
-
 }
-
 
 function renderFilters(){
 
@@ -1192,9 +1173,7 @@ all.map(c).filter(Boolean)
 )
 ];
 
-
 $("filters").innerHTML=
-
 `
 <button
 class="${cat==="*"?"on":""}"
@@ -1202,9 +1181,7 @@ onclick="setCat('*')">
 ${T[lang].all}
 </button>
 `
-
 +
-
 cs.map(
 x=>
 `
@@ -1215,20 +1192,13 @@ ${esc(x)}
 </button>
 `
 ).join("");
-
 }
-
 
 function setCat(x){
-
 cat=x;
-
 renderFilters();
-
 render();
-
 }
-
 
 function render(){
 
@@ -1238,7 +1208,6 @@ cat==="*"
 all
 :
 all.filter(p=>c(p)===cat);
-
 
 $("grid").innerHTML=
 
@@ -1252,7 +1221,6 @@ p.stock??
 0
 );
 
-
 let pr=
 Number(
 p.price_chf??
@@ -1260,12 +1228,10 @@ p.price??
 0
 );
 
-
 let im=
 p.image_url||
 p.image||
 "";
-
 
 let size=
 p.slug==="lip-balm-vanille"
@@ -1278,7 +1244,6 @@ p.volume||
 ""
 );
 
-
 return`
 
 <article class="card">
@@ -1288,7 +1253,7 @@ return`
 ${
 im
 ?
-`<img src="${esc(im)}" alt="${esc(n(p))}">`
+`<img src="${esc(im)}" alt="${esc(n(p))}" loading="lazy">`
 :
 ""
 }
@@ -1316,7 +1281,6 @@ ${pr.toFixed(2)} CHF
 </div>
 
 <div class="stock">
-
 ${
 st>0
 ?
@@ -1324,7 +1288,6 @@ T[lang].available+" ("+st+")"
 :
 T[lang].none
 }
-
 </div>
 
 </div>
@@ -1342,18 +1305,14 @@ ${T[lang].add}
 }
 
 </div>
-
 </div>
-
 </article>
-
 `;
 
 }
 ).join("");
 
 }
-
 
 function add(id){
 
@@ -1362,12 +1321,10 @@ all.find(
 x=>String(x.id)===String(id)
 );
 
-
 let i=
 cart.find(
 x=>String(x.id)===String(id)
 );
-
 
 let max=
 Number(
@@ -1376,29 +1333,19 @@ p.stock??
 0
 );
 
-
 if(i){
-
 if(i.q<max)i.q++;
-
 }else{
-
 cart.push({
 id,
 q:1
 });
-
 }
-
 
 save();
-
 renderCart();
-
 cartOpen();
-
 }
-
 
 function save(){
 
@@ -1407,15 +1354,12 @@ localStorage.setItem(
 JSON.stringify(cart)
 );
 
-
 $("cc").textContent=
 cart.reduce(
 (s,x)=>s+x.q,
 0
 );
-
 }
-
 
 function qty(id,z){
 
@@ -1424,12 +1368,10 @@ cart.find(
 x=>String(x.id)===String(id)
 );
 
-
 let p=
 all.find(
 x=>String(x.id)===String(id)
 );
-
 
 i.q=
 Math.max(
@@ -1444,28 +1386,20 @@ i.q+z
 )
 );
 
-
 if(!i.q){
-
 cart=
 cart.filter(
 x=>String(x.id)!==String(id)
 );
-
 }
-
 
 save();
-
 renderCart();
-
 }
 
-
-function getTotal(){
+function getSubtotal(){
 
 let tot=0;
-
 
 cart.forEach(
 i=>{
@@ -1475,9 +1409,7 @@ all.find(
 x=>String(x.id)===String(i.id)
 );
 
-
 if(!p)return;
-
 
 let pr=
 Number(
@@ -1486,22 +1418,32 @@ p.price??
 0
 );
 
-
 tot+=pr*i.q;
 
 }
 );
 
-
 return tot;
-
 }
 
+function getShipping(){
+
+if(!cart.length)return 0;
+
+return $("pay").value==="Bar"
+?
+0
+:
+SHIPPING_CHF;
+}
+
+function getTotal(){
+return getSubtotal()+getShipping();
+}
 
 function renderCart(){
 
-let tot=0;
-
+let subtotal=0;
 
 if(!cart.length){
 
@@ -1520,9 +1462,7 @@ all.find(
 x=>String(x.id)===String(i.id)
 );
 
-
 if(!p)return"";
-
 
 let pr=
 Number(
@@ -1531,9 +1471,7 @@ p.price??
 0
 );
 
-
-tot+=pr*i.q;
-
+subtotal+=pr*i.q;
 
 return`
 
@@ -1566,17 +1504,35 @@ ${i.q}
 
 }
 
+let shipping=
+cart.length
+?
+(
+$("pay").value==="Bar"
+?
+0
+:
+SHIPPING_CHF
+)
+:
+0;
 
-$("total").textContent=
-tot.toFixed(2);
+let total=subtotal+shipping;
 
+$("subtotal").textContent=subtotal.toFixed(2);
+$("shippingPrice").textContent=shipping.toFixed(2);
+$("total").textContent=total.toFixed(2);
+
+$("deliveryNote").textContent=
+$("pay").value==="Bar"
+?
+T[lang].pickupNote
+:
+T[lang].deliveryNote;
 
 save();
-
 paymentInfo();
-
 }
-
 
 function paymentInfo(){
 
@@ -1584,11 +1540,8 @@ let box=$("paymentInfo");
 
 if(!box)return;
 
-
 let method=$("pay").value;
-
 let tot=getTotal().toFixed(2);
-
 
 if(method==="TWINT"){
 
@@ -1606,9 +1559,7 @@ ${T[lang].twintName}
 `;
 
 return;
-
 }
-
 
 if(method==="PayPal"){
 
@@ -1626,9 +1577,7 @@ ${T[lang].paypalName}
 `;
 
 return;
-
 }
-
 
 box.innerHTML=
 `
@@ -1639,36 +1588,23 @@ ${T[lang].cashText}<br>
 ${T[lang].amount}: ${tot} CHF
 </div>
 `;
-
 }
-
 
 function cartOpen(){
-
 $("ov").classList.add("open");
-
-paymentInfo();
-
+renderCart();
 }
-
 
 function cartClose(){
-
 $("ov").classList.remove("open");
-
 }
-
 
 function sendOrder(){
 
 if(!cart.length){
-
 alert(T[lang].empty);
-
 return;
-
 }
-
 
 if(
 !$("name").value.trim()
@@ -1687,14 +1623,10 @@ lang==="de"
 );
 
 return;
-
 }
 
-
-let tot=0;
-
+let subtotal=0;
 let ls=[];
-
 
 cart.forEach(
 i=>{
@@ -1704,6 +1636,7 @@ all.find(
 x=>String(x.id)===String(i.id)
 );
 
+if(!p)return;
 
 let pr=
 Number(
@@ -1712,9 +1645,7 @@ p.price??
 0
 );
 
-
-tot+=pr*i.q;
-
+subtotal+=pr*i.q;
 
 ls.push(
 `• ${n(p)} x ${i.q} = ${(pr*i.q).toFixed(2)} CHF`
@@ -1723,11 +1654,18 @@ ls.push(
 }
 );
 
-
 let method=$("pay").value;
 
-let paymentText="";
+let shipping=
+method==="Bar"
+?
+0
+:
+SHIPPING_CHF;
 
+let total=subtotal+shipping;
+
+let paymentText="";
 
 if(method==="TWINT"){
 
@@ -1735,13 +1673,12 @@ paymentText=
 lang==="de"
 ?
 `TWINT: ${TWINT_NUMBER}
-Zu zahlender Betrag: ${tot.toFixed(2)} CHF`
+Zu zahlender Betrag: ${total.toFixed(2)} CHF`
 :
 `TWINT: ${TWINT_NUMBER}
-Iznos za uplatu: ${tot.toFixed(2)} CHF`;
+Iznos za uplatu: ${total.toFixed(2)} CHF`;
 
 }
-
 
 else if(method==="PayPal"){
 
@@ -1749,13 +1686,12 @@ paymentText=
 lang==="de"
 ?
 `PayPal: ${PAYPAL_EMAIL}
-Zu zahlender Betrag: ${tot.toFixed(2)} CHF`
+Zu zahlender Betrag: ${total.toFixed(2)} CHF`
 :
 `PayPal: ${PAYPAL_EMAIL}
-Iznos za uplatu: ${tot.toFixed(2)} CHF`;
+Iznos za uplatu: ${total.toFixed(2)} CHF`;
 
 }
-
 
 else{
 
@@ -1763,13 +1699,33 @@ paymentText=
 lang==="de"
 ?
 `Barzahlung bei persönlicher Abholung.
-Zu zahlender Betrag: ${tot.toFixed(2)} CHF`
+Zu zahlender Betrag: ${total.toFixed(2)} CHF`
 :
 `Gotovina pri ličnom preuzimanju.
-Iznos za uplatu: ${tot.toFixed(2)} CHF`;
+Iznos za uplatu: ${total.toFixed(2)} CHF`;
 
 }
 
+let shippingText=
+method==="Bar"
+?
+(
+lang==="de"
+?
+"Versand: Persönliche Abholung – 0.00 CHF"
+:
+"Dostava: Lično preuzimanje – 0.00 CHF"
+)
+:
+(
+lang==="de"
+?
+`Swiss Post Versand: ${shipping.toFixed(2)} CHF
+Lieferzeit: ca. 2–3 Werktage`
+:
+`Swiss Post dostava: ${shipping.toFixed(2)} CHF
+Rok isporuke: oko 2–3 radna dana`
+);
 
 let m=
 
@@ -1777,7 +1733,17 @@ let m=
 
 ${ls.join("\n")}
 
-${T[lang].totalLabel}: ${tot.toFixed(2)} CHF
+${
+lang==="de"
+?
+"Zwischensumme"
+:
+"Proizvodi"
+}: ${subtotal.toFixed(2)} CHF
+
+${shippingText}
+
+${T[lang].totalLabel}: ${total.toFixed(2)} CHF
 ${T[lang].payL}: ${method}
 
 ${paymentText}
@@ -1788,7 +1754,6 @@ E-Mail: ${$("email").value}
 ${T[lang].phoneL}: ${$("phone").value}
 ${T[lang].noteL}: ${$("note").value||"-"}`;
 
-
 window.open(
 "https://wa.me/41774383916?text="
 +
@@ -1798,6 +1763,66 @@ encodeURIComponent(m),
 
 }
 
+function addProductSchema(){
+
+const old=document.getElementById("product-schema");
+
+if(old)old.remove();
+
+const products=all.map(p=>{
+
+let price=
+Number(
+p.price_chf??
+p.price??
+0
+);
+
+let stock=
+Number(
+p.stock_qty??
+p.stock??
+0
+);
+
+return{
+"@type":"Product",
+"name":p.name_de||p.name_sr||p.name||"Bili's Natural Cosmetics",
+"description":p.description_de||p.description_sr||p.description||"",
+"image":p.image_url||p.image||undefined,
+"brand":{
+"@type":"Brand",
+"name":"Bili's Natural Cosmetics"
+},
+"offers":{
+"@type":"Offer",
+"priceCurrency":"CHF",
+"price":price.toFixed(2),
+"availability":
+stock>0
+?
+"https://schema.org/InStock"
+:
+"https://schema.org/OutOfStock",
+"url":"https://konjikonji12.github.io/bilis-natural-cosmetics/"
+}
+};
+
+});
+
+const script=document.createElement("script");
+
+script.type="application/ld+json";
+script.id="product-schema";
+
+script.textContent=
+JSON.stringify({
+"@context":"https://schema.org",
+"@graph":products
+});
+
+document.head.appendChild(script);
+}
 
 async function load(){
 
@@ -1812,7 +1837,6 @@ await db
 {ascending:true}
 );
 
-
 if(error){
 
 $("grid").textContent=
@@ -1821,32 +1845,21 @@ $("grid").textContent=
 console.error(error);
 
 return;
-
 }
-
 
 all=data||[];
 
-
 renderFilters();
-
 render();
-
 renderCart();
-
-paymentInfo();
-
+addProductSchema();
 }
-
 
 $("year").textContent=
 new Date().getFullYear();
 
-
 save();
-
 setLang("sr");
-
 load();
 
 </script>
