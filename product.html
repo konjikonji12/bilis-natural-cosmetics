@@ -1,0 +1,429 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>Bili's Natural Cosmetics – Produkt</title>
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta id="metaDescription" name="description" content="Bili's Natural Cosmetics – natürliche, handgefertigte Kosmetik aus der Schweiz.">
+<link id="canonical" rel="canonical" href="https://konjikonji12.github.io/bilis-natural-cosmetics/product.html">
+
+<meta property="og:type" content="product">
+<meta id="ogTitle" property="og:title" content="Bili's Natural Cosmetics">
+<meta id="ogDescription" property="og:description" content="Natürliche Kosmetik aus der Schweiz.">
+<meta id="ogUrl" property="og:url" content="https://konjikonji12.github.io/bilis-natural-cosmetics/product.html">
+<meta id="ogImage" property="og:image" content="">
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+:root{
+  --black:#0b0b09;
+  --cream:#f8f3e9;
+  --paper:#fffdf8;
+  --gold:#c5a25b;
+  --text:#211f1a;
+  --line:#ded4c4;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  background:var(--cream);
+  color:var(--text);
+  font:16px Arial,sans-serif;
+  line-height:1.6;
+}
+
+a{text-decoration:none;color:inherit}
+
+header{
+  background:var(--black);
+  color:white;
+  padding:18px 5%;
+  border-bottom:1px solid #5c4826;
+}
+
+.brand{
+  color:var(--gold);
+  font:32px Georgia,serif;
+}
+
+.brand small{
+  display:block;
+  margin-top:5px;
+  font:8px Arial,sans-serif;
+  letter-spacing:3px;
+}
+
+.back{
+  display:inline-block;
+  margin-top:15px;
+  color:#ddd3c0;
+  font-size:13px;
+}
+
+main{
+  max-width:1100px;
+  margin:auto;
+  padding:60px 5%;
+}
+
+.product{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:50px;
+  align-items:start;
+}
+
+.image{
+  background:#eee8dc;
+  border:1px solid var(--line);
+}
+
+.image img{
+  display:block;
+  width:100%;
+  height:auto;
+}
+
+.gold{
+  color:#9f7b35;
+  font-size:11px;
+  font-weight:bold;
+  letter-spacing:3px;
+  text-transform:uppercase;
+}
+
+h1{
+  font:48px/1.08 Georgia,serif;
+  margin:12px 0 20px;
+}
+
+.description{
+  font:18px/1.7 Georgia,serif;
+  color:#575147;
+}
+
+.size{
+  margin-top:18px;
+  color:#6c655a;
+}
+
+.price{
+  margin-top:24px;
+  padding-top:20px;
+  border-top:1px solid var(--line);
+  font-size:25px;
+  font-weight:bold;
+}
+
+.stock{
+  margin-top:8px;
+  color:#696359;
+}
+
+.shop{
+  display:inline-block;
+  margin-top:25px;
+  padding:15px 22px;
+  background:#111;
+  color:white;
+}
+
+.notice{
+  margin-top:50px;
+  padding:20px;
+  border:1px solid #d4bd8c;
+  background:#faf5e9;
+  font-size:13px;
+}
+
+footer{
+  margin-top:50px;
+  background:#0b0b09;
+  color:#999187;
+  text-align:center;
+  padding:25px;
+}
+
+.loading{
+  text-align:center;
+  padding:80px 20px;
+}
+
+@media(max-width:700px){
+  .product{grid-template-columns:1fr}
+  main{padding:35px 18px}
+  h1{font-size:38px}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="brand">
+Bili's
+<small>NATURAL COSMETICS</small>
+</div>
+
+<a class="back" href="index.html">← Zurück zum Online-Shop</a>
+</header>
+
+<main>
+
+<div id="loading" class="loading">
+Produkt wird geladen...
+</div>
+
+<article id="product" class="product" style="display:none">
+
+<div class="image">
+<img id="image" alt="">
+</div>
+
+<div>
+
+<div id="category" class="gold"></div>
+
+<h1 id="name"></h1>
+
+<div id="description" class="description"></div>
+
+<div id="size" class="size"></div>
+
+<div id="price" class="price"></div>
+
+<div id="stock" class="stock"></div>
+
+<a class="shop" href="index.html#products">
+Zum Online-Shop
+</a>
+
+</div>
+</article>
+
+<div id="notice" class="notice" style="display:none">
+<strong>Wichtiger Hinweis:</strong>
+Kosmetische Produkte sind keine Arzneimittel.
+Individuelle allergische Reaktionen sind möglich.
+Vor der ersten Anwendung wird ein Test auf einer kleinen Hautstelle empfohlen.
+Kauf und Anwendung erfolgen auf eigene Verantwortung.
+</div>
+
+</main>
+
+<footer>
+© <span id="year"></span> Bili's Natural Cosmetics · Switzerland
+</footer>
+
+<script>
+const SITE =
+"https://konjikonji12.github.io/bilis-natural-cosmetics/";
+
+const db =
+supabase.createClient(
+"https://enzcsfhtduucagqjamnx.supabase.co",
+"sb_publishable_04GgoHvEKpmroJtjY-1wKA_HjEu7tC9"
+);
+
+const esc=s=>
+String(s??"").replace(
+/[&<>"']/g,
+m=>({
+"&":"&amp;",
+"<":"&lt;",
+">":"&gt;",
+'"':"&quot;",
+"'":"&#39;"
+}[m])
+);
+
+function absoluteImage(url){
+if(!url)return "";
+try{
+return new URL(url,SITE).href;
+}catch{
+return url;
+}
+}
+
+async function loadProduct(){
+
+const params=
+new URLSearchParams(window.location.search);
+
+const slug=params.get("slug");
+
+if(!slug){
+document.getElementById("loading").textContent=
+"Produkt wurde nicht gefunden.";
+return;
+}
+
+const {data,error}=
+await db
+.from("products")
+.select("*")
+.eq("slug",slug)
+.eq("active",true)
+.maybeSingle();
+
+if(error || !data){
+document.getElementById("loading").textContent=
+"Produkt wurde nicht gefunden.";
+return;
+}
+
+const name=
+data.name_de||
+data.name_sr||
+data.name||
+"Bili's Natural Cosmetics";
+
+const description=
+data.description_de||
+data.description_sr||
+data.description||
+"";
+
+const category=
+data.category_de||
+data.category_sr||
+data.category||
+"Bili's Natural Cosmetics";
+
+const image=
+absoluteImage(
+data.image_url||
+data.image||
+""
+);
+
+const price=
+Number(
+data.price_chf??
+data.price??
+0
+);
+
+const stock=
+Number(
+data.stock_qty??
+data.stock??
+0
+);
+
+const size=
+data.slug==="lip-balm-vanille"
+?
+"6 g"
+:
+(
+data.size||
+data.volume||
+""
+);
+
+const pageUrl=
+SITE+"product.html?slug="+encodeURIComponent(slug);
+
+document.title=
+name+" | Bili's Natural Cosmetics Schweiz";
+
+document.getElementById("metaDescription")
+.setAttribute(
+"content",
+(description || name+" von Bili's Natural Cosmetics aus der Schweiz.")
+.slice(0,160)
+);
+
+document.getElementById("canonical")
+.setAttribute("href",pageUrl);
+
+document.getElementById("ogTitle")
+.setAttribute("content",name);
+
+document.getElementById("ogDescription")
+.setAttribute(
+"content",
+description || "Bili's Natural Cosmetics"
+);
+
+document.getElementById("ogUrl")
+.setAttribute("content",pageUrl);
+
+if(image){
+document.getElementById("ogImage")
+.setAttribute("content",image);
+}
+
+document.getElementById("name").textContent=name;
+document.getElementById("description").textContent=description;
+document.getElementById("category").textContent=category;
+document.getElementById("size").textContent=size;
+document.getElementById("price").textContent=
+price.toFixed(2)+" CHF";
+
+document.getElementById("stock").textContent=
+stock>0
+?
+"Verfügbar ("+stock+")"
+:
+"Derzeit nicht verfügbar";
+
+const img=document.getElementById("image");
+
+if(image){
+img.src=image;
+img.alt=name;
+}else{
+img.closest(".image").style.display="none";
+}
+
+const schema={
+"@context":"https://schema.org",
+"@type":"Product",
+"name":name,
+"description":description,
+"image":image || undefined,
+"sku":slug,
+"brand":{
+"@type":"Brand",
+"name":"Bili's Natural Cosmetics"
+},
+"offers":{
+"@type":"Offer",
+"url":pageUrl,
+"priceCurrency":"CHF",
+"price":price.toFixed(2),
+"availability":
+stock>0
+?
+"https://schema.org/InStock"
+:
+"https://schema.org/OutOfStock"
+}
+};
+
+const script=document.createElement("script");
+script.type="application/ld+json";
+script.textContent=JSON.stringify(schema);
+document.head.appendChild(script);
+
+document.getElementById("loading").style.display="none";
+document.getElementById("product").style.display="grid";
+document.getElementById("notice").style.display="block";
+}
+
+document.getElementById("year").textContent=
+new Date().getFullYear();
+
+loadProduct();
+</script>
+
+</body>
+</html>
