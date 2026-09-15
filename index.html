@@ -1,917 +1,1388 @@
 <!doctype html>
 <html lang="sr">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <title>Bili's Natural Cosmetics – Prirodna nega</title>
-
-  <meta name="description"
-        content="Bili's Natural Cosmetics – ručno izrađena prirodna kozmetika iz Švajcarske.">
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap"
-        rel="stylesheet">
-
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-  <style>
-    :root {
-      --black: #10100f;
-      --cream: #f7f3eb;
-      --paper: #fffdf9;
-      --gold: #b99a5a;
-      --line: #ddd5c7;
-      --muted: #777267;
-      --text: #24231f;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      margin: 0;
-      background: var(--cream);
-      color: var(--text);
-      font-family: Inter, Arial, sans-serif;
-      line-height: 1.6;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    button {
-      font-family: inherit;
-    }
-
-    .nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(16, 16, 15, 0.97);
-      color: white;
-      border-bottom: 1px solid rgba(185, 154, 90, 0.35);
-    }
-
-    .navin {
-      max-width: 1200px;
-      margin: auto;
-      padding: 18px 22px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-    }
-
-    .brand {
-      font-family: "Cormorant Garamond", serif;
-      font-size: 29px;
-      font-weight: 600;
-      letter-spacing: 0.04em;
-    }
-
-    .brand small {
-      display: block;
-      color: var(--gold);
-      font-family: Inter, Arial, sans-serif;
-      font-size: 9px;
-      letter-spacing: 0.28em;
-      margin-top: -6px;
-    }
-
-    .links {
-      display: flex;
-      gap: 28px;
-      font-size: 13px;
-    }
-
-    .links a:hover {
-      color: var(--gold);
-    }
-
-    .hero {
-      min-height: 78vh;
-      display: flex;
-      align-items: center;
-      background:
-        radial-gradient(
-          circle at 80% 20%,
-          rgba(185, 154, 90, 0.20),
-          transparent 30%
-        ),
-        linear-gradient(
-          135deg,
-          #f7f3eb 0%,
-          #eee7da 100%
-        );
-    }
-
-    .hero-inner {
-      width: 100%;
-      max-width: 1200px;
-      margin: auto;
-      padding: 100px 22px;
-    }
-
-    .eyebrow {
-      color: var(--gold);
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.24em;
-      text-transform: uppercase;
-      margin-bottom: 16px;
-    }
-
-    h1,
-    h2,
-    h3 {
-      font-family: "Cormorant Garamond", serif;
-      font-weight: 500;
-      line-height: 1.08;
-    }
-
-    h1 {
-      max-width: 780px;
-      font-size: clamp(48px, 7vw, 88px);
-      margin: 0 0 24px;
-    }
-
-    h2 {
-      font-size: clamp(38px, 5vw, 58px);
-      margin: 0;
-    }
-
-    .hero p {
-      max-width: 680px;
-      color: #625e55;
-      font-size: 16px;
-    }
-
-    .buttons {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin-top: 30px;
-    }
-
-    .btn {
-      display: inline-block;
-      padding: 13px 22px;
-      background: var(--black);
-      color: white;
-      border: 1px solid var(--black);
-      font-size: 12px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    .btn.light {
-      background: transparent;
-      color: var(--black);
-    }
-
-    .btn:hover {
-      opacity: 0.85;
-    }
-
-    .section {
-      max-width: 1200px;
-      margin: auto;
-      padding: 90px 22px;
-    }
-
-    .head {
-      display: flex;
-      align-items: end;
-      justify-content: space-between;
-      gap: 25px;
-      margin-bottom: 35px;
-    }
-
-    .sub {
-      max-width: 420px;
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    .filters {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-bottom: 28px;
-    }
-
-    .filter {
-      border: 1px solid var(--line);
-      background: transparent;
-      color: var(--text);
-      padding: 9px 15px;
-      cursor: pointer;
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-
-    .filter.active,
-    .filter:hover {
-      background: var(--black);
-      color: white;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 22px;
-    }
-
-    .product {
-      background: var(--paper);
-      border: 1px solid var(--line);
-      display: flex;
-      flex-direction: column;
-      min-height: 100%;
-    }
-
-    .photo {
-      aspect-ratio: 1 / 1;
-      background: #eee9df;
-      overflow: hidden;
-    }
-
-    .photo img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    .photo.empty-photo {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #999;
-      font-family: "Cormorant Garamond", serif;
-      font-size: 28px;
-    }
-
-    .info {
-      padding: 22px;
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-    }
-
-    .cat {
-      color: var(--gold);
-      font-size: 9px;
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      margin-bottom: 7px;
-    }
-
-    .product h3 {
-      font-size: 28px;
-      margin: 0 0 10px;
-    }
-
-    .desc {
-      color: #69645c;
-      font-size: 13px;
-      flex: 1;
-    }
-
-    .buy {
-      margin-top: 22px;
-      padding-top: 16px;
-      border-top: 1px solid var(--line);
-      display: flex;
-      align-items: end;
-      justify-content: space-between;
-      gap: 12px;
-    }
-
-    .price {
-      font-weight: 600;
-      font-size: 17px;
-    }
-
-    .stock {
-      color: #777;
-      font-size: 10px;
-      margin-top: 4px;
-    }
-
-    .order {
-      border: 0;
-      background: var(--black);
-      color: white;
-      padding: 11px 14px;
-      cursor: pointer;
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-
-    .order:hover {
-      opacity: 0.85;
-    }
-
-    .empty {
-      padding: 30px;
-      border: 1px dashed var(--line);
-      color: #777;
-      text-align: center;
-      grid-column: 1 / -1;
-    }
-
-    .story {
-      background: var(--black);
-      color: white;
-    }
-
-    .story-inner {
-      max-width: 1200px;
-      margin: auto;
-      padding: 90px 22px;
-    }
-
-    .story p {
-      max-width: 720px;
-      color: #d4d0c8;
-    }
-
-    .contact {
-      background: var(--paper);
-    }
-
-    .contactbox {
-      max-width: 1200px;
-      margin: auto;
-      padding: 90px 22px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 50px;
-    }
-
-    .contact-info {
-      color: #5f5a52;
-      font-size: 14px;
-    }
-
-    .contact-info strong {
-      color: var(--black);
-    }
-
-    footer {
-      background: var(--black);
-      color: #aaa;
-      padding: 25px 22px;
-      text-align: center;
-      font-size: 11px;
-    }
-
-    @media (max-width: 800px) {
-      .links {
-        display: none;
-      }
-
-      .grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .contactbox {
-        grid-template-columns: 1fr;
-      }
-
-      .head {
-        display: block;
-      }
-
-      .sub {
-        margin-top: 15px;
-      }
-    }
-
-    @media (max-width: 540px) {
-      .grid {
-        grid-template-columns: 1fr;
-      }
-
-      .hero-inner,
-      .section,
-      .story-inner,
-      .contactbox {
-        padding-left: 18px;
-        padding-right: 18px;
-      }
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>Bili's Natural Cosmetics</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+:root{
+  --b:#10100f;
+  --c:#f7f3eb;
+  --p:#fffdf9;
+  --g:#b99a5a;
+  --l:#ddd5c7;
+  --t:#24231f
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  background:var(--c);
+  color:var(--t);
+  font:15px Arial,sans-serif;
+  line-height:1.55
+}
+
+a{
+  text-decoration:none;
+  color:inherit
+}
+
+nav{
+  position:sticky;
+  top:0;
+  z-index:10;
+  background:var(--b);
+  color:white;
+  padding:16px 5%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center
+}
+
+.brand{
+  font:32px Georgia,serif
+}
+
+.brand small{
+  display:block;
+  color:var(--g);
+  font:9px Arial;
+  letter-spacing:3px
+}
+
+.tools{
+  display:flex;
+  gap:7px
+}
+
+button,.btn{
+  border:1px solid var(--b);
+  padding:11px 14px;
+  background:var(--b);
+  color:white;
+  cursor:pointer
+}
+
+.tools button{
+  border-color:#6d6045
+}
+
+.tools .on{
+  background:var(--g);
+  color:#111
+}
+
+.hero,.section,.contact{
+  padding:70px 5%;
+  max-width:1200px;
+  margin:auto
+}
+
+.hero{
+  max-width:none;
+  min-height:55vh;
+  background:linear-gradient(135deg,#f7f3eb,#eee7da)
+}
+
+h1,h2,h3{
+  font-family:Georgia,serif;
+  font-weight:400
+}
+
+h1{
+  font-size:clamp(46px,7vw,82px);
+  max-width:780px
+}
+
+.gold{
+  color:var(--g);
+  letter-spacing:3px;
+  font-size:11px;
+  font-weight:bold
+}
+
+.filters{
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+  margin:25px 0
+}
+
+.filters button{
+  background:transparent;
+  color:#222;
+  border-color:var(--l)
+}
+
+.filters .on{
+  background:var(--b);
+  color:white
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px
+}
+
+.card{
+  background:var(--p);
+  border:1px solid var(--l)
+}
+
+.photo{
+  aspect-ratio:1;
+  overflow:hidden;
+  background:#eee
+}
+
+.photo img{
+  width:100%;
+  height:100%;
+  object-fit:cover
+}
+
+.info{
+  padding:18px
+}
+
+.price{
+  font-weight:bold;
+  font-size:18px
+}
+
+.stock{
+  font-size:12px;
+  color:#777
+}
+
+.row{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  align-items:end;
+  border-top:1px solid var(--l);
+  padding-top:15px;
+  margin-top:15px
+}
+
+.story{
+  background:var(--b);
+  color:white;
+  padding:70px 5%
+}
+
+.story>div{
+  max-width:1200px;
+  margin:auto
+}
+
+.contact{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:30px
+}
+
+.legal{
+  padding:25px 5%;
+  font-size:12px;
+  color:#666
+}
+
+footer{
+  background:var(--b);
+  color:#aaa;
+  text-align:center;
+  padding:25px
+}
+
+.overlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:#0009;
+  z-index:30
+}
+
+.overlay.open{
+  display:block
+}
+
+.drawer{
+  position:absolute;
+  right:0;
+  top:0;
+  height:100%;
+  width:min(440px,100%);
+  background:var(--p);
+  padding:22px;
+  overflow:auto
+}
+
+.cartitem{
+  padding:12px 0;
+  border-bottom:1px solid var(--l)
+}
+
+input,textarea,select{
+  width:100%;
+  padding:11px;
+  margin:5px 0 10px;
+  border:1px solid var(--l)
+}
+
+.full{
+  width:100%
+}
+
+@media(max-width:800px){
+  .grid{
+    grid-template-columns:repeat(2,1fr)
+  }
+}
+
+@media(max-width:540px){
+  .grid{
+    grid-template-columns:1fr
+  }
+
+  .hero,.section,.contact{
+    padding-left:18px;
+    padding-right:18px
+  }
+
+  .contact{
+    grid-template-columns:1fr
+  }
+}
+</style>
 </head>
 
 <body>
 
-  <nav class="nav">
-    <div class="navin">
+<nav>
 
-      <a class="brand" href="#">
-        Bili's
-        <small>NATURAL COSMETICS</small>
-      </a>
+<div class="brand">
+Bili's
+<small>NATURAL COSMETICS</small>
+</div>
 
-      <div class="links">
-        <a href="#proizvodi">Proizvodi</a>
-        <a href="#o-nama">O nama</a>
-        <a href="#kontakt">Kontakt</a>
-      </div>
+<div class="tools">
 
-    </div>
-  </nav>
+<button
+id="sr"
+class="on"
+onclick="setLang('sr')">
+SR
+</button>
 
+<button
+id="de"
+onclick="setLang('de')">
+DE
+</button>
 
-  <section class="hero">
+<button onclick="cartOpen()">
+🛒 <span id="cc">0</span>
+</button>
 
-    <div class="hero-inner">
+</div>
 
-      <div class="eyebrow">
-        HANDMADE • NATURAL • SWITZERLAND
-      </div>
+</nav>
 
-      <h1>
-        Prirodna nega sa posebnom pričom.
-      </h1>
 
-      <p>
-        Pažljivo birana ulja, biljni macerati i prirodni sastojci,
-        objedinjeni u maloj kolekciji ručno izrađene kozmetike.
-      </p>
+<section class="hero">
 
-      <div class="buttons">
+<div class="gold">
+HANDMADE • NATURAL • SWITZERLAND
+</div>
 
-        <a class="btn" href="#proizvodi">
-          Pogledaj kolekciju
-        </a>
+<h1 id="hero"></h1>
 
-        <a class="btn light" href="#kontakt">
-          Kontakt
-        </a>
+<p id="heroText"></p>
 
-      </div>
+<a
+class="btn"
+href="#products"
+id="see">
+</a>
 
-    </div>
+</section>
 
-  </section>
 
+<section
+class="section"
+id="products">
 
-  <section id="proizvodi" class="section">
+<div class="gold">
+BILI'S COLLECTION
+</div>
 
-    <div class="head">
+<h2 id="prodTitle"></h2>
 
-      <div>
-        <div class="eyebrow">
-          BILI'S KOLEKCIJA
-        </div>
+<p id="prodSub"></p>
 
-        <h2>
-          Proizvodi
-        </h2>
-      </div>
+<div
+id="filters"
+class="filters">
+</div>
 
-      <div class="sub">
-        Izaberi kategoriju. Cena i stanje zaliha
-        učitavaju se direktno iz online baze.
-      </div>
+<div
+id="grid"
+class="grid">
+Učitavanje...
+</div>
 
-    </div>
+</section>
 
 
-    <div id="filters" class="filters"></div>
+<section class="story">
 
+<div>
 
-    <div id="products" class="grid">
+<div class="gold">
+BILI'S NATURAL COSMETICS
+</div>
 
-      <div class="empty">
-        Učitavanje proizvoda...
-      </div>
+<h2 id="storyTitle"></h2>
 
-    </div>
+<p id="storyText"></p>
 
-  </section>
+</div>
 
+</section>
 
-  <section id="o-nama" class="story">
 
-    <div class="story-inner">
+<section class="contact">
 
-      <div class="eyebrow">
-        O BILI'S NATURAL COSMETICS
-      </div>
+<div>
 
-      <h2>
-        Prirodno. Pažljivo. Ručno.
-      </h2>
+<div
+class="gold"
+id="contactLabel">
+</div>
 
-      <p>
-        Bili's Natural Cosmetics je mala kolekcija prirodne
-        kozmetike razvijena sa posebnom pažnjom prema izboru
-        sirovina, jednostavnosti formulacija i kvalitetu izrade.
-      </p>
+<h2 id="here"></h2>
 
-      <p>
-        Svaki proizvod nastaje sa željom da prirodna nega bude
-        jednostavna, prijatna i pažljivo osmišljena.
-      </p>
+</div>
 
-    </div>
 
-  </section>
+<div>
 
+<b>
+Bili's Natural Cosmetics
+</b>
 
-  <section id="kontakt" class="contact">
+<p>
+Duric Biljana<br>
+Abt Bedastrasse 42<br>
+9245 Sonnental<br>
+Schweiz
+</p>
 
-    <div class="contactbox">
+<p>
+Telefon: 077 438 39 16<br>
+E-Mail: duricbiljana.diki@gmail.com
+</p>
 
-      <div>
+</div>
 
-        <div class="eyebrow">
-          KONTAKT
-        </div>
+</section>
 
-        <h2>
-          Tu smo za vas.
-        </h2>
 
-      </div>
+<div class="legal">
 
+<b id="warning"></b>
 
-      <div class="contact-info">
+<span id="legal"></span>
 
-        <p>
-          <strong>
-            Bili's Natural Cosmetics
-          </strong>
-        </p>
+</div>
 
-        <p>
-          Duric Biljana<br>
-          Abt Bedastrasse 42<br>
-          9245 Sonnental<br>
-          Schweiz
-        </p>
 
-        <p>
-          Telefon: 077 438 39 16<br>
-          E-Mail: duricbiljana.diki@gmail.com
-        </p>
+<footer>
+© <span id="year"></span>
+Bili's Natural Cosmetics
+</footer>
 
-      </div>
 
-    </div>
+<div
+id="ov"
+class="overlay"
+onclick="if(event.target===this)cartClose()">
 
-  </section>
+<div class="drawer">
 
+<button onclick="cartClose()">
+×
+</button>
 
-  <footer>
-    © <span id="year"></span> Bili's Natural Cosmetics
-  </footer>
+<h2 id="cartTitle"></h2>
 
+<div id="items"></div>
 
-  <script>
+<h3>
+<span id="totalLabel"></span>:
+<span id="total">0.00</span> CHF
+</h3>
 
-    const SUPABASE_URL =
-      "https://enzcsfhtduucagqjamnx.supabase.co";
+<hr>
 
-    const SUPABASE_ANON_KEY =
-      "sb_publishable_04GgoHvEKpmroJtjY-1wKA_HjEu7tC9";
 
+<label id="nameL"></label>
+<input id="name">
 
-    const db = supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_ANON_KEY
-    );
 
+<label id="addressL"></label>
+<input id="address">
 
-    let all = [];
 
-    let category = "Sve";
+<label>
+E-Mail
+</label>
+<input id="email">
 
 
-    function esc(value) {
+<label id="phoneL"></label>
+<input id="phone">
 
-      return String(value ?? "")
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
 
-    }
+<label id="payL"></label>
 
+<select id="pay">
 
-    function renderFilters() {
+<option>
+TWINT
+</option>
 
-      const categories = [
-        "Sve",
-        ...new Set(
-          all
-            .map(p =>
-              p.category ||
-              p.category_sr ||
-              p.category_de ||
-              ""
-            )
-            .filter(Boolean)
-        )
-      ];
+<option>
+PayPal
+</option>
 
+<option value="Bar">
+Bar / Gotovina
+</option>
 
-      document.getElementById("filters").innerHTML =
-        categories.map(c => {
+</select>
 
-          const active =
-            category === c
-              ? "active"
-              : "";
 
-          return `
-            <button
-              class="filter ${active}"
-              onclick='setCat(${JSON.stringify(c)})'>
-              ${esc(c)}
-            </button>
-          `;
+<label id="noteL"></label>
 
-        }).join("");
+<textarea id="note"></textarea>
 
-    }
 
+<button
+class="full"
+id="send"
+onclick="sendOrder()">
+</button>
 
-    function setCat(c) {
 
-      category = c;
+<p
+id="ship"
+style="font-size:12px;color:#777">
+</p>
 
-      renderFilters();
+</div>
 
-      renderProducts();
+</div>
 
-    }
 
+<script>
 
-    function renderProducts() {
+const db =
+supabase.createClient(
+"https://enzcsfhtduucagqjamnx.supabase.co",
+"sb_publishable_04GgoHvEKpmroJtjY-1wKA_HjEu7tC9"
+);
 
-      const list =
-        category === "Sve"
-          ? all
-          : all.filter(p =>
-              (
-                p.category ||
-                p.category_sr ||
-                p.category_de ||
-                ""
-              ) === category
-            );
 
+const T = {
 
-      if (!list.length) {
+sr:{
 
-        document.getElementById("products").innerHTML =
-          `
-            <div class="empty">
-              Trenutno nema proizvoda u ovoj kategoriji.
-            </div>
-          `;
+hero:
+"Prirodna nega sa posebnom pričom.",
 
-        return;
-      }
+heroText:
+"Pažljivo birana ulja, biljni macerati i prirodni sastojci, objedinjeni u kolekciji ručno izrađene kozmetike.",
 
+see:
+"Pogledaj kolekciju",
 
-      document.getElementById("products").innerHTML =
-        list.map(p => {
+prodTitle:
+"Proizvodi",
 
-          const name =
-            p.name_sr ||
-            p.name_de ||
-            p.name ||
-            "Proizvod";
+prodSub:
+"Cena i stanje zaliha učitavaju se direktno iz online baze.",
 
+storyTitle:
+"Prirodno. Pažljivo. Ručno.",
 
-          const description =
-            p.description_sr ||
-            p.description_de ||
-            p.description ||
-            "";
+storyText:
+"Bili's Natural Cosmetics je kolekcija prirodne kozmetike razvijena sa posebnom pažnjom prema izboru sirovina i kvalitetu izrade.",
 
+contactLabel:
+"KONTAKT",
 
-          const image =
-            p.image_url ||
-            p.image ||
-            p.photo_url ||
-            "";
+here:
+"Tu smo za vas.",
 
+warning:
+"Važna napomena:",
 
-          const stock =
-            Number(
-              p.stock_qty ??
-              p.stock ??
-              0
-            );
+legal:
+"Kozmetički proizvodi nisu lekovi. Moguća je individualna alergijska reakcija. Pre prve upotrebe preporučuje se test na malom delu kože. Kupovina i korišćenje su na sopstvenu odgovornost.",
 
+cartTitle:
+"Korpa",
 
-          const price =
-            p.price_chf ??
-            p.price ??
-            "";
+totalLabel:
+"Ukupno",
 
+nameL:
+"Ime i prezime",
 
-          const categoryName =
-            p.category ||
-            p.category_sr ||
-            p.category_de ||
-            "";
+addressL:
+"Adresa",
 
+phoneL:
+"Telefon",
 
-          const whatsappText =
-            encodeURIComponent(
-              "Zdravo, interesuje me proizvod: " + name
-            );
+payL:
+"Način plaćanja",
 
+noteL:
+"Napomena",
 
-          return `
-            <article class="product">
+send:
+"Pošalji porudžbinu preko WhatsApp-a",
 
-              <div class="photo ${image ? "" : "empty-photo"}">
+ship:
+"Dostava se dodatno naplaćuje. Dostava je moguća u Švajcarskoj, EU i drugim zemljama; transport plaća kupac.",
 
-                ${
-                  image
-                    ? `
-                      <img
-                        src="${esc(image)}"
-                        alt="${esc(name)}"
-                        loading="lazy">
-                    `
-                    : "Bili's"
-                }
+all:
+"Sve",
 
-              </div>
+add:
+"Dodaj u korpu",
 
+available:
+"Dostupno",
 
-              <div class="info">
+none:
+"Trenutno nije dostupno",
 
-                <div class="cat">
-                  ${esc(categoryName)}
-                </div>
+empty:
+"Korpa je prazna."
 
+},
 
-                <h3>
-                  ${esc(name)}
-                </h3>
 
+de:{
 
-                <div class="desc">
-                  ${esc(description)}
-                </div>
+hero:
+"Natürliche Pflege mit einer besonderen Geschichte.",
 
+heroText:
+"Sorgfältig ausgewählte Öle, Pflanzenmazerate und natürliche Inhaltsstoffe in einer Kollektion handgefertigter Kosmetik.",
 
-                <div class="buy">
+see:
+"Kollektion ansehen",
 
-                  <div>
+prodTitle:
+"Produkte",
 
-                    <div class="price">
+prodSub:
+"Preise und Lagerbestand werden direkt aus der Online-Datenbank geladen.",
 
-                      ${
-                        price !== ""
-                          ? esc(price) + " CHF"
-                          : "Cena na upit"
-                      }
+storyTitle:
+"Natürlich. Sorgfältig. Handgemacht.",
 
-                    </div>
+storyText:
+"Bili's Natural Cosmetics ist eine Kollektion natürlicher Kosmetik mit besonderer Sorgfalt bei Rohstoffen und Herstellung.",
 
+contactLabel:
+"KONTAKT",
 
-                    <div class="stock">
+here:
+"Wir sind für Sie da.",
 
-                      ${
-                        stock > 0
-                          ? "Dostupno"
-                          : "Trenutno nije dostupno"
-                      }
+warning:
+"Wichtiger Hinweis:",
 
-                    </div>
+legal:
+"Kosmetische Produkte sind keine Arzneimittel. Individuelle allergische Reaktionen sind möglich. Vor der ersten Anwendung wird ein Test auf einer kleinen Hautstelle empfohlen. Kauf und Anwendung erfolgen auf eigene Verantwortung.",
 
-                  </div>
+cartTitle:
+"Warenkorb",
 
+totalLabel:
+"Gesamt",
 
-                  ${
-                    stock > 0
-                      ? `
-                        <a
-                          class="order"
-                          href="https://wa.me/41774383916?text=${whatsappText}"
-                          target="_blank"
-                          rel="noopener">
-                          Poruči
-                        </a>
-                      `
-                      : ""
-                  }
+nameL:
+"Vor- und Nachname",
 
-                </div>
+addressL:
+"Adresse",
 
-              </div>
+phoneL:
+"Telefon",
 
-            </article>
-          `;
+payL:
+"Zahlungsart",
 
-        }).join("");
+noteL:
+"Bemerkung",
 
-    }
+send:
+"Bestellung über WhatsApp senden",
 
+ship:
+"Versandkosten werden zusätzlich berechnet. Versand in die Schweiz, EU und weitere Länder ist möglich; Transportkosten trägt der Käufer.",
 
-    async function load() {
+all:
+"Alle",
 
-      const productsBox =
-        document.getElementById("products");
+add:
+"In den Warenkorb",
 
+available:
+"Verfügbar",
 
-      try {
+none:
+"Derzeit nicht verfügbar",
 
-        const result =
-          await db
-            .from("products")
-            .select("*")
-            .eq("active", true);
+empty:
+"Der Warenkorb ist leer."
 
+}
 
-        const data =
-          result.data;
+};
 
-        const error =
-          result.error;
 
+let lang = "sr";
 
-        if (error) {
+let all = [];
 
-          console.error(
-            "Supabase error:",
-            error
-          );
+let cat = "*";
 
+let cart =
+JSON.parse(
+localStorage.getItem("bilis_cart") || "[]"
+);
 
-          productsBox.innerHTML =
-            `
-              <div class="empty">
-                Proizvodi trenutno nisu dostupni.
-              </div>
-            `;
 
-          return;
-        }
+const $ =
+id =>
+document.getElementById(id);
 
 
-        all = data || [];
+const esc =
+s =>
+String(s ?? "")
+.replace(
+/[&<>"']/g,
+m => ({
+"&":"&amp;",
+"<":"&lt;",
+">":"&gt;",
+'"':"&quot;",
+"'":"&#39;"
+}[m])
+);
 
 
-        renderFilters();
+function n(p){
 
-        renderProducts();
+return (
+lang === "de"
+?
+(p.name_de || p.name_sr)
+:
+(p.name_sr || p.name_de)
+)
+||
+p.name
+||
+"Bili's";
 
-      }
+}
 
 
-      catch (error) {
+function d(p){
 
-        console.error(
-          "Loading error:",
-          error
-        );
+return (
+lang === "de"
+?
+(p.description_de || p.description_sr)
+:
+(p.description_sr || p.description_de)
+)
+||
+p.description
+||
+"";
 
+}
 
-        productsBox.innerHTML =
-          `
-            <div class="empty">
-              Došlo je do greške pri učitavanju proizvoda.
-            </div>
-          `;
 
-      }
+function c(p){
 
-    }
+return (
+lang === "de"
+?
+(p.category_de || p.category_sr)
+:
+(p.category_sr || p.category_de)
+)
+||
+p.category
+||
+"";
 
+}
 
-    document.getElementById("year").textContent =
-      new Date().getFullYear();
 
+function setLang(x){
 
-    load();
+lang = x;
 
-  </script>
+$("sr").classList.toggle(
+"on",
+x === "sr"
+);
+
+$("de").classList.toggle(
+"on",
+x === "de"
+);
+
+
+for(
+const k of [
+"hero",
+"heroText",
+"see",
+"prodTitle",
+"prodSub",
+"storyTitle",
+"storyText",
+"contactLabel",
+"here",
+"warning",
+"legal",
+"cartTitle",
+"totalLabel",
+"nameL",
+"addressL",
+"phoneL",
+"payL",
+"noteL",
+"send",
+"ship"
+]
+){
+
+$(k).textContent =
+T[x][k];
+
+}
+
+
+renderFilters();
+
+render();
+
+renderCart();
+
+}
+
+
+function renderFilters(){
+
+let cs =
+[
+...new Set(
+all
+.map(c)
+.filter(Boolean)
+)
+];
+
+
+$("filters").innerHTML =
+
+`
+<button
+class="${cat === "*" ? "on" : ""}"
+onclick="setCat('*')">
+${T[lang].all}
+</button>
+`
+
++
+
+cs.map(
+x =>
+`
+<button
+class="${cat === x ? "on" : ""}"
+onclick='setCat(${JSON.stringify(x)})'>
+${esc(x)}
+</button>
+`
+).join("");
+
+}
+
+
+function setCat(x){
+
+cat = x;
+
+renderFilters();
+
+render();
+
+}
+
+
+function render(){
+
+let list =
+cat === "*"
+?
+all
+:
+all.filter(
+p =>
+c(p) === cat
+);
+
+
+$("grid").innerHTML =
+
+list.map(
+p => {
+
+let st =
+Number(
+p.stock_qty ??
+p.stock ??
+0
+);
+
+
+let pr =
+Number(
+p.price_chf ??
+p.price ??
+0
+);
+
+
+let im =
+p.image_url ||
+p.image ||
+"";
+
+
+let size =
+p.slug === "lip-balm-vanille"
+?
+"6 g"
+:
+(
+p.size ||
+p.volume ||
+""
+);
+
+
+return `
+
+<article class="card">
+
+<div class="photo">
+
+${
+im
+?
+`
+<img
+src="${esc(im)}"
+alt="${esc(n(p))}">
+`
+:
+""
+}
+
+</div>
+
+
+<div class="info">
+
+<small class="gold">
+${esc(c(p))}
+</small>
+
+
+<h3>
+${esc(n(p))}
+</h3>
+
+
+<p>
+${esc(d(p))}
+</p>
+
+
+${
+size
+?
+`
+<small>
+${esc(size)}
+</small>
+`
+:
+""
+}
+
+
+<div class="row">
+
+<div>
+
+<div class="price">
+${pr.toFixed(2)} CHF
+</div>
+
+
+<div class="stock">
+
+${
+st > 0
+?
+T[lang].available + " (" + st + ")"
+:
+T[lang].none
+}
+
+</div>
+
+</div>
+
+
+${
+st > 0
+?
+`
+<button
+onclick='add(${JSON.stringify(p.id)})'>
+${T[lang].add}
+</button>
+`
+:
+""
+}
+
+</div>
+
+</div>
+
+</article>
+
+`;
+
+}
+).join("");
+
+}
+
+
+function add(id){
+
+let p =
+all.find(
+x =>
+String(x.id) === String(id)
+);
+
+
+let i =
+cart.find(
+x =>
+String(x.id) === String(id)
+);
+
+
+let max =
+Number(
+p.stock_qty ??
+p.stock ??
+0
+);
+
+
+if(i){
+
+if(i.q < max)
+i.q++;
+
+}
+else{
+
+cart.push({
+id,
+q:1
+});
+
+}
+
+
+save();
+
+renderCart();
+
+cartOpen();
+
+}
+
+
+function save(){
+
+localStorage.setItem(
+"bilis_cart",
+JSON.stringify(cart)
+);
+
+
+$("cc").textContent =
+cart.reduce(
+(s,x) =>
+s + x.q,
+0
+);
+
+}
+
+
+function qty(id,z){
+
+let i =
+cart.find(
+x =>
+String(x.id) === String(id)
+);
+
+
+let p =
+all.find(
+x =>
+String(x.id) === String(id)
+);
+
+
+i.q =
+Math.max(
+0,
+Math.min(
+Number(
+p.stock_qty ??
+p.stock ??
+0
+),
+i.q + z
+)
+);
+
+
+if(!i.q){
+
+cart =
+cart.filter(
+x =>
+String(x.id) !== String(id)
+);
+
+}
+
+
+save();
+
+renderCart();
+
+}
+
+
+function renderCart(){
+
+let tot = 0;
+
+
+if(!cart.length){
+
+$("items").innerHTML =
+`
+<p>
+${T[lang].empty}
+</p>
+`;
+
+}
+else{
+
+$("items").innerHTML =
+
+cart.map(
+i => {
+
+let p =
+all.find(
+x =>
+String(x.id) === String(i.id)
+);
+
+
+if(!p)
+return "";
+
+
+let pr =
+Number(
+p.price_chf ??
+p.price ??
+0
+);
+
+
+tot +=
+pr * i.q;
+
+
+return `
+
+<div class="cartitem">
+
+<b>
+${esc(n(p))}
+</b>
+
+<br>
+
+${(pr * i.q).toFixed(2)} CHF
+
+<br>
+
+<button
+onclick='qty(${JSON.stringify(i.id)},-1)'>
+−
+</button>
+
+${i.q}
+
+<button
+onclick='qty(${JSON.stringify(i.id)},1)'>
++
+</button>
+
+</div>
+
+`;
+
+}
+).join("");
+
+}
+
+
+$("total").textContent =
+tot.toFixed(2);
+
+
+save();
+
+}
+
+
+function cartOpen(){
+
+$("ov").classList.add(
+"open"
+);
+
+}
+
+
+function cartClose(){
+
+$("ov").classList.remove(
+"open"
+);
+
+}
+
+
+function sendOrder(){
+
+if(!cart.length){
+
+alert(
+T[lang].empty
+);
+
+return;
+
+}
+
+
+if(
+!$("name").value.trim()
+||
+!$("address").value.trim()
+||
+!$("phone").value.trim()
+){
+
+alert(
+lang === "de"
+?
+"Bitte Name, Adresse und Telefon eingeben."
+:
+"Unesite ime, adresu i telefon."
+);
+
+return;
+
+}
+
+
+let tot = 0;
+
+let ls = [];
+
+
+cart.forEach(
+i => {
+
+let p =
+all.find(
+x =>
+String(x.id) === String(i.id)
+);
+
+
+let pr =
+Number(
+p.price_chf ??
+p.price ??
+0
+);
+
+
+tot +=
+pr * i.q;
+
+
+ls.push(
+`• ${n(p)} x ${i.q} = ${(pr * i.q).toFixed(2)} CHF`
+);
+
+}
+);
+
+
+let m =
+
+`BILI'S NATURAL COSMETICS
+
+${ls.join("\n")}
+
+${T[lang].totalLabel}: ${tot.toFixed(2)} CHF
+${T[lang].payL}: ${$("pay").value}
+
+${T[lang].nameL}: ${$("name").value}
+${T[lang].addressL}: ${$("address").value}
+E-Mail: ${$("email").value}
+${T[lang].phoneL}: ${$("phone").value}
+${T[lang].noteL}: ${$("note").value || "-"}`;
+
+
+window.open(
+"https://wa.me/41774383916?text="
++
+encodeURIComponent(m),
+"_blank"
+);
+
+}
+
+
+async function load(){
+
+let {
+data,
+error
+}
+=
+await db
+.from("products")
+.select("*")
+.eq(
+"active",
+true
+)
+.order(
+"sort_order",
+{
+ascending:true
+}
+);
+
+
+if(error){
+
+$("grid").textContent =
+"Proizvodi trenutno nisu dostupni.";
+
+console.error(error);
+
+return;
+
+}
+
+
+all =
+data || [];
+
+
+renderFilters();
+
+render();
+
+renderCart();
+
+}
+
+
+$("year").textContent =
+new Date().getFullYear();
+
+
+save();
+
+setLang("sr");
+
+load();
+
+</script>
 
 </body>
 </html>
