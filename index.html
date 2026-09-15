@@ -241,6 +241,24 @@ input,textarea,select{
   width:100%
 }
 
+.payment-info{
+  margin:4px 0 16px;
+  padding:15px;
+  border:1px solid #d7c59d;
+  background:#faf5e9;
+  font-size:14px
+}
+
+.payment-info strong{
+  color:#8b6a28
+}
+
+.payment-total{
+  font-size:18px;
+  font-weight:bold;
+  margin-top:8px
+}
+
 @media(max-width:800px){
   .grid{
     grid-template-columns:repeat(2,1fr)
@@ -454,13 +472,13 @@ E-Mail
 
 <label id="payL"></label>
 
-<select id="pay">
+<select id="pay" onchange="paymentInfo()">
 
-<option>
+<option value="TWINT">
 TWINT
 </option>
 
-<option>
+<option value="PayPal">
 PayPal
 </option>
 
@@ -469,6 +487,12 @@ Bar / Gotovina
 </option>
 
 </select>
+
+
+<div
+id="paymentInfo"
+class="payment-info">
+</div>
 
 
 <label id="noteL"></label>
@@ -500,6 +524,11 @@ supabase.createClient(
 "https://enzcsfhtduucagqjamnx.supabase.co",
 "sb_publishable_04GgoHvEKpmroJtjY-1wKA_HjEu7tC9"
 );
+
+
+const TWINT_NUMBER = "+41 77 438 39 16";
+
+const PAYPAL_EMAIL = "duricbiljana.diki@gmail.com";
 
 
 const T = {
@@ -579,7 +608,37 @@ none:
 "Trenutno nije dostupno",
 
 empty:
-"Korpa je prazna."
+"Korpa je prazna.",
+
+twintTitle:
+"TWINT uplata",
+
+twintText:
+"Pošaljite ukupan iznos putem TWINT-a na broj:",
+
+twintName:
+"Molimo navedite ime i prezime prilikom uplate.",
+
+paypalTitle:
+"PayPal uplata",
+
+paypalText:
+"Pošaljite ukupan iznos putem PayPal-a na:",
+
+paypalName:
+"Molimo navedite ime i prezime uz uplatu.",
+
+cashTitle:
+"Gotovina",
+
+cashText:
+"Plaćanje gotovinom moguće je pri ličnom preuzimanju.",
+
+amount:
+"Iznos za uplatu",
+
+paymentInstructions:
+"Podaci za uplatu"
 
 },
 
@@ -659,7 +718,37 @@ none:
 "Derzeit nicht verfügbar",
 
 empty:
-"Der Warenkorb ist leer."
+"Der Warenkorb ist leer.",
+
+twintTitle:
+"TWINT-Zahlung",
+
+twintText:
+"Bitte senden Sie den Gesamtbetrag per TWINT an:",
+
+twintName:
+"Bitte geben Sie bei der Zahlung Ihren Vor- und Nachnamen an.",
+
+paypalTitle:
+"PayPal-Zahlung",
+
+paypalText:
+"Bitte senden Sie den Gesamtbetrag per PayPal an:",
+
+paypalName:
+"Bitte geben Sie bei der Zahlung Ihren Vor- und Nachnamen an.",
+
+cashTitle:
+"Barzahlung",
+
+cashText:
+"Barzahlung ist bei persönlicher Abholung möglich.",
+
+amount:
+"Zu zahlender Betrag",
+
+paymentInstructions:
+"Zahlungsinformationen"
 
 }
 
@@ -800,6 +889,8 @@ renderFilters();
 render();
 
 renderCart();
+
+paymentInfo();
 
 }
 
@@ -1122,6 +1213,45 @@ renderCart();
 }
 
 
+function getTotal(){
+
+let tot = 0;
+
+
+cart.forEach(
+i => {
+
+let p =
+all.find(
+x =>
+String(x.id) === String(i.id)
+);
+
+
+if(!p)
+return;
+
+
+let pr =
+Number(
+p.price_chf ??
+p.price ??
+0
+);
+
+
+tot +=
+pr * i.q;
+
+}
+);
+
+
+return tot;
+
+}
+
+
 function renderCart(){
 
 let tot = 0;
@@ -1209,6 +1339,74 @@ tot.toFixed(2);
 
 save();
 
+paymentInfo();
+
+}
+
+
+function paymentInfo(){
+
+let box =
+$("paymentInfo");
+
+
+if(!box)
+return;
+
+
+let method =
+$("pay").value;
+
+
+let tot =
+getTotal().toFixed(2);
+
+
+if(method === "TWINT"){
+
+box.innerHTML =
+`
+<strong>${T[lang].twintTitle}</strong><br>
+${T[lang].twintText}<br>
+<b>${TWINT_NUMBER}</b><br>
+<div class="payment-total">
+${T[lang].amount}: ${tot} CHF
+</div>
+${T[lang].twintName}
+`;
+
+return;
+
+}
+
+
+if(method === "PayPal"){
+
+box.innerHTML =
+`
+<strong>${T[lang].paypalTitle}</strong><br>
+${T[lang].paypalText}<br>
+<b>${PAYPAL_EMAIL}</b><br>
+<div class="payment-total">
+${T[lang].amount}: ${tot} CHF
+</div>
+${T[lang].paypalName}
+`;
+
+return;
+
+}
+
+
+box.innerHTML =
+`
+<strong>${T[lang].cashTitle}</strong><br>
+${T[lang].cashText}<br>
+<div class="payment-total">
+${T[lang].amount}: ${tot} CHF
+</div>
+`;
+
 }
 
 
@@ -1217,6 +1415,8 @@ function cartOpen(){
 $("ov").classList.add(
 "open"
 );
+
+paymentInfo();
 
 }
 
@@ -1299,6 +1499,55 @@ ls.push(
 );
 
 
+let method =
+$("pay").value;
+
+
+let paymentText = "";
+
+
+if(method === "TWINT"){
+
+paymentText =
+lang === "de"
+?
+`TWINT: ${TWINT_NUMBER}
+Zu zahlender Betrag: ${tot.toFixed(2)} CHF`
+:
+`TWINT: ${TWINT_NUMBER}
+Iznos za uplatu: ${tot.toFixed(2)} CHF`;
+
+}
+
+
+else if(method === "PayPal"){
+
+paymentText =
+lang === "de"
+?
+`PayPal: ${PAYPAL_EMAIL}
+Zu zahlender Betrag: ${tot.toFixed(2)} CHF`
+:
+`PayPal: ${PAYPAL_EMAIL}
+Iznos za uplatu: ${tot.toFixed(2)} CHF`;
+
+}
+
+
+else{
+
+paymentText =
+lang === "de"
+?
+`Barzahlung bei persönlicher Abholung.
+Zu zahlender Betrag: ${tot.toFixed(2)} CHF`
+:
+`Gotovina pri ličnom preuzimanju.
+Iznos za uplatu: ${tot.toFixed(2)} CHF`;
+
+}
+
+
 let m =
 
 `BILI'S NATURAL COSMETICS
@@ -1306,7 +1555,9 @@ let m =
 ${ls.join("\n")}
 
 ${T[lang].totalLabel}: ${tot.toFixed(2)} CHF
-${T[lang].payL}: ${$("pay").value}
+${T[lang].payL}: ${method}
+
+${paymentText}
 
 ${T[lang].nameL}: ${$("name").value}
 ${T[lang].addressL}: ${$("address").value}
@@ -1368,6 +1619,8 @@ renderFilters();
 render();
 
 renderCart();
+
+paymentInfo();
 
 }
 
