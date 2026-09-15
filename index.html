@@ -10,156 +10,293 @@
 
 <style>
 :root{
-  --b:#10100f;
-  --c:#f7f3eb;
-  --p:#fffdf9;
-  --g:#b99a5a;
-  --l:#ddd5c7;
-  --t:#24231f
+  --black:#0b0b09;
+  --black2:#15130f;
+  --cream:#f8f3e9;
+  --paper:#fffdf8;
+  --gold:#c5a25b;
+  --gold2:#9f7b35;
+  --line:#d9cdb9;
+  --text:#211f1a;
 }
 
-*{box-sizing:border-box}
+*{
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
 
 body{
   margin:0;
-  background:var(--c);
-  color:var(--t);
+  background:var(--cream);
+  color:var(--text);
   font:15px Arial,sans-serif;
-  line-height:1.55
+  line-height:1.55;
 }
 
 a{
   text-decoration:none;
-  color:inherit
+  color:inherit;
 }
+
+button,.btn{
+  font:inherit;
+  cursor:pointer;
+}
+
+/* HEADER */
 
 nav{
   position:sticky;
   top:0;
-  z-index:10;
-  background:var(--b);
+  z-index:20;
+  background:rgba(9,9,8,.97);
   color:white;
-  padding:16px 5%;
+  padding:14px 5%;
   display:flex;
   justify-content:space-between;
-  align-items:center
+  align-items:center;
+  border-bottom:1px solid #332b1e;
+  box-shadow:0 8px 25px rgba(0,0,0,.16);
 }
 
 .brand{
-  font:32px Georgia,serif
+  color:#e0bd72;
+  font:34px Georgia,serif;
+  line-height:1;
 }
 
 .brand small{
   display:block;
-  color:var(--g);
-  font:9px Arial;
-  letter-spacing:3px
+  margin-top:7px;
+  color:#c7a65e;
+  font:8px Arial,sans-serif;
+  letter-spacing:3px;
 }
 
 .tools{
   display:flex;
-  gap:7px
-}
-
-button,.btn{
-  border:1px solid var(--b);
-  padding:11px 14px;
-  background:var(--b);
-  color:white;
-  cursor:pointer
+  gap:8px;
+  align-items:center;
 }
 
 .tools button{
-  border-color:#6d6045
+  min-width:48px;
+  height:46px;
+  padding:0 12px;
+  background:#0d0d0c;
+  color:white;
+  border:1px solid #806a3f;
 }
 
-.tools .on{
-  background:var(--g);
-  color:#111
+.tools button.on{
+  background:linear-gradient(135deg,#d2b06a,#a57c34);
+  color:#111;
+  border-color:#d1b16d;
 }
 
-.hero,.section,.contact{
-  padding:70px 5%;
-  max-width:1200px;
-  margin:auto
+.cart-button{
+  position:relative;
+  color:#d7b468!important;
 }
+
+/* HERO */
 
 .hero{
-  max-width:none;
-  min-height:55vh;
-  background:linear-gradient(135deg,#f7f3eb,#eee7da)
+  position:relative;
+  min-height:760px;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(0,0,0,.92) 0%,
+      rgba(0,0,0,.72) 37%,
+      rgba(0,0,0,.18) 68%,
+      rgba(0,0,0,.08) 100%
+    ),
+    url("2D9C8D1D-604E-4AE0-8E32-6080E1944B90.png")
+    center top/cover no-repeat;
+  color:white;
+  display:flex;
+  align-items:center;
+  padding:80px 6%;
+  overflow:hidden;
+}
+
+.hero::after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  height:130px;
+  background:linear-gradient(transparent,rgba(0,0,0,.4));
+  pointer-events:none;
+}
+
+.hero-content{
+  position:relative;
+  z-index:2;
+  width:min(600px,55%);
+}
+
+.hero-kicker{
+  color:#d2ae61;
+  font-size:12px;
+  font-weight:bold;
+  letter-spacing:5px;
+  text-transform:uppercase;
+  margin-bottom:25px;
+}
+
+.hero-line{
+  width:130px;
+  height:1px;
+  background:var(--gold);
+  margin:18px 0 25px;
 }
 
 h1,h2,h3{
   font-family:Georgia,serif;
-  font-weight:400
+  font-weight:400;
 }
 
 h1{
-  font-size:clamp(46px,7vw,82px);
-  max-width:780px
+  margin:0 0 22px;
+  font-size:clamp(48px,7vw,88px);
+  line-height:1.02;
+  letter-spacing:-2px;
+  text-shadow:0 3px 18px rgba(0,0,0,.35);
+}
+
+.hero p{
+  max-width:540px;
+  margin:0 0 34px;
+  color:#eee7db;
+  font:20px/1.6 Georgia,serif;
+}
+
+.hero .btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:235px;
+  padding:16px 24px;
+  border:1px solid #e0bd72;
+  border-radius:4px;
+  background:linear-gradient(135deg,#b18537,#6f4e18);
+  color:white;
+  font-size:12px;
+  font-weight:bold;
+  letter-spacing:3px;
+  box-shadow:0 0 25px rgba(197,162,91,.22);
+}
+
+.hero .btn:hover{
+  background:linear-gradient(135deg,#d0ad63,#8a6427);
+}
+
+/* PRODUCTS */
+
+.section{
+  max-width:1250px;
+  margin:auto;
+  padding:80px 5%;
 }
 
 .gold{
-  color:var(--g);
-  letter-spacing:3px;
+  color:var(--gold2);
+  letter-spacing:4px;
   font-size:11px;
-  font-weight:bold
+  font-weight:bold;
+  text-transform:uppercase;
+}
+
+.section h2{
+  margin:10px 0;
+  font-size:clamp(38px,5vw,60px);
+}
+
+#prodSub{
+  color:#666157;
+  margin-bottom:25px;
 }
 
 .filters{
   display:flex;
   flex-wrap:wrap;
-  gap:7px;
-  margin:25px 0
+  gap:9px;
+  margin:28px 0 38px;
 }
 
 .filters button{
   background:transparent;
-  color:#222;
-  border-color:var(--l)
+  color:#3b372f;
+  border:1px solid #d7c9b1;
+  padding:12px 18px;
+  transition:.2s;
 }
 
-.filters .on{
-  background:var(--b);
-  color:white
+.filters button:hover{
+  border-color:var(--gold);
+  color:#8b682b;
+}
+
+.filters button.on{
+  background:var(--black);
+  color:#d9b76d;
+  border-color:var(--black);
 }
 
 .grid{
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:20px
+  gap:24px;
 }
 
 .card{
-  background:var(--p);
-  border:1px solid var(--l)
+  background:var(--paper);
+  border:1px solid #ded4c4;
+  box-shadow:0 9px 28px rgba(58,45,25,.07);
+  transition:.25s ease;
+}
+
+.card:hover{
+  transform:translateY(-3px);
+  box-shadow:0 14px 35px rgba(58,45,25,.12);
 }
 
 .photo{
   aspect-ratio:1;
   overflow:hidden;
-  background:#eee
+  background:#eee8dc;
 }
 
 .photo img{
   width:100%;
   height:100%;
-  object-fit:cover
+  object-fit:cover;
+  display:block;
+  transition:.35s;
+}
+
+.card:hover .photo img{
+  transform:scale(1.025);
 }
 
 .info{
-  padding:18px
+  padding:21px;
 }
 
-.price{
-  font-weight:bold;
-  font-size:18px
+.info h3{
+  font-size:23px;
+  margin:7px 0 10px;
 }
 
-.stock{
-  font-size:12px;
-  color:#777
+.info p{
+  color:#625e55;
+  min-height:48px;
 }
 
 .row{
@@ -167,91 +304,154 @@ h1{
   justify-content:space-between;
   gap:10px;
   align-items:end;
-  border-top:1px solid var(--l);
-  padding-top:15px;
-  margin-top:15px
+  border-top:1px solid #e0d7c8;
+  padding-top:16px;
+  margin-top:16px;
 }
 
-.story{
-  background:var(--b);
+.price{
+  font-weight:bold;
+  font-size:19px;
+  color:#191816;
+}
+
+.stock{
+  margin-top:4px;
+  font-size:12px;
+  color:#777269;
+}
+
+.row button{
+  border:1px solid var(--black);
+  padding:11px 13px;
+  background:var(--black);
   color:white;
-  padding:70px 5%
+}
+
+.row button:hover{
+  background:#9a7432;
+  border-color:#9a7432;
+}
+
+/* STORY */
+
+.story{
+  position:relative;
+  background:
+    radial-gradient(circle at 85% 30%,#302613 0,#15120d 30%,#0b0b09 65%);
+  color:white;
+  padding:90px 5%;
+  border-top:1px solid #3b3020;
+  border-bottom:1px solid #3b3020;
 }
 
 .story>div{
   max-width:1200px;
-  margin:auto
+  margin:auto;
 }
+
+.story h2{
+  color:#f4eee4;
+  font-size:clamp(38px,5vw,58px);
+  margin:10px 0 18px;
+}
+
+.story p{
+  max-width:750px;
+  color:#d8d0c3;
+  font:18px/1.8 Georgia,serif;
+}
+
+/* CONTACT */
 
 .contact{
+  max-width:1200px;
+  margin:auto;
+  padding:80px 5%;
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:30px
+  gap:50px;
 }
+
+.contact h2{
+  margin:10px 0;
+  font-size:45px;
+}
+
+.contact>div:last-child{
+  padding:25px;
+  border-left:1px solid #d6c39d;
+}
+
+/* LEGAL */
 
 .legal{
-  padding:25px 5%;
+  padding:25px 5% 45px;
   font-size:12px;
-  color:#666;
+  color:#6e695f;
   max-width:1200px;
-  margin:auto
+  margin:auto;
 }
 
-/* NOVI QUICK LINKS FOOTER */
+/* QUICK LINKS */
 
 .quick-footer{
-  background:#151513;
+  background:#15130f;
   color:white;
-  padding:42px 5%
+  padding:48px 5%;
+  border-top:1px solid #46381f;
 }
 
 .quick-footer-inner{
   max-width:1200px;
-  margin:auto
+  margin:auto;
 }
 
 .quick-footer-title{
-  color:var(--g);
+  color:var(--gold);
   font-size:11px;
   font-weight:bold;
-  letter-spacing:3px;
-  margin-bottom:20px
+  letter-spacing:4px;
+  margin-bottom:22px;
 }
 
 .quick-links{
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:12px 30px
+  gap:12px 30px;
 }
 
 .quick-links a{
-  color:#ddd7ca;
+  color:#ddd6c9;
   font-size:13px;
-  padding:7px 0;
-  border-bottom:1px solid #34322d
+  padding:9px 0;
+  border-bottom:1px solid #343029;
 }
 
 .quick-links a:hover{
-  color:var(--g)
+  color:var(--gold);
 }
 
 footer{
-  background:var(--b);
-  color:#aaa;
+  background:#0b0b09;
+  color:#89857d;
   text-align:center;
-  padding:25px
+  padding:26px;
+  border-top:1px solid #29261f;
 }
+
+/* CART */
 
 .overlay{
   display:none;
   position:fixed;
   inset:0;
-  background:#0009;
-  z-index:30
+  background:rgba(0,0,0,.7);
+  z-index:40;
 }
 
 .overlay.open{
-  display:block
+  display:block;
 }
 
 .drawer{
@@ -259,77 +459,223 @@ footer{
   right:0;
   top:0;
   height:100%;
-  width:min(440px,100%);
-  background:var(--p);
-  padding:22px;
-  overflow:auto
+  width:min(460px,100%);
+  background:#fffdf8;
+  padding:25px;
+  overflow:auto;
+  box-shadow:-15px 0 50px rgba(0,0,0,.28);
+}
+
+.drawer>button:first-child{
+  width:48px;
+  height:48px;
+  border:0;
+  background:#111;
+  color:white;
+  font-size:20px;
+}
+
+.drawer h2{
+  font-size:38px;
 }
 
 .cartitem{
-  padding:12px 0;
-  border-bottom:1px solid var(--l)
+  padding:15px 0;
+  border-bottom:1px solid var(--line);
+}
+
+.cartitem button{
+  width:42px;
+  height:42px;
+  margin:9px 6px 0 0;
+  border:0;
+  background:#111;
+  color:white;
+  font-size:17px;
 }
 
 input,textarea,select{
   width:100%;
-  padding:11px;
-  margin:5px 0 10px;
-  border:1px solid var(--l)
+  padding:13px;
+  margin:6px 0 12px;
+  border:1px solid var(--line);
+  background:white;
+  font-size:16px;
+}
+
+textarea{
+  min-height:80px;
 }
 
 .full{
-  width:100%
+  width:100%;
+  border:0;
+  padding:15px;
+  background:#111;
+  color:white;
+  font-size:15px;
+}
+
+.full:hover{
+  background:#9a7432;
 }
 
 .payment-info{
-  margin:4px 0 16px;
-  padding:15px;
-  border:1px solid #d7c59d;
+  margin:5px 0 18px;
+  padding:16px;
+  border:1px solid #d4bd8c;
   background:#faf5e9;
-  font-size:14px
+  font-size:14px;
 }
 
 .payment-info strong{
-  color:#8b6a28
+  color:#8b6928;
+  font-size:17px;
 }
 
 .payment-total{
   font-size:18px;
   font-weight:bold;
-  margin-top:8px
+  margin:9px 0 4px;
 }
 
-@media(max-width:800px){
+/* MOBILE */
+
+@media(max-width:900px){
   .grid{
-    grid-template-columns:repeat(2,1fr)
+    grid-template-columns:repeat(2,1fr);
   }
 
-  .quick-links{
-    grid-template-columns:repeat(2,1fr)
+  .hero{
+    min-height:700px;
+    background-position:center top;
+  }
+
+  .hero-content{
+    width:62%;
   }
 }
 
-@media(max-width:540px){
-  .grid{
-    grid-template-columns:1fr
+@media(max-width:650px){
+
+  nav{
+    padding:13px 16px;
   }
 
-  .hero,.section,.contact{
-    padding-left:18px;
-    padding-right:18px
+  .brand{
+    font-size:29px;
+  }
+
+  .brand small{
+    font-size:7px;
+    letter-spacing:2.5px;
+  }
+
+  .tools{
+    gap:5px;
+  }
+
+  .tools button{
+    min-width:43px;
+    height:43px;
+    padding:0 9px;
+  }
+
+  .hero{
+    min-height:720px;
+    padding:55px 24px 48px;
+    align-items:flex-end;
+    background:
+      linear-gradient(
+        0deg,
+        rgba(0,0,0,.96) 0%,
+        rgba(0,0,0,.78) 38%,
+        rgba(0,0,0,.12) 73%
+      ),
+      url("2D9C8D1D-604E-4AE0-8E32-6080E1944B90.png")
+      center top/cover no-repeat;
+  }
+
+  .hero-content{
+    width:100%;
+  }
+
+  .hero-kicker{
+    font-size:10px;
+    letter-spacing:4px;
+  }
+
+  h1{
+    font-size:48px;
+    max-width:480px;
+  }
+
+  .hero p{
+    font-size:17px;
+    max-width:500px;
+  }
+
+  .hero .btn{
+    min-width:220px;
+  }
+
+  .section{
+    padding:58px 18px;
+  }
+
+  .grid{
+    grid-template-columns:1fr;
+  }
+
+  .filters{
+    gap:7px;
+  }
+
+  .filters button{
+    padding:10px 13px;
+  }
+
+  .story{
+    padding:65px 18px;
   }
 
   .contact{
-    grid-template-columns:1fr
+    grid-template-columns:1fr;
+    padding:60px 18px;
+  }
+
+  .contact>div:last-child{
+    border-left:0;
+    border-top:1px solid #d6c39d;
+    padding:25px 0 0;
+  }
+
+  .legal{
+    padding-left:18px;
+    padding-right:18px;
   }
 
   .quick-footer{
-    padding-left:18px;
-    padding-right:18px
+    padding:42px 18px;
   }
 
   .quick-links{
-    grid-template-columns:1fr
+    grid-template-columns:1fr;
+  }
+}
+
+@media(max-width:390px){
+  .brand{
+    font-size:25px;
+  }
+
+  .tools button{
+    min-width:39px;
+    padding:0 7px;
+  }
+
+  h1{
+    font-size:43px;
   }
 }
 </style>
@@ -354,7 +700,7 @@ SR
 DE
 </button>
 
-<button onclick="cartOpen()">
+<button class="cart-button" onclick="cartOpen()">
 🛒 <span id="cc">0</span>
 </button>
 
@@ -365,15 +711,21 @@ DE
 
 <section class="hero">
 
-<div class="gold">
-HANDMADE • NATURAL • SWITZERLAND
+<div class="hero-content">
+
+<div class="hero-kicker" id="heroKicker">
+PRIRODNA KOZMETIKA SA SRCEM
 </div>
+
+<div class="hero-line"></div>
 
 <h1 id="hero"></h1>
 
 <p id="heroText"></p>
 
 <a class="btn" href="#products" id="see"></a>
+
+</div>
 
 </section>
 
@@ -448,77 +800,54 @@ E-Mail: duricbiljana.diki@gmail.com
 <div class="legal">
 
 <b id="warning"></b>
-
 <span id="legal"></span>
 
 </div>
 
 
-<!-- QUICK LINKS -->
-
 <section class="quick-footer">
 
 <div class="quick-footer-inner">
 
-<div
-class="quick-footer-title"
-id="quickTitle">
+<div class="quick-footer-title" id="quickTitle">
 BRZI LINKOVI
 </div>
 
 <div class="quick-links">
 
-<a
-id="quickContact"
-href="informationen.html#kontakt">
+<a id="quickContact" href="informationen.html#kontakt">
 Kontakt
 </a>
 
-<a
-id="quickPrivacy"
-href="informationen.html#datenschutz">
+<a id="quickPrivacy" href="informationen.html#datenschutz">
 Datenschutzerklärung
 </a>
 
-<a
-id="quickAGB"
-href="informationen.html#agb">
+<a id="quickAGB" href="informationen.html#agb">
 AGB
 </a>
 
-<a
-id="quickShipping"
-href="informationen.html#versand">
+<a id="quickShipping" href="informationen.html#versand">
 Versand & Lieferung
 </a>
 
-<a
-id="quickReturn"
-href="informationen.html#rueckgabe">
+<a id="quickReturn" href="informationen.html#rueckgabe">
 Rückgabe & Rückerstattung
 </a>
 
-<a
-id="quickPayment"
-href="informationen.html#zahlung">
+<a id="quickPayment" href="informationen.html#zahlung">
 Zahlung
 </a>
 
-<a
-id="quickImprint"
-href="informationen.html#impressum">
+<a id="quickImprint" href="informationen.html#impressum">
 Impressum
 </a>
 
-<a
-id="quickAbout"
-href="informationen.html#ueber-uns">
+<a id="quickAbout" href="informationen.html#ueber-uns">
 Über uns
 </a>
 
-<a
-id="quickFAQ"
-href="informationen.html#faq">
+<a id="quickFAQ" href="informationen.html#faq">
 FAQ
 </a>
 
@@ -571,17 +900,9 @@ onclick="if(event.target===this)cartClose()">
 
 <select id="pay" onchange="paymentInfo()">
 
-<option value="TWINT">
-TWINT
-</option>
-
-<option value="PayPal">
-PayPal
-</option>
-
-<option value="Bar">
-Bar / Gotovina
-</option>
+<option value="TWINT">TWINT</option>
+<option value="PayPal">PayPal</option>
+<option value="Bar">Bar / Gotovina</option>
 
 </select>
 
@@ -626,20 +947,23 @@ const T = {
 
 sr:{
 
+heroKicker:
+"PRIRODNA KOZMETIKA SA SRCEM",
+
 hero:
-"Prirodna nega sa posebnom pričom.",
+"Prirodna lepota u svom najčistijem obliku.",
 
 heroText:
-"Pažljivo birana ulja, biljni macerati i prirodni sastojci, objedinjeni u kolekciji ručno izrađene kozmetike.",
+"Pažljivo odabrana biljna ulja, dragoceni macerati i prirodni sastojci – sjedinjeni u ručno izrađenoj kolekciji za vašu svakodnevnu negu.",
 
 see:
-"Pogledaj kolekciju",
+"OTKRIJ KOLEKCIJU →",
 
 prodTitle:
 "Proizvodi",
 
 prodSub:
-"Cena i stanje zaliha učitavaju se direktno iz online baze.",
+"Cene i stanje zaliha učitavaju se direktno iz online baze.",
 
 storyTitle:
 "Prirodno. Pažljivo. Ručno.",
@@ -654,7 +978,7 @@ here:
 "Tu smo za vas.",
 
 warning:
-"Važna napomena:",
+"Važna napomena: ",
 
 legal:
 "Kozmetički proizvodi nisu lekovi. Moguća je individualna alergijska reakcija. Pre prve upotrebe preporučuje se test na malom delu kože. Kupovina i korišćenje su na sopstvenu odgovornost.",
@@ -763,14 +1087,17 @@ quickFAQ:
 
 de:{
 
+heroKicker:
+"NATURKOSMETIK MIT HERZ",
+
 hero:
-"Natürliche Pflege mit einer besonderen Geschichte.",
+"Natürliche Schönheit in ihrer reinsten Form.",
 
 heroText:
-"Sorgfältig ausgewählte Öle, Pflanzenmazerate und natürliche Inhaltsstoffe in einer Kollektion handgefertigter Kosmetik.",
+"Hochwertige Pflanzenöle, wertvolle Mazerate und natürliche Inhaltsstoffe – vereint in einer handgefertigten Kollektion für Ihre tägliche Pflege.",
 
 see:
-"Kollektion ansehen",
+"JETZT ENTDECKEN →",
 
 prodTitle:
 "Produkte",
@@ -791,7 +1118,7 @@ here:
 "Wir sind für Sie da.",
 
 warning:
-"Wichtiger Hinweis:",
+"Wichtiger Hinweis: ",
 
 legal:
 "Kosmetische Produkte sind keine Arzneimittel. Individuelle allergische Reaktionen sind möglich. Vor der ersten Anwendung wird ein Test auf einer kleinen Hautstelle empfohlen. Kauf und Anwendung erfolgen auf eigene Verantwortung.",
@@ -1000,6 +1327,7 @@ x === "de"
 
 for(
 const k of [
+"heroKicker",
 "hero",
 "heroText",
 "see",
