@@ -20,13 +20,9 @@
   --text:#211f1a;
 }
 
-*{
-  box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
-html{
-  scroll-behavior:smooth;
-}
+html{scroll-behavior:smooth}
 
 body{
   margin:0;
@@ -52,18 +48,17 @@ nav{
   position:sticky;
   top:0;
   z-index:20;
-  background:rgba(9,9,8,.97);
+  background:#0b0b09;
   color:white;
   padding:14px 5%;
   display:flex;
   justify-content:space-between;
   align-items:center;
-  border-bottom:1px solid #332b1e;
-  box-shadow:0 8px 25px rgba(0,0,0,.16);
+  border-bottom:1px solid #49391f;
 }
 
 .brand{
-  color:#e0bd72;
+  color:#d6b366;
   font:34px Georgia,serif;
   line-height:1;
 }
@@ -71,14 +66,14 @@ nav{
 .brand small{
   display:block;
   margin-top:7px;
-  color:#c7a65e;
+  color:#c6a45d;
   font:8px Arial,sans-serif;
   letter-spacing:3px;
 }
 
 .tools{
   display:flex;
-  gap:8px;
+  gap:7px;
   align-items:center;
 }
 
@@ -94,11 +89,9 @@ nav{
 .tools button.on{
   background:linear-gradient(135deg,#d2b06a,#a57c34);
   color:#111;
-  border-color:#d1b16d;
 }
 
 .cart-button{
-  position:relative;
   color:#d7b468!important;
 }
 
@@ -107,54 +100,41 @@ nav{
 .hero{
   position:relative;
   min-height:760px;
+  display:flex;
+  align-items:center;
+  color:white;
+  padding:75px 6%;
   background:
     linear-gradient(
       90deg,
-      rgba(0,0,0,.92) 0%,
+      rgba(0,0,0,.91) 0%,
       rgba(0,0,0,.72) 37%,
-      rgba(0,0,0,.18) 68%,
-      rgba(0,0,0,.08) 100%
+      rgba(0,0,0,.23) 64%,
+      rgba(0,0,0,.06) 100%
     ),
-    url("2D9C8D1D-604E-4AE0-8E32-6080E1944B90.png")
-    center top/cover no-repeat;
-  color:white;
-  display:flex;
-  align-items:center;
-  padding:80px 6%;
-  overflow:hidden;
-}
-
-.hero::after{
-  content:"";
-  position:absolute;
-  left:0;
-  right:0;
-  bottom:0;
-  height:130px;
-  background:linear-gradient(transparent,rgba(0,0,0,.4));
-  pointer-events:none;
+    url("909ED8FD-1343-400A-B30F-B45D26D8CB1E.png")
+    center center/cover no-repeat;
 }
 
 .hero-content{
   position:relative;
   z-index:2;
-  width:min(600px,55%);
+  width:min(590px,55%);
 }
 
 .hero-kicker{
-  color:#d2ae61;
-  font-size:12px;
+  color:#d4b064;
+  font-size:11px;
   font-weight:bold;
   letter-spacing:5px;
   text-transform:uppercase;
-  margin-bottom:25px;
 }
 
 .hero-line{
   width:130px;
   height:1px;
-  background:var(--gold);
-  margin:18px 0 25px;
+  background:#c9a45a;
+  margin:20px 0 27px;
 }
 
 h1,h2,h3{
@@ -163,18 +143,17 @@ h1,h2,h3{
 }
 
 h1{
-  margin:0 0 22px;
-  font-size:clamp(48px,7vw,88px);
+  margin:0 0 23px;
+  font-size:clamp(48px,7vw,86px);
   line-height:1.02;
   letter-spacing:-2px;
-  text-shadow:0 3px 18px rgba(0,0,0,.35);
 }
 
 .hero p{
   max-width:540px;
   margin:0 0 34px;
   color:#eee7db;
-  font:20px/1.6 Georgia,serif;
+  font:19px/1.65 Georgia,serif;
 }
 
 .hero .btn{
@@ -185,16 +164,12 @@ h1{
   padding:16px 24px;
   border:1px solid #e0bd72;
   border-radius:4px;
-  background:linear-gradient(135deg,#b18537,#6f4e18);
+  background:linear-gradient(135deg,#bd913e,#74521b);
   color:white;
   font-size:12px;
   font-weight:bold;
   letter-spacing:3px;
-  box-shadow:0 0 25px rgba(197,162,91,.22);
-}
-
-.hero .btn:hover{
-  background:linear-gradient(135deg,#d0ad63,#8a6427);
+  box-shadow:0 0 25px rgba(197,162,91,.25);
 }
 
 /* PRODUCTS */
@@ -202,7 +177,7 @@ h1{
 .section{
   max-width:1250px;
   margin:auto;
-  padding:80px 5%;
+  padding:78px 5%;
 }
 
 .gold{
@@ -219,8 +194,7 @@ h1{
 }
 
 #prodSub{
-  color:#666157;
-  margin-bottom:25px;
+  color:#686158;
 }
 
 .filters{
@@ -232,21 +206,15 @@ h1{
 
 .filters button{
   background:transparent;
-  color:#3b372f;
+  color:#332f29;
   border:1px solid #d7c9b1;
   padding:12px 18px;
-  transition:.2s;
-}
-
-.filters button:hover{
-  border-color:var(--gold);
-  color:#8b682b;
 }
 
 .filters button.on{
-  background:var(--black);
+  background:#0b0b09;
   color:#d9b76d;
-  border-color:var(--black);
+  border-color:#0b0b09;
 }
 
 .grid{
@@ -259,12 +227,6 @@ h1{
   background:var(--paper);
   border:1px solid #ded4c4;
   box-shadow:0 9px 28px rgba(58,45,25,.07);
-  transition:.25s ease;
-}
-
-.card:hover{
-  transform:translateY(-3px);
-  box-shadow:0 14px 35px rgba(58,45,25,.12);
 }
 
 .photo{
@@ -278,11 +240,6 @@ h1{
   height:100%;
   object-fit:cover;
   display:block;
-  transition:.35s;
-}
-
-.card:hover .photo img{
-  transform:scale(1.025);
 }
 
 .info{
@@ -296,7 +253,6 @@ h1{
 
 .info p{
   color:#625e55;
-  min-height:48px;
 }
 
 .row{
@@ -312,7 +268,6 @@ h1{
 .price{
   font-weight:bold;
   font-size:19px;
-  color:#191816;
 }
 
 .stock{
@@ -322,27 +277,20 @@ h1{
 }
 
 .row button{
-  border:1px solid var(--black);
+  border:1px solid #111;
   padding:11px 13px;
-  background:var(--black);
+  background:#111;
   color:white;
-}
-
-.row button:hover{
-  background:#9a7432;
-  border-color:#9a7432;
 }
 
 /* STORY */
 
 .story{
-  position:relative;
   background:
     radial-gradient(circle at 85% 30%,#302613 0,#15120d 30%,#0b0b09 65%);
   color:white;
   padding:90px 5%;
   border-top:1px solid #3b3020;
-  border-bottom:1px solid #3b3020;
 }
 
 .story>div{
@@ -382,8 +330,6 @@ h1{
   padding:25px;
   border-left:1px solid #d6c39d;
 }
-
-/* LEGAL */
 
 .legal{
   padding:25px 5% 45px;
@@ -428,10 +374,6 @@ h1{
   border-bottom:1px solid #343029;
 }
 
-.quick-links a:hover{
-  color:var(--gold);
-}
-
 footer{
   background:#0b0b09;
   color:#89857d;
@@ -450,9 +392,7 @@ footer{
   z-index:40;
 }
 
-.overlay.open{
-  display:block;
-}
+.overlay.open{display:block}
 
 .drawer{
   position:absolute;
@@ -463,7 +403,6 @@ footer{
   background:#fffdf8;
   padding:25px;
   overflow:auto;
-  box-shadow:-15px 0 50px rgba(0,0,0,.28);
 }
 
 .drawer>button:first-child{
@@ -491,7 +430,6 @@ footer{
   border:0;
   background:#111;
   color:white;
-  font-size:17px;
 }
 
 input,textarea,select{
@@ -503,9 +441,7 @@ input,textarea,select{
   font-size:16px;
 }
 
-textarea{
-  min-height:80px;
-}
+textarea{min-height:80px}
 
 .full{
   width:100%;
@@ -513,11 +449,6 @@ textarea{
   padding:15px;
   background:#111;
   color:white;
-  font-size:15px;
-}
-
-.full:hover{
-  background:#9a7432;
 }
 
 .payment-info{
@@ -541,18 +472,14 @@ textarea{
 
 /* MOBILE */
 
-@media(max-width:900px){
+@media(max-width:800px){
+
   .grid{
     grid-template-columns:repeat(2,1fr);
   }
 
-  .hero{
-    min-height:700px;
-    background-position:center top;
-  }
-
-  .hero-content{
-    width:62%;
+  .quick-links{
+    grid-template-columns:repeat(2,1fr);
   }
 }
 
@@ -585,15 +512,17 @@ textarea{
     min-height:720px;
     padding:55px 24px 48px;
     align-items:flex-end;
+
     background:
       linear-gradient(
         0deg,
         rgba(0,0,0,.96) 0%,
-        rgba(0,0,0,.78) 38%,
-        rgba(0,0,0,.12) 73%
+        rgba(0,0,0,.78) 42%,
+        rgba(0,0,0,.18) 72%,
+        rgba(0,0,0,.04) 100%
       ),
-      url("2D9C8D1D-604E-4AE0-8E32-6080E1944B90.png")
-      center top/cover no-repeat;
+      url("909ED8FD-1343-400A-B30F-B45D26D8CB1E.png")
+      63% center/cover no-repeat;
   }
 
   .hero-content{
@@ -602,21 +531,16 @@ textarea{
 
   .hero-kicker{
     font-size:10px;
-    letter-spacing:4px;
+    letter-spacing:3px;
   }
 
   h1{
-    font-size:48px;
-    max-width:480px;
+    font-size:46px;
+    max-width:500px;
   }
 
   .hero p{
     font-size:17px;
-    max-width:500px;
-  }
-
-  .hero .btn{
-    min-width:220px;
   }
 
   .section{
@@ -625,10 +549,6 @@ textarea{
 
   .grid{
     grid-template-columns:1fr;
-  }
-
-  .filters{
-    gap:7px;
   }
 
   .filters button{
@@ -664,20 +584,6 @@ textarea{
   }
 }
 
-@media(max-width:390px){
-  .brand{
-    font-size:25px;
-  }
-
-  .tools button{
-    min-width:39px;
-    padding:0 7px;
-  }
-
-  h1{
-    font-size:43px;
-  }
-}
 </style>
 </head>
 
@@ -692,20 +598,15 @@ Bili's
 
 <div class="tools">
 
-<button id="sr" class="on" onclick="setLang('sr')">
-SR
-</button>
+<button id="sr" class="on" onclick="setLang('sr')">SR</button>
 
-<button id="de" onclick="setLang('de')">
-DE
-</button>
+<button id="de" onclick="setLang('de')">DE</button>
 
 <button class="cart-button" onclick="cartOpen()">
 🛒 <span id="cc">0</span>
 </button>
 
 </div>
-
 </nav>
 
 
@@ -713,9 +614,7 @@ DE
 
 <div class="hero-content">
 
-<div class="hero-kicker" id="heroKicker">
-PRIRODNA KOZMETIKA SA SRCEM
-</div>
+<div class="hero-kicker" id="heroKicker"></div>
 
 <div class="hero-line"></div>
 
@@ -732,9 +631,7 @@ PRIRODNA KOZMETIKA SA SRCEM
 
 <section class="section" id="products">
 
-<div class="gold">
-BILI'S COLLECTION
-</div>
+<div class="gold">BILI'S COLLECTION</div>
 
 <h2 id="prodTitle"></h2>
 
@@ -809,23 +706,17 @@ E-Mail: duricbiljana.diki@gmail.com
 
 <div class="quick-footer-inner">
 
-<div class="quick-footer-title" id="quickTitle">
-BRZI LINKOVI
-</div>
+<div class="quick-footer-title" id="quickTitle"></div>
 
 <div class="quick-links">
 
-<a id="quickContact" href="informationen.html#kontakt">
-Kontakt
-</a>
+<a id="quickContact" href="informationen.html#kontakt">Kontakt</a>
 
 <a id="quickPrivacy" href="informationen.html#datenschutz">
 Datenschutzerklärung
 </a>
 
-<a id="quickAGB" href="informationen.html#agb">
-AGB
-</a>
+<a id="quickAGB" href="informationen.html#agb">AGB</a>
 
 <a id="quickShipping" href="informationen.html#versand">
 Versand & Lieferung
@@ -852,9 +743,7 @@ FAQ
 </a>
 
 </div>
-
 </div>
-
 </section>
 
 
@@ -909,7 +798,6 @@ onclick="if(event.target===this)cartClose()">
 <div id="paymentInfo" class="payment-info"></div>
 
 <label id="noteL"></label>
-
 <textarea id="note"></textarea>
 
 <button
@@ -918,13 +806,9 @@ id="send"
 onclick="sendOrder()">
 </button>
 
-<p
-id="ship"
-style="font-size:12px;color:#777">
-</p>
+<p id="ship" style="font-size:12px;color:#777"></p>
 
 </div>
-
 </div>
 
 
@@ -936,31 +820,25 @@ supabase.createClient(
 "sb_publishable_04GgoHvEKpmroJtjY-1wKA_HjEu7tC9"
 );
 
-const TWINT_NUMBER =
-"+41 77 438 39 16";
+const TWINT_NUMBER = "+41 77 438 39 16";
 
-const PAYPAL_EMAIL =
-"duricbiljana.diki@gmail.com";
+const PAYPAL_EMAIL = "duricbiljana.diki@gmail.com";
 
 
-const T = {
+const T={
 
 sr:{
 
-heroKicker:
-"PRIRODNA KOZMETIKA SA SRCEM",
+heroKicker:"PRIRODNA KOZMETIKA SA SRCEM",
 
-hero:
-"Prirodna lepota u svom najčistijem obliku.",
+hero:"Prirodna lepota u svom najčistijem obliku.",
 
 heroText:
 "Pažljivo odabrana biljna ulja, dragoceni macerati i prirodni sastojci – sjedinjeni u ručno izrađenoj kolekciji za vašu svakodnevnu negu.",
 
-see:
-"OTKRIJ KOLEKCIJU →",
+see:"OTKRIJ KOLEKCIJU →",
 
-prodTitle:
-"Proizvodi",
+prodTitle:"Proizvodi",
 
 prodSub:
 "Cene i stanje zaliha učitavaju se direktno iz online baze.",
@@ -971,38 +849,28 @@ storyTitle:
 storyText:
 "Bili's Natural Cosmetics je kolekcija prirodne kozmetike razvijena sa posebnom pažnjom prema izboru sirovina i kvalitetu izrade.",
 
-contactLabel:
-"KONTAKT",
+contactLabel:"KONTAKT",
 
-here:
-"Tu smo za vas.",
+here:"Tu smo za vas.",
 
-warning:
-"Važna napomena: ",
+warning:"Važna napomena: ",
 
 legal:
 "Kozmetički proizvodi nisu lekovi. Moguća je individualna alergijska reakcija. Pre prve upotrebe preporučuje se test na malom delu kože. Kupovina i korišćenje su na sopstvenu odgovornost.",
 
-cartTitle:
-"Korpa",
+cartTitle:"Korpa",
 
-totalLabel:
-"Ukupno",
+totalLabel:"Ukupno",
 
-nameL:
-"Ime i prezime",
+nameL:"Ime i prezime",
 
-addressL:
-"Adresa",
+addressL:"Adresa",
 
-phoneL:
-"Telefon",
+phoneL:"Telefon",
 
-payL:
-"Način plaćanja",
+payL:"Način plaćanja",
 
-noteL:
-"Napomena",
+noteL:"Napomena",
 
 send:
 "Pošalji porudžbinu preko WhatsApp-a",
@@ -1010,23 +878,17 @@ send:
 ship:
 "Dostava se dodatno naplaćuje. Dostava je moguća u Švajcarskoj, EU i drugim zemljama; transport plaća kupac.",
 
-all:
-"Sve",
+all:"Sve",
 
-add:
-"Dodaj u korpu",
+add:"Dodaj u korpu",
 
-available:
-"Dostupno",
+available:"Dostupno",
 
-none:
-"Trenutno nije dostupno",
+none:"Trenutno nije dostupno",
 
-empty:
-"Korpa je prazna.",
+empty:"Korpa je prazna.",
 
-twintTitle:
-"TWINT uplata",
+twintTitle:"TWINT uplata",
 
 twintText:
 "Pošaljite ukupan iznos putem TWINT-a na broj:",
@@ -1034,8 +896,7 @@ twintText:
 twintName:
 "Molimo navedite ime i prezime prilikom uplate.",
 
-paypalTitle:
-"PayPal uplata",
+paypalTitle:"PayPal uplata",
 
 paypalText:
 "Pošaljite ukupan iznos putem PayPal-a na:",
@@ -1043,52 +904,39 @@ paypalText:
 paypalName:
 "Molimo navedite ime i prezime uz uplatu.",
 
-cashTitle:
-"Gotovina",
+cashTitle:"Gotovina",
 
 cashText:
 "Plaćanje gotovinom moguće je pri ličnom preuzimanju.",
 
-amount:
-"Iznos za uplatu",
+amount:"Iznos za uplatu",
 
-quickTitle:
-"BRZI LINKOVI",
+quickTitle:"BRZI LINKOVI",
 
-quickContact:
-"Kontakt",
+quickContact:"Kontakt",
 
-quickPrivacy:
-"Zaštita podataka",
+quickPrivacy:"Zaštita podataka",
 
-quickAGB:
-"Opšti uslovi poslovanja (AGB)",
+quickAGB:"Opšti uslovi poslovanja (AGB)",
 
-quickShipping:
-"Dostava i isporuka",
+quickShipping:"Dostava i isporuka",
 
-quickReturn:
-"Povrat i refundacija",
+quickReturn:"Povrat i refundacija",
 
-quickPayment:
-"Plaćanje",
+quickPayment:"Plaćanje",
 
-quickImprint:
-"Impressum",
+quickImprint:"Impressum",
 
-quickAbout:
-"O nama",
+quickAbout:"O nama",
 
-quickFAQ:
-"Česta pitanja"
+quickFAQ:"Česta pitanja"
 
 },
 
 
 de:{
 
-heroKicker:
-"NATURKOSMETIK MIT HERZ",
+heroKicker:"NATURKOSMETIK MIT HERZ",
 
 hero:
 "Natürliche Schönheit in ihrer reinsten Form.",
@@ -1096,11 +944,9 @@ hero:
 heroText:
 "Hochwertige Pflanzenöle, wertvolle Mazerate und natürliche Inhaltsstoffe – vereint in einer handgefertigten Kollektion für Ihre tägliche Pflege.",
 
-see:
-"JETZT ENTDECKEN →",
+see:"JETZT ENTDECKEN →",
 
-prodTitle:
-"Produkte",
+prodTitle:"Produkte",
 
 prodSub:
 "Preise und Lagerbestand werden direkt aus der Online-Datenbank geladen.",
@@ -1111,38 +957,28 @@ storyTitle:
 storyText:
 "Bili's Natural Cosmetics ist eine Kollektion natürlicher Kosmetik mit besonderer Sorgfalt bei Rohstoffen und Herstellung.",
 
-contactLabel:
-"KONTAKT",
+contactLabel:"KONTAKT",
 
-here:
-"Wir sind für Sie da.",
+here:"Wir sind für Sie da.",
 
-warning:
-"Wichtiger Hinweis: ",
+warning:"Wichtiger Hinweis: ",
 
 legal:
 "Kosmetische Produkte sind keine Arzneimittel. Individuelle allergische Reaktionen sind möglich. Vor der ersten Anwendung wird ein Test auf einer kleinen Hautstelle empfohlen. Kauf und Anwendung erfolgen auf eigene Verantwortung.",
 
-cartTitle:
-"Warenkorb",
+cartTitle:"Warenkorb",
 
-totalLabel:
-"Gesamt",
+totalLabel:"Gesamt",
 
-nameL:
-"Vor- und Nachname",
+nameL:"Vor- und Nachname",
 
-addressL:
-"Adresse",
+addressL:"Adresse",
 
-phoneL:
-"Telefon",
+phoneL:"Telefon",
 
-payL:
-"Zahlungsart",
+payL:"Zahlungsart",
 
-noteL:
-"Bemerkung",
+noteL:"Bemerkung",
 
 send:
 "Bestellung über WhatsApp senden",
@@ -1150,23 +986,17 @@ send:
 ship:
 "Versandkosten werden zusätzlich berechnet. Versand in die Schweiz, EU und weitere Länder ist möglich; Transportkosten trägt der Käufer.",
 
-all:
-"Alle",
+all:"Alle",
 
-add:
-"In den Warenkorb",
+add:"In den Warenkorb",
 
-available:
-"Verfügbar",
+available:"Verfügbar",
 
-none:
-"Derzeit nicht verfügbar",
+none:"Derzeit nicht verfügbar",
 
-empty:
-"Der Warenkorb ist leer.",
+empty:"Der Warenkorb ist leer.",
 
-twintTitle:
-"TWINT-Zahlung",
+twintTitle:"TWINT-Zahlung",
 
 twintText:
 "Bitte senden Sie den Gesamtbetrag per TWINT an:",
@@ -1174,8 +1004,7 @@ twintText:
 twintName:
 "Bitte geben Sie bei der Zahlung Ihren Vor- und Nachnamen an.",
 
-paypalTitle:
-"PayPal-Zahlung",
+paypalTitle:"PayPal-Zahlung",
 
 paypalText:
 "Bitte senden Sie den Gesamtbetrag per PayPal an:",
@@ -1183,73 +1012,57 @@ paypalText:
 paypalName:
 "Bitte geben Sie bei der Zahlung Ihren Vor- und Nachnamen an.",
 
-cashTitle:
-"Barzahlung",
+cashTitle:"Barzahlung",
 
 cashText:
 "Barzahlung ist bei persönlicher Abholung möglich.",
 
-amount:
-"Zu zahlender Betrag",
+amount:"Zu zahlender Betrag",
 
-quickTitle:
-"SCHNELLZUGRIFF",
+quickTitle:"SCHNELLZUGRIFF",
 
-quickContact:
-"Kontakt",
+quickContact:"Kontakt",
 
-quickPrivacy:
-"Datenschutzerklärung",
+quickPrivacy:"Datenschutzerklärung",
 
-quickAGB:
-"AGB",
+quickAGB:"AGB",
 
-quickShipping:
-"Versand & Lieferung",
+quickShipping:"Versand & Lieferung",
 
-quickReturn:
-"Rückgabe & Rückerstattung",
+quickReturn:"Rückgabe & Rückerstattung",
 
-quickPayment:
-"Zahlung",
+quickPayment:"Zahlung",
 
-quickImprint:
-"Impressum",
+quickImprint:"Impressum",
 
-quickAbout:
-"Über uns",
+quickAbout:"Über uns",
 
-quickFAQ:
-"FAQ"
+quickFAQ:"FAQ"
 
 }
 
 };
 
 
-let lang = "sr";
+let lang="sr";
 
-let all = [];
+let all=[];
 
-let cat = "*";
+let cat="*";
 
-let cart =
+let cart=
 JSON.parse(
-localStorage.getItem("bilis_cart") || "[]"
+localStorage.getItem("bilis_cart")||"[]"
 );
 
 
-const $ =
-id =>
-document.getElementById(id);
+const $=id=>document.getElementById(id);
 
 
-const esc =
-s =>
-String(s ?? "")
-.replace(
+const esc=s=>
+String(s??"").replace(
 /[&<>"']/g,
-m => ({
+m=>({
 "&":"&amp;",
 "<":"&lt;",
 ">":"&gt;",
@@ -1261,12 +1074,12 @@ m => ({
 
 function n(p){
 
-return (
-lang === "de"
+return(
+lang==="de"
 ?
-(p.name_de || p.name_sr)
+(p.name_de||p.name_sr)
 :
-(p.name_sr || p.name_de)
+(p.name_sr||p.name_de)
 )
 ||
 p.name
@@ -1278,12 +1091,12 @@ p.name
 
 function d(p){
 
-return (
-lang === "de"
+return(
+lang==="de"
 ?
-(p.description_de || p.description_sr)
+(p.description_de||p.description_sr)
 :
-(p.description_sr || p.description_de)
+(p.description_sr||p.description_de)
 )
 ||
 p.description
@@ -1295,12 +1108,12 @@ p.description
 
 function c(p){
 
-return (
-lang === "de"
+return(
+lang==="de"
 ?
-(p.category_de || p.category_sr)
+(p.category_de||p.category_sr)
 :
-(p.category_sr || p.category_de)
+(p.category_sr||p.category_de)
 )
 ||
 p.category
@@ -1312,21 +1125,15 @@ p.category
 
 function setLang(x){
 
-lang = x;
+lang=x;
 
-$("sr").classList.toggle(
-"on",
-x === "sr"
-);
+$("sr").classList.toggle("on",x==="sr");
 
-$("de").classList.toggle(
-"on",
-x === "de"
-);
+$("de").classList.toggle("on",x==="de");
 
 
-for(
-const k of [
+for(const k of[
+
 "heroKicker",
 "hero",
 "heroText",
@@ -1358,11 +1165,10 @@ const k of [
 "quickImprint",
 "quickAbout",
 "quickFAQ"
-]
-){
 
-$(k).textContent =
-T[x][k];
+]){
+
+$(k).textContent=T[x][k];
 
 }
 
@@ -1380,21 +1186,18 @@ paymentInfo();
 
 function renderFilters(){
 
-let cs =
-[
+let cs=[
 ...new Set(
-all
-.map(c)
-.filter(Boolean)
+all.map(c).filter(Boolean)
 )
 ];
 
 
-$("filters").innerHTML =
+$("filters").innerHTML=
 
 `
 <button
-class="${cat === "*" ? "on" : ""}"
+class="${cat==="*"?"on":""}"
 onclick="setCat('*')">
 ${T[lang].all}
 </button>
@@ -1403,10 +1206,10 @@ ${T[lang].all}
 +
 
 cs.map(
-x =>
+x=>
 `
 <button
-class="${cat === x ? "on" : ""}"
+class="${cat===x?"on":""}"
 onclick='setCat(${JSON.stringify(x)})'>
 ${esc(x)}
 </button>
@@ -1418,7 +1221,7 @@ ${esc(x)}
 
 function setCat(x){
 
-cat = x;
+cat=x;
 
 renderFilters();
 
@@ -1429,57 +1232,54 @@ render();
 
 function render(){
 
-let list =
-cat === "*"
+let list=
+cat==="*"
 ?
 all
 :
-all.filter(
-p =>
-c(p) === cat
-);
+all.filter(p=>c(p)===cat);
 
 
-$("grid").innerHTML =
+$("grid").innerHTML=
 
 list.map(
-p => {
+p=>{
 
-let st =
+let st=
 Number(
-p.stock_qty ??
-p.stock ??
+p.stock_qty??
+p.stock??
 0
 );
 
 
-let pr =
+let pr=
 Number(
-p.price_chf ??
-p.price ??
+p.price_chf??
+p.price??
 0
 );
 
 
-let im =
-p.image_url ||
-p.image ||
+let im=
+p.image_url||
+p.image||
 "";
 
 
-let size =
-p.slug === "lip-balm-vanille"
+let size=
+p.slug==="lip-balm-vanille"
 ?
 "6 g"
 :
 (
-p.size ||
-p.volume ||
+p.size||
+p.volume||
 ""
 );
 
 
-return `
+return`
 
 <article class="card">
 
@@ -1488,17 +1288,12 @@ return `
 ${
 im
 ?
-`
-<img
-src="${esc(im)}"
-alt="${esc(n(p))}">
-`
+`<img src="${esc(im)}" alt="${esc(n(p))}">`
 :
 ""
 }
 
 </div>
-
 
 <div class="info">
 
@@ -1506,25 +1301,11 @@ alt="${esc(n(p))}">
 ${esc(c(p))}
 </small>
 
-<h3>
-${esc(n(p))}
-</h3>
+<h3>${esc(n(p))}</h3>
 
-<p>
-${esc(d(p))}
-</p>
+<p>${esc(d(p))}</p>
 
-${
-size
-?
-`
-<small>
-${esc(size)}
-</small>
-`
-:
-""
-}
+${size?`<small>${esc(size)}</small>`:""}
 
 <div class="row">
 
@@ -1537,9 +1318,9 @@ ${pr.toFixed(2)} CHF
 <div class="stock">
 
 ${
-st > 0
+st>0
 ?
-T[lang].available + " (" + st + ")"
+T[lang].available+" ("+st+")"
 :
 T[lang].none
 }
@@ -1549,11 +1330,10 @@ T[lang].none
 </div>
 
 ${
-st > 0
+st>0
 ?
 `
-<button
-onclick='add(${JSON.stringify(p.id)})'>
+<button onclick='add(${JSON.stringify(p.id)})'>
 ${T[lang].add}
 </button>
 `
@@ -1577,35 +1357,31 @@ ${T[lang].add}
 
 function add(id){
 
-let p =
+let p=
 all.find(
-x =>
-String(x.id) === String(id)
+x=>String(x.id)===String(id)
 );
 
 
-let i =
+let i=
 cart.find(
-x =>
-String(x.id) === String(id)
+x=>String(x.id)===String(id)
 );
 
 
-let max =
+let max=
 Number(
-p.stock_qty ??
-p.stock ??
+p.stock_qty??
+p.stock??
 0
 );
 
 
 if(i){
 
-if(i.q < max)
-i.q++;
+if(i.q<max)i.q++;
 
-}
-else{
+}else{
 
 cart.push({
 id,
@@ -1632,10 +1408,9 @@ JSON.stringify(cart)
 );
 
 
-$("cc").textContent =
+$("cc").textContent=
 cart.reduce(
-(s,x) =>
-s + x.q,
+(s,x)=>s+x.q,
 0
 );
 
@@ -1644,40 +1419,37 @@ s + x.q,
 
 function qty(id,z){
 
-let i =
+let i=
 cart.find(
-x =>
-String(x.id) === String(id)
+x=>String(x.id)===String(id)
 );
 
 
-let p =
+let p=
 all.find(
-x =>
-String(x.id) === String(id)
+x=>String(x.id)===String(id)
 );
 
 
-i.q =
+i.q=
 Math.max(
 0,
 Math.min(
 Number(
-p.stock_qty ??
-p.stock ??
+p.stock_qty??
+p.stock??
 0
 ),
-i.q + z
+i.q+z
 )
 );
 
 
 if(!i.q){
 
-cart =
+cart=
 cart.filter(
-x =>
-String(x.id) !== String(id)
+x=>String(x.id)!==String(id)
 );
 
 }
@@ -1692,33 +1464,30 @@ renderCart();
 
 function getTotal(){
 
-let tot = 0;
+let tot=0;
 
 
 cart.forEach(
-i => {
+i=>{
 
-let p =
+let p=
 all.find(
-x =>
-String(x.id) === String(i.id)
+x=>String(x.id)===String(i.id)
 );
 
 
-if(!p)
-return;
+if(!p)return;
 
 
-let pr =
+let pr=
 Number(
-p.price_chf ??
-p.price ??
+p.price_chf??
+p.price??
 0
 );
 
 
-tot +=
-pr * i.q;
+tot+=pr*i.q;
 
 }
 );
@@ -1731,72 +1500,60 @@ return tot;
 
 function renderCart(){
 
-let tot = 0;
+let tot=0;
 
 
 if(!cart.length){
 
-$("items").innerHTML =
-`
-<p>
-${T[lang].empty}
-</p>
-`;
+$("items").innerHTML=
+`<p>${T[lang].empty}</p>`;
 
-}
-else{
+}else{
 
-$("items").innerHTML =
+$("items").innerHTML=
 
 cart.map(
-i => {
+i=>{
 
-let p =
+let p=
 all.find(
-x =>
-String(x.id) === String(i.id)
+x=>String(x.id)===String(i.id)
 );
 
 
-if(!p)
-return "";
+if(!p)return"";
 
 
-let pr =
+let pr=
 Number(
-p.price_chf ??
-p.price ??
+p.price_chf??
+p.price??
 0
 );
 
 
-tot +=
-pr * i.q;
+tot+=pr*i.q;
 
 
-return `
+return`
 
 <div class="cartitem">
 
-<b>
-${esc(n(p))}
-</b>
+<b>${esc(n(p))}</b>
 
 <br>
 
-${(pr * i.q).toFixed(2)} CHF
+${(pr*i.q).toFixed(2)} CHF
 
 <br>
 
-<button
-onclick='qty(${JSON.stringify(i.id)},-1)'>
+<button onclick='qty(${JSON.stringify(i.id)},-1)'>
 −
 </button>
 
 ${i.q}
 
-<button
-onclick='qty(${JSON.stringify(i.id)},1)'>
+<button onclick='qty(${JSON.stringify(i.id)},1)'>
 +
 </button>
 
@@ -1810,7 +1567,7 @@ onclick='qty(${JSON.stringify(i.id)},1)'>
 }
 
 
-$("total").textContent =
+$("total").textContent=
 tot.toFixed(2);
 
 
@@ -1823,32 +1580,28 @@ paymentInfo();
 
 function paymentInfo(){
 
-let box =
-$("paymentInfo");
+let box=$("paymentInfo");
+
+if(!box)return;
 
 
-if(!box)
-return;
+let method=$("pay").value;
+
+let tot=getTotal().toFixed(2);
 
 
-let method =
-$("pay").value;
+if(method==="TWINT"){
 
-
-let tot =
-getTotal().toFixed(2);
-
-
-if(method === "TWINT"){
-
-box.innerHTML =
+box.innerHTML=
 `
 <strong>${T[lang].twintTitle}</strong><br>
 ${T[lang].twintText}<br>
 <b>${TWINT_NUMBER}</b><br>
+
 <div class="payment-total">
 ${T[lang].amount}: ${tot} CHF
 </div>
+
 ${T[lang].twintName}
 `;
 
@@ -1857,16 +1610,18 @@ return;
 }
 
 
-if(method === "PayPal"){
+if(method==="PayPal"){
 
-box.innerHTML =
+box.innerHTML=
 `
 <strong>${T[lang].paypalTitle}</strong><br>
 ${T[lang].paypalText}<br>
 <b>${PAYPAL_EMAIL}</b><br>
+
 <div class="payment-total">
 ${T[lang].amount}: ${tot} CHF
 </div>
+
 ${T[lang].paypalName}
 `;
 
@@ -1875,10 +1630,11 @@ return;
 }
 
 
-box.innerHTML =
+box.innerHTML=
 `
 <strong>${T[lang].cashTitle}</strong><br>
 ${T[lang].cashText}<br>
+
 <div class="payment-total">
 ${T[lang].amount}: ${tot} CHF
 </div>
@@ -1889,9 +1645,7 @@ ${T[lang].amount}: ${tot} CHF
 
 function cartOpen(){
 
-$("ov").classList.add(
-"open"
-);
+$("ov").classList.add("open");
 
 paymentInfo();
 
@@ -1900,9 +1654,7 @@ paymentInfo();
 
 function cartClose(){
 
-$("ov").classList.remove(
-"open"
-);
+$("ov").classList.remove("open");
 
 }
 
@@ -1911,9 +1663,7 @@ function sendOrder(){
 
 if(!cart.length){
 
-alert(
-T[lang].empty
-);
+alert(T[lang].empty);
 
 return;
 
@@ -1929,7 +1679,7 @@ if(
 ){
 
 alert(
-lang === "de"
+lang==="de"
 ?
 "Bitte Name, Adresse und Telefon eingeben."
 :
@@ -1941,52 +1691,48 @@ return;
 }
 
 
-let tot = 0;
+let tot=0;
 
-let ls = [];
+let ls=[];
 
 
 cart.forEach(
-i => {
+i=>{
 
-let p =
+let p=
 all.find(
-x =>
-String(x.id) === String(i.id)
+x=>String(x.id)===String(i.id)
 );
 
 
-let pr =
+let pr=
 Number(
-p.price_chf ??
-p.price ??
+p.price_chf??
+p.price??
 0
 );
 
 
-tot +=
-pr * i.q;
+tot+=pr*i.q;
 
 
 ls.push(
-`• ${n(p)} x ${i.q} = ${(pr * i.q).toFixed(2)} CHF`
+`• ${n(p)} x ${i.q} = ${(pr*i.q).toFixed(2)} CHF`
 );
 
 }
 );
 
 
-let method =
-$("pay").value;
+let method=$("pay").value;
+
+let paymentText="";
 
 
-let paymentText = "";
+if(method==="TWINT"){
 
-
-if(method === "TWINT"){
-
-paymentText =
-lang === "de"
+paymentText=
+lang==="de"
 ?
 `TWINT: ${TWINT_NUMBER}
 Zu zahlender Betrag: ${tot.toFixed(2)} CHF`
@@ -1997,10 +1743,10 @@ Iznos za uplatu: ${tot.toFixed(2)} CHF`;
 }
 
 
-else if(method === "PayPal"){
+else if(method==="PayPal"){
 
-paymentText =
-lang === "de"
+paymentText=
+lang==="de"
 ?
 `PayPal: ${PAYPAL_EMAIL}
 Zu zahlender Betrag: ${tot.toFixed(2)} CHF`
@@ -2013,8 +1759,8 @@ Iznos za uplatu: ${tot.toFixed(2)} CHF`;
 
 else{
 
-paymentText =
-lang === "de"
+paymentText=
+lang==="de"
 ?
 `Barzahlung bei persönlicher Abholung.
 Zu zahlender Betrag: ${tot.toFixed(2)} CHF`
@@ -2025,7 +1771,7 @@ Iznos za uplatu: ${tot.toFixed(2)} CHF`;
 }
 
 
-let m =
+let m=
 
 `BILI'S NATURAL COSMETICS
 
@@ -2040,7 +1786,7 @@ ${T[lang].nameL}: ${$("name").value}
 ${T[lang].addressL}: ${$("address").value}
 E-Mail: ${$("email").value}
 ${T[lang].phoneL}: ${$("phone").value}
-${T[lang].noteL}: ${$("note").value || "-"}`;
+${T[lang].noteL}: ${$("note").value||"-"}`;
 
 
 window.open(
@@ -2055,29 +1801,21 @@ encodeURIComponent(m),
 
 async function load(){
 
-let {
-data,
-error
-}
-=
+let{data,error}=
+
 await db
 .from("products")
 .select("*")
-.eq(
-"active",
-true
-)
+.eq("active",true)
 .order(
 "sort_order",
-{
-ascending:true
-}
+{ascending:true}
 );
 
 
 if(error){
 
-$("grid").textContent =
+$("grid").textContent=
 "Proizvodi trenutno nisu dostupni.";
 
 console.error(error);
@@ -2087,8 +1825,7 @@ return;
 }
 
 
-all =
-data || [];
+all=data||[];
 
 
 renderFilters();
@@ -2102,7 +1839,7 @@ paymentInfo();
 }
 
 
-$("year").textContent =
+$("year").textContent=
 new Date().getFullYear();
 
 
